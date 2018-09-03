@@ -1,6 +1,11 @@
 # new-strad
 **Nouvelle version du bot Discord Strad pour le serveur Stradivarius**
 
+## Informations
+
+Le bot est dévellopé par Tagueo et les contributeurs (voir ci desous pour la liste)
+Il est dévellopé en [nodejs](https://nodejs.org/en/), avec le framework [discord.js](https://discord.js.org/#/).
+
 ## Installation
 Pour faire marcher ce bot en local c'est très simple :
 
