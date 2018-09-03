@@ -20,8 +20,8 @@ Pour faire marcher ce bot en local c'est très simple :
   npm install chalk
   npm install cpu-stat
   npm install ms
-  npm install os```
-
+  npm install os
+  
 - Remplissez le fichier de config avec le token
 
 - Executez `node main.js` dans la cmd
