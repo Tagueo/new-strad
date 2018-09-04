@@ -1,7 +1,8 @@
 const Discord = require("discord.js")
 
 exports.run = (client, message, args) => {
-  if (message.member.roles.find("name", "Mentor")) {
+
+  if (message.member.roles.find(x => x.name === "Mentor")) {
 
     switch (args[0]) {
 
