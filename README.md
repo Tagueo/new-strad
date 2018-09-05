@@ -5,6 +5,9 @@
 
 Le bot est dévellopé par Tagueo et les contributeurs (voir ci desous pour la liste)
 Il est dévellopé en [nodejs](https://nodejs.org/en/), avec le framework [discord.js](https://discord.js.org/#/).
+Le logo du bot à été fait par Superdelphi.
+
+Pour savoir comment contribuer au developpement du bot, rendez vous [ici](https://github.com/Tagueo/new-strad/blob/master/CONTRIBUTING.md)
 
 ## Installation
 Pour faire marcher ce bot en local c'est très simple :
