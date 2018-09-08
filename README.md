@@ -16,7 +16,8 @@ Pour faire marcher ce bot en local c'est très simple :
 - Clonez la repository
 - Ouvrez une cmd dans le dossier de la repository et executez :
 
-  ```npm install discord.js
+  ```
+  npm install discord.js
   npm install enmap
   npm install moment
   npm install moment-duration-format
@@ -24,6 +25,7 @@ Pour faire marcher ce bot en local c'est très simple :
   npm install cpu-stat
   npm install ms
   npm install os
+  ```
   
 - Remplissez le fichier de config avec le token
 
