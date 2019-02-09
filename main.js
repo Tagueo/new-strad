@@ -3,9 +3,9 @@ const Enmap = require("enmap");
 const fs = require("fs");
 const chalk = require('chalk');
 var moment = require('moment');
-const config = require("./config.json");
 
 const client = new Discord.Client();
+client.config = require("./config.json");
 
 
 console.log(chalk.cyan('Starting ...'));
@@ -21,7 +21,7 @@ fs.readdir("./events/", (err, files) => {
     // Get the event name
     let eventName = file.split(".")[0];
     // scall events with all their proper arguments *after* the `client` var.
-    client.on(eventName, event.bind(null, client));
+    client.on(eventName, event.bind(null, config, client));
     delete require.cache[require.resolve(`./events/${file}`)];
     console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] ${chalk.green('Loaded')} event ${chalk.cyan(file)}`);
   });
@@ -44,6 +44,6 @@ fs.readdir("./commands/", (err, files) => {
   });
 });
 
-client.login(config.token);
+client.login(client.config.token);
 
 client.on('error', console.error);
