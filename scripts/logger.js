@@ -10,6 +10,7 @@ exports.run = (message) => {
     var fs = require("fs"); // Module nécessaire pour écrire dans les logs.
     let isMessageType = typeof(message) != "string" ? true : false; // Détecte un message (objet) ou une string en argument.
     var logMoment = moment(Date.now()).format("MM-DD-YY_h-mm-ss");
+    var logName = moment(Date.now()).format("MM-DD-YY");
     var filter = /[\s]{2,}/gi;
 
     var logMessage;
@@ -22,12 +23,9 @@ exports.run = (message) => {
     }
 
     try { // Essaie d'écrire dans les logs.
-        fs.appendFile(appRoot + `/logs/${logMoment}.txt`, logMessage, (err) => {
-            console.log(err);
-        })
+        fs.appendFile(appRoot + `/logs/${logName}.txt`, logMessage, (err) => {})
     } catch (error) {
-        fs.writeFile(appRoot + `/logs/${logMoment}.txt`, logMessage);
-        console.log(error)
+        fs.writeFile(appRoot + `/logs/${logName}.txt`, logMessage);
     }
 
 }
