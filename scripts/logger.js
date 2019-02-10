@@ -31,7 +31,7 @@ exports.run = (message) => {
 
         fs.writeFile(appRoot + `/logs/${logMoment}.txt`, logFile);
     } catch (error) {
-        
+        console.log(error)
     }
 
 }
