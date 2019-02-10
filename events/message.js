@@ -21,11 +21,8 @@ module.exports = (client, message) => {
   if (message.author.bot) return;
 
   // Checks automatic answers
-  try {
+  if (ANSWERS[message.cleanContent.toLowerCase()]) {
     message.channel.send(ANSWERS[message.cleanContent.toLowerCase()]);
-    return
-  } catch (e) {
-    e;
   }
 
   // Ignores messages not starting with the prefix
