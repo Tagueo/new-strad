@@ -13,8 +13,7 @@ module.exports = (client, message) => {
 
   const guildId = message.guild.id;
   const userData = JSON.parse(fs.readFileSync(appRoot+"/json/userData.json", "utf8"));
-  // const ANSWERS = JSON.parse("../static_data/answers.json");
-  const ANSWERS = {"strad ?": "Oui ?"};
+  const ANSWERS = JSON.parse(fs.readFileSync(appRoot+"/static_data/answers.json", "utf8"));
 
   var botPrefix = client.config.prefix;
 
@@ -23,9 +22,6 @@ module.exports = (client, message) => {
 
   // Checks automatic answers
   try {
-    // DEBUG
-    console.log(message.cleanContent.toLowerCase().trim())
-    // DEBUG
     message.channel.send(ANSWERS[message.cleanContent.toLowerCase()]);
     return
   } catch (e) {}
