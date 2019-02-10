@@ -25,7 +25,7 @@ module.exports = (client, message) => {
     message.channel.send(ANSWERS[message.cleanContent.toLowerCase()]);
     return
   } catch (e) {
-    console.error(e);
+    e;
   }
 
   // Ignores messages not starting with the prefix
