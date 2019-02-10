@@ -24,7 +24,9 @@ module.exports = (client, message) => {
   try {
     message.channel.send(ANSWERS[message.cleanContent.toLowerCase()]);
     return
-  } catch (e) {}
+  } catch (e) {
+    continue
+  }
 
   // Ignores messages not starting with the prefix
   if (!message.content.startsWith(botPrefix)) {
