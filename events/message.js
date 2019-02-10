@@ -6,10 +6,15 @@ const fs = require('fs');
 
 var appRoot = process.cwd();
 
+const logger = require(appRoot + '/scripts/logger.js');
+
 module.exports = (client, message) => {
   if (!message.guild) {
     return;
   }
+
+  // Écriture dans les logs
+  logger.run(message);
 
   // Gestion des ressources postées
   var msg = message.content.toUpperCase();
