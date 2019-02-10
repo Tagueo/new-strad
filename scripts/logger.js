@@ -16,7 +16,7 @@ exports.run = (message) => {
     var logMessage;
 
     if (isMessageType) { // Traite la requête en fonction de son type.
-        logMessage = "[" + logMoment + "][" + message.guild.name + "|" + message.guild.id + "] ";
+        logMessage = "[" + logMoment + "][" + message.guild.name + "|" + message.guild.id + "][#" + message.channel.name + "] ";
         logMessage += message.author.tag + " : " + message.cleanContent.replace(filter, " ") + "\r\n";
     } else {
         logMessage = "[" + logMoment + "] * " + message + "\r\n";
