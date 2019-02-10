@@ -8,11 +8,11 @@ const config = require("./config.json");
 const client = new Discord.Client();
 
 
-console.log(chalk.cyan('Starting ...'));
+console.log(chalk.cyan('Starting...'));
 
 // Reads the /events/ folder and attaches each event file to the appropriate event.
 fs.readdir("./events/", (err, files) => {
-  console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] ${chalk.cyan('Loading events ...')}`)
+  console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] ${chalk.cyan('Loading events...')}`)
   if (err) return console.error(err);
   files.forEach(file => {
     if (!file.endsWith(".js")) return;
@@ -30,7 +30,7 @@ fs.readdir("./events/", (err, files) => {
 client.commands = new Enmap();
 
 fs.readdir("./commands/", (err, files) => {
-  console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] ${chalk.cyan('Loading commands ...')}`)
+  console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] ${chalk.cyan('Loading commands...')}`)
   if (err) return console.error(err);
   files.forEach(file => {
     if (!file.endsWith(".js")) return;

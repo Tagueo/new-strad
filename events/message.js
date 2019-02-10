@@ -12,13 +12,20 @@ var appRoot = process.cwd();
 module.exports = (client, message) => {
 
   const guildId = message.guild.id;
+  const ANSWERS = JSON.parse("../static_data/answers.json");
 
   var botPrefix = 'Strad ';
 
-  // Ignore all bots
+  // Ignores all bots
   if (message.author.bot) return;
 
-  // Ignore messages not starting with the prefix
+  // Checks automatic answers
+  try {
+    message.author.send(ANSWERS[message.cleanContent.toLowerCase()]);
+    return
+  } catch (e) {}
+
+  // Ignores messages not starting with the prefix
   if (!message.content.startsWith(botPrefix)) {
     return;
   }
@@ -28,14 +35,14 @@ module.exports = (client, message) => {
   var command = args.shift().toLowerCase();
 
 
-  // Grab the command data from the client.commands Enmap
+  // Grabs the command data from the client.commands Enmap
   const cmd = client.commands.get(command);
 
   if (!cmd) {
     return;
   };
 
-  // Run the command
+  // Runs the command
   cmd.run(client, message, args);
   console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`);
 
