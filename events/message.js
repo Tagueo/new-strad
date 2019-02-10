@@ -11,6 +11,28 @@ module.exports = (client, message) => {
     return;
   }
 
+  // Gestion des ressources postées
+  var msg = message.content.toUpperCase();
+  if (message.channel.id === "412622887317405707" || message.channel.id === "447416122468466688" || message.channel.id === "412622999267704834" || message.channel.id === "416227695429550100" || message.channel.id === "425739003623374848" || message.channel.id === "438794104621629441" || message.channel.id === "442374005177974825") {
+    if (msg.includes("[RES]")) {
+  	  message.pin();
+  	}
+    if (message.type === "PINS_ADD") {
+  		message.delete(5);
+  	}
+    if (msg.includes("[POST]")) {
+  		if (message.attachments.size === 0 && !msg.includes("HTTP")) {
+  			return;
+  		}
+      message.react(bot.emojis.get("419568361110896640"));
+      message.react(bot.emojis.get("419568377946832896"));
+  	}
+    if (message.attachments.size != 0) {
+      message.react(bot.emojis.get("419568361110896640"));
+      message.react(bot.emojis.get("419568377946832896"));
+  	}
+  }
+
   const guildId = message.guild.id;
   const userData = JSON.parse(fs.readFileSync(appRoot+"/json/userData.json", "utf8"));
   const ANSWERS = JSON.parse(fs.readFileSync(appRoot+"/static_data/answers.json", "utf8"));
@@ -45,5 +67,4 @@ module.exports = (client, message) => {
   // Run the command
   cmd.run(client, message, args, userData);
   console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`);
-
 };
