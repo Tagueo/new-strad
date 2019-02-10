@@ -23,7 +23,6 @@ exports.run = (message) => {
 
     try { // Essaie d'écrire dans les logs.
         fs.appendFile(appRoot + `/logs/${logMoment}.txt`, logMessage, (err) => {})
-        var logFile = fs.readFileSync(appRoot + `/logs/${logMoment}.txt`);
     } catch (error) {
         fs.writeFile(appRoot + `/logs/${logMoment}.txt`, logMessage);
         console.log(error)
