@@ -1,4 +1,6 @@
 {
-  "token": "bot-token",
-  "logsChannel": "419506197847343132"
+  "token": "",
+  "prefix": "Strad ",
+  "logsChannel": "419506197847343132",
+  "modRole": "Mentor"
 }

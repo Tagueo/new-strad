@@ -21,7 +21,7 @@ fs.readdir("./events/", (err, files) => {
     // Get the event name
     let eventName = file.split(".")[0];
     // scall events with all their proper arguments *after* the `client` var.
-    client.on(eventName, event.bind(null, config, client));
+    client.on(eventName, event.bind(null, client));
     delete require.cache[require.resolve(`./events/${file}`)];
     console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] ${chalk.green('Loaded')} event ${chalk.cyan(file)}`);
   });

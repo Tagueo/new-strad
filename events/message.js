@@ -1,7 +1,4 @@
 const Discord = require('discord.js');
-const client = new Discord.Client({
-  disableEveryone: true
-});
 
 const chalk = require('chalk');
 const moment = require('moment');
@@ -10,10 +7,14 @@ const fs = require('fs');
 var appRoot = process.cwd();
 
 module.exports = (client, message) => {
+  if (!message.guild) {
+    return;
+  }
 
   const guildId = message.guild.id;
+  const userData = JSON.parse(fs.readFileSync(appRoot+"/json/userData.json", "utf8"));
 
-  var botPrefix = 'Strad ';
+  var botPrefix = client.config.prefix;
 
   // Ignore all bots
   if (message.author.bot) return;
@@ -36,7 +37,7 @@ module.exports = (client, message) => {
   };
 
   // Run the command
-  cmd.run(client, message, args);
+  cmd.run(client, message, args, userData);
   console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`);
 
 };

@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const moment = require('moment');
 
 module.exports = (client, guild, user) => {
-  const logs = client.channels.get("419506197847343132")
+  const logs = client.channels.get(client.config.logsChannel)
 
   if (guild.id = '412369732679893004') {
 
