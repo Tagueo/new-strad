@@ -21,10 +21,10 @@ exports.run = (message) => {
         logMessage = "[" + logMoment + "] * " + message + "\r\n";
     }
 
-    console.log(logMoment);
-    
     try { // Essaie d'écrire dans les logs.
-        fs.appendFile(appRoot + `/logs/${logMoment}.txt`, logMessage, (err) => {})
+        fs.appendFile(appRoot + `/logs/${logMoment}.txt`, logMessage, (err) => {
+            console.log(err);
+        })
     } catch (error) {
         fs.writeFile(appRoot + `/logs/${logMoment}.txt`, logMessage);
         console.log(error)
