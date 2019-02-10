@@ -22,6 +22,9 @@ module.exports = (client, message) => {
 
   // Checks automatic answers
   try {
+    // DEBUG
+    console.log(message.cleanContent.toLowerCase())
+    // DEBUG
     message.author.send(ANSWERS[message.cleanContent.toLowerCase()]);
     return
   } catch (e) {}
