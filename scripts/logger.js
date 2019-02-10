@@ -21,6 +21,8 @@ exports.run = (message) => {
         logMessage = "[" + logMoment + "] * " + message + "\r\n";
     }
 
+    console.log(logMoment);
+    
     try { // Essaie d'écrire dans les logs.
         fs.appendFile(appRoot + `/logs/${logMoment}.txt`, logMessage, (err) => {})
     } catch (error) {
