@@ -3,9 +3,9 @@ const Enmap = require("enmap");
 const fs = require("fs");
 const chalk = require('chalk');
 var moment = require('moment');
-const config = require("./config.json");
 
 const client = new Discord.Client();
+client.config = require("./config.json");
 
 
 console.log(chalk.cyan('Starting...'));
@@ -44,6 +44,6 @@ fs.readdir("./commands/", (err, files) => {
   });
 });
 
-client.login(config.token);
+client.login(client.config.token);
 
 client.on('error', console.error);
