@@ -26,7 +26,7 @@ module.exports = (client, message) => {
     // DEBUG
     console.log(message.cleanContent.toLowerCase().trim())
     // DEBUG
-    message.author.send(ANSWERS[message.cleanContent.toLowerCase()]);
+    message.channel.send(ANSWERS[message.cleanContent.toLowerCase()]);
     return
   } catch (e) {}
 
