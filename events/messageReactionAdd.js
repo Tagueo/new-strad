@@ -5,6 +5,10 @@ const moment = require('moment');
 
 const reactedRecently = new Set();
 
+var appRoot = process.cwd();
+
+const logger = require(appRoot + '/scripts/logger.js');
+
 module.exports = (client, messageReaction, user) => {
   if (messageReaction.message.member.guild.id !== "412369732679893004") {
     return;
@@ -89,6 +93,7 @@ module.exports = (client, messageReaction, user) => {
     //messageReaction.message.react(bot.emojis.get("418441210475053056"));
     console.log("Report !");
     var reportedMessage = messageReaction.message.cleanContent;
+    logger.run(`${user.tag} a reporté un message dans le salon #${messageReaction.message.channel.name} du serveur ${guild.name}.`);
     messageReaction.message.member.guild.channels.find("id", client.config.logsChannel).send({
       embed: {
         title: "Message signalé",

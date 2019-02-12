@@ -4,6 +4,7 @@
 
 const chalk = require('chalk');
 const moment = require('moment');
+
 var appRoot = process.cwd();
 
 exports.run = (message) => {
