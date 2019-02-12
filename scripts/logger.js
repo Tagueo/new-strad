@@ -2,6 +2,7 @@
  * Permet d'écrire dans les logs.
  */
 
+const chalk = require('chalk');
 const moment = require('moment');
 var appRoot = process.cwd();
 
@@ -20,6 +21,7 @@ exports.run = (message) => {
         logMessage += message.author.tag + " : " + message.cleanContent.replace(filter, " ") + "\r\n";
     } else {
         logMessage = "[" + logMoment + "] * " + message + "\r\n";
+        console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] ` + message);
     }
 
     try { // Essaie d'écrire dans les logs.
