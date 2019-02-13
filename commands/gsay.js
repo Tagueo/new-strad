@@ -22,11 +22,13 @@ exports.run = (client, message, args) => {
         message.channel.send('Tu dois indiquer un salon :\n`general`\n`shit-post`\n`flash-annonces`');
         return;
     }
+
     if (channel && args[1]) {
       args.splice(0, 1);
       client.channels.get(channel).send(args.join(' '));
-      message.channel.send('<:true:413685423202893826> Envoyé !');
+      message.author.send('<:true:413685423202893826> Envoyé !');
     }
+
   } else {
     message.channel.send('Tu n\'as pas le droit de faire cette commande <:facepalm:428261651947716609>');
   }
