@@ -17,7 +17,7 @@ module.exports = (client, member) => {
       .setTitle("Nouveau Membre")
       .setDescription(`**<@${member.user.id}>** vient de rejoindre le serveur !`)
 
-    member.guild.channels.find("id", welcome_categ_id).setName("STRADIVARIUS | " + member.guild.memberCount)
+    member.guild.channels.find("id", welcome_categ_id).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES")
     logs.send(embed)
     console.log(member.user.username + " a rejoint le serveur !");
   }
