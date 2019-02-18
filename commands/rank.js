@@ -10,9 +10,9 @@ exports.run = (client, message, args) => {
     .setAuthor(message.author.usertag, message.author.avatarURL)
     .setThumbnail(message.author.avatarURL)
     .addField("ID du propriétaire", message.author.id, true)
-    .addField("Valeur du compte", `**{unknown}** <:strad:544057514589683723>`, false)
-    .addField("Nombre de Créas", `**{unknown} Créas**`, true)
-    .addField("Rang artistique", "unknown", false)
+    .addField("Valeur du compte", `**{unknown}** <:strad:544057514589683723>`, true)
+    .addField("Nombre de Créas", `**{unknown} Créas**`, false)
+    .addField("Rang artistique", "unknown", true)
     .setFooter("Strad rank")
     .setColor("#21b1ff");
 
