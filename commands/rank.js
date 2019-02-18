@@ -30,7 +30,7 @@ exports.run = (client, message, args) => {
       
       gb.results = rows[0];
       rows.forEach(function(result) {
-        console.log(result + "WOW");
+        console.log(result.money);
       })
 
     });
