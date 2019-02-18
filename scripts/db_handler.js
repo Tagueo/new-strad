@@ -18,6 +18,7 @@ exports.run = (client, query) => {
     con.query(query, function(err, rows, fields) {
         if (err) console.log(err);
         exports.results = rows;
+        console.log(rows[0]);
     })
 
 }
