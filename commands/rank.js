@@ -16,7 +16,7 @@ exports.run = (client, message, args) => {
   });
 
   con.connect(query, (err) => {
-    results = result;
+    results = result[0];
   });
 
   const stradEmoji = "<:strad:544057514589683723>";
