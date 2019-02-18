@@ -20,11 +20,10 @@ exports.run = (client, message, args) => {
 
   con.query(query, function(err, rows, fields) {
     results = rows;
+    console.log(results);
   })
 
   con.end();
-
-  console.log(results);
   
   // const stradEmoji = "<:strad:544057514589683723>";
 
