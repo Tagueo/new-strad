@@ -28,8 +28,8 @@ exports.run = (client, message, args) => {
           console.log(err);
       }
       
-      // gb.results = rows[0];
-      gb.results = [{}];
+      gb.results = rows[0];
+      // gb.results = [{}];
 
       console.log(gb.results.join(", "))
 
