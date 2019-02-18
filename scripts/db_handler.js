@@ -1,5 +1,7 @@
 var appRoot = process.cwd();
 
+exports.results = undefined;
+
 exports.run = (client, query) => {
 
     var mysql = require("mysql");
@@ -25,9 +27,8 @@ exports.run = (client, query) => {
         if (err) console.log(err);
         exports.results = rows;
         console.log(rows[0]);
+        return rows;
         console.log("--------------------");
     })
 
 }
-
-exports.results = undefined;
