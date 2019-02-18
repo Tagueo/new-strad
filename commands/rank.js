@@ -1,5 +1,4 @@
 const Discord = require("discord.js")
-const config = require("../config.json");
 
 var mysql = require("mysql")
 
@@ -8,8 +7,8 @@ exports.run = (client, message, args) => {
   const query = `SELECT * FROM users WHERE user_id = ${message.author.id}`;
   var results;
 
-  console.log(config.mysqlUser + config.mysqlPass);
-
+  console.log(client.config.mysqlUser + client.config.mysqlPass);
+  
   var con = mysql.createConnection({
     host: "localhost",
     user: "ggg",
