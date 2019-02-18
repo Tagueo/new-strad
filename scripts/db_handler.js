@@ -11,6 +11,8 @@ exports.run = (client, query) => {
       database: "strad"
     });
     
+    console.log("--------------------");
+    console.log(client.config.mysqlUser);
     console.log(con);
 
     con.connect((err) => {
@@ -23,6 +25,7 @@ exports.run = (client, query) => {
         if (err) console.log(err);
         exports.results = rows;
         console.log(rows[0]);
+        console.log("--------------------");
     })
 
 }
