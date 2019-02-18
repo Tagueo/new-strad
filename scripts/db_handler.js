@@ -24,7 +24,6 @@ exports.run = (client, query) => {
             results = [{}];
         }
 
-        console.log("LOG DB : " + rows[0]);
         return results;
 
     });
