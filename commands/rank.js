@@ -29,8 +29,6 @@ exports.run = (client, message, args) => {
       }
       
       gb.results = rows[0];
-      console.log("CHECKPOINT 1");
-      console.log(gb.results.money);
 
     });
 
@@ -38,7 +36,6 @@ exports.run = (client, message, args) => {
 
   // DB connection
 
-  console.log("CHECKPOINT 2");
   setTimeout(() => {
     const stradEmoji = "<:strad:544057514589683723>";
 
@@ -46,7 +43,7 @@ exports.run = (client, message, args) => {
       .setAuthor(message.author.tag, message.author.avatarURL)
       .setThumbnail(message.author.avatarURL)
       .addField("Valeur du compte", `${gb.results.money} ${stradEmoji}`, true)
-      .addField("Nombre de Créas", `${gb.results.money}`, true)
+      .addField("Nombre de Créas", `${gb.results.creas_amount}`, true)
       .addField("ID du propriétaire", message.author.id, true)
       .addField("Rang artistique", "unknown", true)
       .setFooter("Strad rank")
