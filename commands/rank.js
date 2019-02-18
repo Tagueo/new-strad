@@ -14,13 +14,11 @@ exports.run = (client, message, args) => {
     database: "strad"
   });
 
+  con.connect(query, (err) => {
+    results = result[0];
+  });
+
   console.log(con);
-
-  // con.connect(query, (err) => {
-  //   results = result[0];
-  // });
-
-  // console.log(con);
   
   // const stradEmoji = "<:strad:544057514589683723>";
 
