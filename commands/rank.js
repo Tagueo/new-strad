@@ -5,7 +5,6 @@ const db_handler = require("../scripts/db_handler.js");
 exports.run = (client, message, args) => {
 
   db_handler.run(client, `SELECT * FROM users WHERE user_id = ${message.author.id}`);
-  var results = db_handler.results[0];
   
   const stradEmoji = "<:strad:544057514589683723>";
 
