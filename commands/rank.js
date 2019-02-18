@@ -18,14 +18,15 @@ exports.run = (client, message, args) => {
   con.connect(query, (err) => {
     results = result[0];
   });
-  console.log(results);
+
+  console.log(con);
   
   const stradEmoji = "<:strad:544057514589683723>";
 
   const embedMoney = new Discord.RichEmbed()
     .setAuthor(message.author.tag, message.author.avatarURL)
     .setThumbnail(message.author.avatarURL)
-    .addField("Valeur du compte", `${results["money"]} <:strad:544057514589683723>`, true)
+    .addField("Valeur du compte", `${results["money"]} ${stradEmoji}`, true)
     .addField("Nombre de Créas", `${results["creas_amount"]}`, true)
     .addField("ID du propriétaire", message.author.id, true)
     .addField("Rang artistique", "unknown", true)
