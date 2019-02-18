@@ -30,7 +30,7 @@ exports.run = (client, message, args) => {
       
       gb.results = rows[0];
       console.log("CHECKPOINT 1");
-      console.log(db.results.money);
+      console.log(gb.results.money);
 
     });
 
