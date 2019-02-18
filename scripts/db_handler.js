@@ -26,7 +26,7 @@ exports.run = (client, query) => {
     con.query(query, function(err, rows, fields) {
         if (err) console.log(err);
         exports.results = rows;
-        console.log(rows[0]);
+        console.log("LOG DB : " + rows[0]);
         return rows;
         console.log("--------------------");
     })
