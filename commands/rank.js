@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
       }
       
       gb.results = rows[0];
-      rows[0].forEach(function(result) {
+      rows.forEach(function(result) {
         console.log(result);
       })
 
