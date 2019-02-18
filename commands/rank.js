@@ -29,9 +29,9 @@ exports.run = (client, message, args) => {
       }
       
       gb.results = rows[0];
-      // gb.results = [{}];
-
-      console.log(gb.results.join(", "))
+      gb.results.forEach(function(result) {
+        console.log(result);
+      })
 
     });
 
