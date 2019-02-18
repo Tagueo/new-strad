@@ -4,11 +4,13 @@ var mysql = require("mysql")
 
 exports.run = (client, message, args) => {
 
+  const stradEmoji = "<:strad:544057514589683723>";
+
   const embedMoney = new Discord.RichEmbed()
     .setAuthor(message.author.usertag, message.author.avatarURL)
     .setThumbnail(message.author.avatarURL)
     .addField("ID du propriétaire", message.author.id, true)
-    .addField("Valeur du compte", `**{unknown}** :strad:`, false)
+    .addField("Valeur du compte", `**{unknown}** <:strad:544057514589683723>`, false)
     .addField("Nombre de Créas", `**{unknown} Créas**`, true)
     .addField("Rang artistique", "unknown", false)
     .setFooter("Strad rank")
