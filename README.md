@@ -25,6 +25,7 @@ Pour faire marcher ce bot en local c'est très simple :
   npm install cpu-stat
   npm install ms
   npm install os
+  npm install mysql
   ```
 
 - Remplissez le fichier de config avec le token et les ids des channels
