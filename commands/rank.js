@@ -6,7 +6,9 @@ exports.run = (client, message, args) => {
 
   // DB connection
 
-  var gb = {};
+  var gb = {
+    results: [{}]
+  };
   var mysql = require("mysql");
   
     var con = mysql.createConnection({
