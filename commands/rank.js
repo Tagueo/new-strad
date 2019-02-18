@@ -7,7 +7,6 @@ exports.run = (client, message, args) => {
   // DB connection
 
   var results;
-
   var mysql = require("mysql");
   
     var con = mysql.createConnection({
@@ -21,7 +20,7 @@ exports.run = (client, message, args) => {
         if (err) console.log(err);
     });
 
-    con.query(query, function(err, rows, fields) {
+    con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, function(err, rows, fields) {
 
         results = rows;
 
@@ -37,11 +36,7 @@ exports.run = (client, message, args) => {
 
   // DB connection
 
-  var res;
-
-  res = db_handler.run(client, `SELECT * FROM users WHERE user_id = ${message.author.id}`);
-
-  console.log("LOG RANK.JS : " + res);
+  console.log("LOG RANK.JS : " + results);
   
   const stradEmoji = "<:strad:544057514589683723>";
 
