@@ -8,7 +8,7 @@ exports.run = (client, message, args) => {
   var results;
 
   console.log(client.config.mysqlUser + client.config.mysqlPass);
-  
+
   var con = mysql.createConnection({
     host: "localhost",
     user: "ggg",
@@ -16,24 +16,24 @@ exports.run = (client, message, args) => {
     database: "strad"
   });
 
-  con.connect(query, (err) => {
-    results = result[0];
-  });
+  // con.connect(query, (err) => {
+  //   results = result[0];
+  // });
 
-  console.log(con);
+  // console.log(con);
   
-  const stradEmoji = "<:strad:544057514589683723>";
+  // const stradEmoji = "<:strad:544057514589683723>";
 
-  const embedMoney = new Discord.RichEmbed()
-    .setAuthor(message.author.tag, message.author.avatarURL)
-    .setThumbnail(message.author.avatarURL)
-    .addField("Valeur du compte", `${results["money"]} ${stradEmoji}`, true)
-    .addField("Nombre de Créas", `${results["creas_amount"]}`, true)
-    .addField("ID du propriétaire", message.author.id, true)
-    .addField("Rang artistique", "unknown", true)
-    .setFooter("Strad rank")
-    .setColor(message.member.displayColor);
+  // const embedMoney = new Discord.RichEmbed()
+  //   .setAuthor(message.author.tag, message.author.avatarURL)
+  //   .setThumbnail(message.author.avatarURL)
+  //   .addField("Valeur du compte", `${results["money"]} ${stradEmoji}`, true)
+  //   .addField("Nombre de Créas", `${results["creas_amount"]}`, true)
+  //   .addField("ID du propriétaire", message.author.id, true)
+  //   .addField("Rang artistique", "unknown", true)
+  //   .setFooter("Strad rank")
+  //   .setColor(message.member.displayColor);
 
-    client.channels.get('413678978990080010').send(embedMoney);
-    message.delete();
+  //   client.channels.get('413678978990080010').send(embedMoney);
+  //   message.delete();
 };
