@@ -7,7 +7,7 @@ exports.run = (client, message, args) => {
   // DB connection
 
   var gb = {
-    results: [{}]
+    results: undefined
   };
   var mysql = require("mysql");
   
@@ -29,10 +29,16 @@ exports.run = (client, message, args) => {
       }
       
       gb.results = rows[0];
+      console.log("CHECKPOINT 1");
+      console.log(db.results.money);
 
     });
 
+    con.end();
+
   // DB connection
+
+  console.log("CHECKPOINT 2");
   
   const stradEmoji = "<:strad:544057514589683723>";
 
