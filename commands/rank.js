@@ -13,12 +13,12 @@ exports.run = (client, message, args) => {
     password: client.config.mysqlPass,
     database: "strad"
   });
-  
+
   console.log(con);
 
-  con.connect(query, (err, result, fields) => {
-    results = result[0];
-  });
+  // con.connect(query, (err, result, fields) => {
+  //   results = result[0];
+  // });
 
   
   // const stradEmoji = "<:strad:544057514589683723>";
