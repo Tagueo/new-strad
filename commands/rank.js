@@ -29,9 +29,6 @@ exports.run = (client, message, args) => {
       }
       
       gb.results = rows[0];
-      rows.forEach(function(result) {
-        console.log(result.money);
-      })
 
     });
 
@@ -42,8 +39,8 @@ exports.run = (client, message, args) => {
   const embedMoney = new Discord.RichEmbed()
     .setAuthor(message.author.tag, message.author.avatarURL)
     .setThumbnail(message.author.avatarURL)
-    .addField("Valeur du compte", `${gb.results["money"]} ${stradEmoji}`, true)
-    .addField("Nombre de Créas", `${gb.results["creas_amount"]}`, true)
+    .addField("Valeur du compte", `${gb.results.money} ${stradEmoji}`, true)
+    .addField("Nombre de Créas", `${gb.results.money}`, true)
     .addField("ID du propriétaire", message.author.id, true)
     .addField("Rang artistique", "unknown", true)
     .setFooter("Strad rank")
