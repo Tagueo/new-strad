@@ -8,10 +8,12 @@ exports.run = (client, message, args) => {
   const query = `SELECT * FROM users WHERE user_id = ${message.author.id}`;
   var results;
 
+  console.log(config.mysqlUser + config.mysqlPass);
+
   var con = mysql.createConnection({
     host: "localhost",
-    user: config.mysqlUser,
-    password: config.mysqlPass,
+    user: "ggg",
+    password: "ggg",
     database: "strad"
   });
 
