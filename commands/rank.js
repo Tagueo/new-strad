@@ -11,7 +11,7 @@ exports.run = (client, message, args) => {
     .setThumbnail(message.author.avatarURL)
     .addField("ID du propriétaire", message.author.id, true)
     .addField("Valeur du compte", `**{unknown}** <:strad:544057514589683723>`, true)
-    .addField("Nombre de Créas", `**{unknown} Créas**`, false)
+    .addField("Nombre de Créas", `**{unknown} Créas**`, true)
     .addField("Rang artistique", "unknown", true)
     .setFooter("Strad rank")
     .setColor("#21b1ff");
