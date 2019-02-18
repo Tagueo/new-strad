@@ -10,16 +10,10 @@ exports.run = (client, query) => {
       password: client.config.mysqlPass,
       database: "strad"
     });
-    
-    console.log("--------------------");
-    console.log(client.config.mysqlUser);
-    console.log(con);
 
     con.connect((err) => {
         if (err) console.log(err);
     });
-
-    console.log(con);
 
     con.query(query, function(err, rows, fields) {
 
@@ -30,14 +24,8 @@ exports.run = (client, query) => {
             results = [{}];
         }
 
-        var promise = new Promise((success, failure) => {
-            success(rows);
-        });
-
         console.log("LOG DB : " + rows[0]);
-        return promise;
-
-        console.log("--------------------");
+        return results;
 
     });
 

@@ -10,6 +10,8 @@
     - nick
   - money
 
+- Rendre db_handler fonctionnel (opérationnel mais asynchrone, n'a donc pas le temps de retourner un résultat)
+
 
 ### Liste des bugs à résoudre :
 Aucun bugs ! 🎉!

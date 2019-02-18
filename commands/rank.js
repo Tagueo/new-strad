@@ -1,16 +1,47 @@
 const Discord = require("discord.js")
 
-const db_handler = require("../scripts/db_handler.js");
+// const db_handler = require("../scripts/db_handler.js");
 
 exports.run = (client, message, args) => {
 
+  // DB connection
+
+  var results;
+
+  var mysql = require("mysql");
+  
+    var con = mysql.createConnection({
+      host: "localhost",
+      user: client.config.mysqlUser,
+      password: client.config.mysqlPass,
+      database: "strad"
+    });
+
+    con.connect((err) => {
+        if (err) console.log(err);
+    });
+
+    con.query(query, function(err, rows, fields) {
+
+        results = rows;
+
+        if (err) {
+            console.log(err);
+            results = [{}];
+        }
+
+        console.log("LOG DB : " + rows[0]);
+        return results;
+
+    });
+
+  // DB connection
+
   var res;
 
-  db_handler.run(client, `SELECT * FROM users WHERE user_id = ${message.author.id}`).then((results) => {
-    res = results;
-  });
+  res = db_handler.run(client, `SELECT * FROM users WHERE user_id = ${message.author.id}`);
 
-  console.log("LOG RANK.JS : " + results);
+  console.log("LOG RANK.JS : " + res);
   
   const stradEmoji = "<:strad:544057514589683723>";
 
