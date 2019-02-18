@@ -14,7 +14,7 @@ exports.run = (client, message, args) => {
     database: "strad"
   });
 
-  con.connect(query, (err) => {
+  con.connect(query, (err, result, fields) => {
     results = result[0];
   });
 
