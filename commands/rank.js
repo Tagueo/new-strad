@@ -24,7 +24,7 @@ exports.run = (client, message, args) => {
 
   con.end();
 
-  console.log(rows);
+  console.log(results);
   
   // const stradEmoji = "<:strad:544057514589683723>";
 
