@@ -10,10 +10,14 @@ exports.run = (client, query) => {
       password: client.config.mysqlPass,
       database: "strad"
     });
+    
+    console.log(con);
 
     con.connect((err) => {
         if (err) console.log(err);
     });
+
+    console.log(con);
 
     con.query(query, function(err, rows, fields) {
         if (err) console.log(err);
