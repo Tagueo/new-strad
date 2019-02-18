@@ -24,7 +24,7 @@ exports.run = (client, message, args) => {
 
     con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, function(err, rows, fields) {
 
-        gb.results = rows;
+        gb.results = rows[0];
 
         if (err) {
             console.log(err);
