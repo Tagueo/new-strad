@@ -4,8 +4,13 @@ const db_handler = require("../scripts/db_handler.js");
 
 exports.run = (client, message, args) => {
 
-  db_handler.run(client, `SELECT * FROM users WHERE user_id = ${message.author.id}`);
-  console.log("LOG RANK.JS : " + db_handler.results);
+  var res;
+
+  db_handler.run(client, `SELECT * FROM users WHERE user_id = ${message.author.id}`).then((results) => {
+    res = results;
+  });
+
+  console.log("LOG RANK.JS : " + results);
   
   const stradEmoji = "<:strad:544057514589683723>";
 
