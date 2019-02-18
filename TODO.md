@@ -8,7 +8,8 @@
   - shop
     - say
     - nick
+  - money
 
 
 ### Liste des bugs à résoudre :
-Aucun bugs ! 🎉
+Aucun bugs ! 🎉!

@@ -12,7 +12,7 @@ module.exports = (client, message) => {
   if (!message.guild) {
     return;
   }
-
+  
   // Écriture dans les logs
   logger.run(message);
 
