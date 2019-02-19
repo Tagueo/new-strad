@@ -37,13 +37,14 @@ exports.run = (client, message, args) => {
   // DB connection
 
   setTimeout(() => {
-    const stradEmoji = "<:strad:544057514589683723>";
+    const stradEmoji = "<:block:547448359959396371>";
+    const creaEmoji = "<:crea:547447418833338368>";
 
     const embedMoney = new Discord.RichEmbed()
       .setAuthor(message.author.tag, message.author.avatarURL)
       .setThumbnail(message.author.avatarURL)
       .addField("Valeur du compte", `${gb.results.money} ${stradEmoji}`, true)
-      .addField("Nombre de Créas", `${gb.results.creas_amount}`, true)
+      .addField("Nombre de Créas", `${gb.results.creas_amount} ${creaEmoji}`, true)
       .addField("ID du propriétaire", message.author.id, true)
       .addField("Rang artistique", "unknown", true)
       .setFooter("Strad rank")
