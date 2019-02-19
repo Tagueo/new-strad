@@ -38,7 +38,7 @@ exports.run = (client, message, args) => {
 
   setTimeout(() => {
     const stradEmoji = "<:block:547449530610745364>";
-    const creaEmoji = "<:crea:547447418833338368>";
+    const creaEmoji = "<:crea:547481808934010901>";
 
     const embedMoney = new Discord.RichEmbed()
       .setAuthor(message.author.tag, message.author.avatarURL)
