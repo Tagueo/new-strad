@@ -39,7 +39,6 @@ module.exports = (client, message) => {
   }
 
   const guildId = message.guild.id;
-  const userData = JSON.parse(fs.readFileSync(appRoot+"/json/userData.json", "utf8"));
   const ANSWERS = JSON.parse(fs.readFileSync(appRoot+"/static_data/answers.json", "utf8"));
 
   var botPrefix = client.config.prefix;
@@ -65,11 +64,51 @@ module.exports = (client, message) => {
   // Grabs the command data from the client.commands Enmap
   const cmd = client.commands.get(command);
 
+  try {
+    // DB connection
+    var gb = {
+      results: undefined
+    };
+    var mysql = require("mysql");
+  
+    var con = mysql.createConnection({
+      host: "localhost",
+      user: client.config.mysqlUser,
+      password: client.config.mysqlPass,
+      database: "strad"
+    });
+
+    con.connect((err) => {
+        if (err) console.log(err);
+    });
+
+    con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, function(err, rows, fields) {
+
+      if (err) {
+          console.log(err);
+      }
+      
+      gb.results = rows[0];
+      if (gb.results.length == 0) {
+        con.query(`INSERT INTO users (user_id, usertag) VALUES (${message.author.id}, ${message.author.tag})`, function(err, rows, fields) {
+          if (err) {
+            console.log(err);
+          }
+        })
+      }
+
+    });
+
+    con.end();
+  } catch (err) {
+    console.log(err);
+  }
+
   if (!cmd) {
     return;
   };
 
   // Run the command
-  cmd.run(client, message, args, userData);
+  cmd.run(client, message, args);
   console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`);
 };
