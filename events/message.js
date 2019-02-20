@@ -64,7 +64,7 @@ module.exports = (client, message) => {
   // Grabs the command data from the client.commands Enmap
   const cmd = client.commands.get(command);
 
-  try {
+  // try {
     // DB connection
     var gb = {
       results: undefined
@@ -100,9 +100,9 @@ module.exports = (client, message) => {
     });
 
     con.end();
-  } catch (err) {
-    console.log(err);
-  }
+  // } catch (err) {
+  //   console.log(err);
+  // }
 
   if (!cmd) {
     return;
