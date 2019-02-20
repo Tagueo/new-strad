@@ -9,6 +9,10 @@
     - say
     - nick
   - money
+- Créas
+  - rank (fini)
+  - top (classement)
+  - ranklist (liste des rangs + description)
 
 - Rendre db_handler fonctionnel (opérationnel mais asynchrone, n'a donc pas le temps de retourner un résultat)
 
