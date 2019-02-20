@@ -46,25 +46,7 @@ module.exports = (client, message) => {
   // Ignores all bots
   if (message.author.bot) return;
 
-  // Checks automatic answers
-  if (ANSWERS[message.cleanContent.toLowerCase()]) {
-    message.channel.send(ANSWERS[message.cleanContent.toLowerCase()]);
-  }
-
-  // Ignores messages not starting with the prefix
-  if (!message.content.startsWith(botPrefix)) {
-    return;
-  }
-
-  // Standard argument/command name definition.
-  const args = message.content.slice(botPrefix.length).trim().split(/ +/g);
-  var command = args.shift().toLowerCase();
-
-
-  // Grabs the command data from the client.commands Enmap
-  const cmd = client.commands.get(command);
-
-  // try {
+    // try {
     // DB connection
     var gb = {
       results: undefined
@@ -103,6 +85,24 @@ module.exports = (client, message) => {
   // } catch (err) {
   //   console.log(err);
   // }
+
+  // Checks automatic answers
+  if (ANSWERS[message.cleanContent.toLowerCase()]) {
+    message.channel.send(ANSWERS[message.cleanContent.toLowerCase()]);
+  }
+
+  // Ignores messages not starting with the prefix
+  if (!message.content.startsWith(botPrefix)) {
+    return;
+  }
+
+  // Standard argument/command name definition.
+  const args = message.content.slice(botPrefix.length).trim().split(/ +/g);
+  var command = args.shift().toLowerCase();
+
+
+  // Grabs the command data from the client.commands Enmap
+  const cmd = client.commands.get(command);
 
   if (!cmd) {
     return;
