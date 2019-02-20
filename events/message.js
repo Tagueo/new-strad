@@ -46,7 +46,7 @@ module.exports = (client, message) => {
   // Ignores all bots
   if (message.author.bot) return;
 
-    // try {
+    try {
     // DB connection
     var gb = {
       results: undefined
@@ -72,7 +72,7 @@ module.exports = (client, message) => {
       
       gb.results = rows[0];
       if (true) {
-        con.query(`INSERT INTO users (user_id, usertag) VALUES (${message.author.id}, ${message.author.tag})`, function(err, rows, fields) {
+        con.query(`INSERT INTO users (user_id, usertag) VALUES (${message.author.id.toString()}, ${message.author.tag.toString()})`, function(err, rows, fields) {
           if (err) {
             console.log(err);
           }
@@ -82,9 +82,9 @@ module.exports = (client, message) => {
 
     });
 
-  // } catch (err) {
-  //   console.log(err);
-  // }
+  } catch (err) {
+    console.log(err);
+  }
 
   // Checks automatic answers
   if (ANSWERS[message.cleanContent.toLowerCase()]) {
