@@ -38,8 +38,8 @@ exports.run = (client, message, args) => {
         .setThumbnail(message.author.avatarURL)
         .addField("Valeur du compte", `${gb.results.money} ${stradEmoji}`, true)
         .addField("Nombre de Créas", `${gb.results.creas_amount} ${creaEmoji}`, true)
-        .addField("ID du propriétaire", message.author.id, true)
-        .addField("Rang artistique", `${gb.results.rank} (Prochain : Non défini)`, true)
+        .addField("Rang", `#0`, true)
+        .addField("Titre artistique", `${gb.results.rank} (Prochain : Non défini)`, true)
         .setFooter("Strad rank")
         .setColor(message.member.displayColor);
     
