@@ -19,8 +19,50 @@ module.exports = (client, member) => {
       .setTitle("Nouveau Membre")
       .setDescription(`**<@${member.user.id}>** vient de rejoindre le serveur !`)
 
-    member.guild.channels.find("id", welcome_categ_id).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES")
-    logs.send(embed)
+      try {
+        // DB connection
+        var gb = {
+          results: undefined
+        };
+        var mysql = require("mysql");
+      
+        var con = mysql.createConnection({
+          host: "localhost",
+          user: client.config.mysqlUser,
+          password: client.config.mysqlPass,
+          database: "strad"
+        });
+    
+        con.connect((err) => {
+            if (err) console.log(err);
+        });
+    
+        con.query(`SELECT * FROM users WHERE user_id = "${member.user.id}"`, function(err, rows, fields) {
+    
+          if (err) {
+              console.log(err);
+          }
+          
+          gb.results = rows[0];
+          if (!gb.results) {
+            con.query(`INSERT INTO users (user_id, usertag) VALUES ("${member.user.id}", "${member.user.tag}")`, function(err, rows, fields) {
+              if (err) {
+                console.log("Membre déjà présent dans la base de données.");
+              }
+              con.end();
+            })
+          } else {
+            con.end();
+          }
+    
+        });
+    
+      } catch (err) {
+        console.log(err);
+      }
+
+    member.guild.channels.find("id", welcome_categ_id).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES");
+    logs.send(embed);
     console.log(member.user.username + " a rejoint le serveur !");
   }
 }

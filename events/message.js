@@ -46,7 +46,7 @@ module.exports = (client, message) => {
   // Ignores all bots
   if (message.author.bot) return;
 
-    try {
+  try {
     // DB connection
     var gb = {
       results: undefined
@@ -74,7 +74,7 @@ module.exports = (client, message) => {
       if (!gb.results) {
         con.query(`INSERT INTO users (user_id, usertag) VALUES ("${message.author.id}", "${message.author.tag}")`, function(err, rows, fields) {
           if (err) {
-            console.log(chalk.red("Membre déjà présent dans la base de données."));
+            console.log("Membre déjà présent dans la base de données.");
           }
           con.end();
         })
