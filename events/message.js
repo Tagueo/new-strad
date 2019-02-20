@@ -89,7 +89,7 @@ module.exports = (client, message) => {
       }
       
       gb.results = rows[0];
-      if (gb.results.length == 0) {
+      if (true) {
         con.query(`INSERT INTO users (user_id, usertag) VALUES (${message.author.id}, ${message.author.tag})`, function(err, rows, fields) {
           if (err) {
             console.log(err);
