@@ -71,13 +71,15 @@ module.exports = (client, message) => {
       }
       
       gb.results = rows[0];
-      if (true) {
+      if (!gb.results) {
         con.query(`INSERT INTO users (user_id, usertag) VALUES ("${message.author.id}", "${message.author.tag}")`, function(err, rows, fields) {
           if (err) {
-            console.log(err);
+            console.log(chalk.red("Membre déjà présent dans la base de données."));
           }
           con.end();
         })
+      } else {
+        con.end();
       }
 
     });
