@@ -76,12 +76,12 @@ module.exports = (client, message) => {
           if (err) {
             console.log(err);
           }
+          con.end();
         })
       }
 
     });
 
-    con.end();
   // } catch (err) {
   //   console.log(err);
   // }
