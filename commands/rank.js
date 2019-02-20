@@ -39,7 +39,7 @@ exports.run = (client, message, args) => {
         .addField("Valeur du compte", `${gb.results.money} ${stradEmoji}`, true)
         .addField("Nombre de Créas", `${gb.results.creas_amount} ${creaEmoji}`, true)
         .addField("ID du propriétaire", message.author.id, true)
-        .addField("Rang artistique", "unknown", true)
+        .addField("Rang artistique", gb.results.rank, true)
         .setFooter("Strad rank")
         .setColor(message.member.displayColor);
     
