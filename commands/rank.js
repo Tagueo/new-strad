@@ -30,28 +30,26 @@ exports.run = (client, message, args) => {
       
       gb.results = rows[0];
 
+      const stradEmoji = "<:block:547449530610745364>";
+      const creaEmoji = "<:crea:547482886824001539>";
+    
+      const embedMoney = new Discord.RichEmbed()
+        .setAuthor(message.author.tag, message.author.avatarURL)
+        .setThumbnail(message.author.avatarURL)
+        .addField("Valeur du compte", `${gb.results.money} ${stradEmoji}`, true)
+        .addField("Nombre de Créas", `${gb.results.creas_amount} ${creaEmoji}`, true)
+        .addField("ID du propriétaire", message.author.id, true)
+        .addField("Rang artistique", "unknown", true)
+        .setFooter("Strad rank")
+        .setColor(message.member.displayColor);
+    
+        client.channels.get('413678978990080010').send(embedMoney);
+        message.delete();
+
     });
 
     con.end();
 
   // DB connection
-
-  setTimeout(() => {
-    const stradEmoji = "<:block:547449530610745364>";
-    const creaEmoji = "<:crea:547482886824001539>";
-
-    const embedMoney = new Discord.RichEmbed()
-      .setAuthor(message.author.tag, message.author.avatarURL)
-      .setThumbnail(message.author.avatarURL)
-      .addField("Valeur du compte", `${gb.results.money} ${stradEmoji}`, true)
-      .addField("Nombre de Créas", `${gb.results.creas_amount} ${creaEmoji}`, true)
-      .addField("ID du propriétaire", message.author.id, true)
-      .addField("Rang artistique", "unknown", true)
-      .setFooter("Strad rank")
-      .setColor(message.member.displayColor);
-  
-      client.channels.get('413678978990080010').send(embedMoney);
-      message.delete();
-  }, 300)
 
 };
