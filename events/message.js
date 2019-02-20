@@ -64,7 +64,7 @@ module.exports = (client, message) => {
         if (err) console.log(err);
     });
 
-    con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, function(err, rows, fields) {
+    con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`, function(err, rows, fields) {
 
       if (err) {
           console.log(err);
@@ -72,7 +72,7 @@ module.exports = (client, message) => {
       
       gb.results = rows[0];
       if (true) {
-        con.query(`INSERT INTO users (user_id, usertag) VALUES (${message.author.id.toString()}, ${message.author.tag.toString()})`, function(err, rows, fields) {
+        con.query(`INSERT INTO users (user_id, usertag) VALUES ("${message.author.id}", "${message.author.tag}")`, function(err, rows, fields) {
           if (err) {
             console.log(err);
           }
