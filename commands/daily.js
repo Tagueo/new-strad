@@ -37,7 +37,7 @@ exports.run = (client, message, args, userData) => {
         gb.embed = new Discord.RichEmbed()
           .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
           .setColor("#6cb254")
-          .addField("", "**50** <:block:547449530610745364> ont été ajoutés sur ton compte !\nPour y accéder, fais : Strad rank")
+          .setDescription("**50** <:block:547449530610745364> ont été ajoutés sur ton compte !\nPour y accéder, fais : Strad rank")
           .setFooter("Strad daily");
 
         client.channels.get('413678978990080010').send(gb.embed);
@@ -48,7 +48,7 @@ exports.run = (client, message, args, userData) => {
         gb.embed = new Discord.RichEmbed()
           .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
           .setColor("#ff6766")
-          .addField("", "Tu as déjà obtenu ta récompense aujourd'hui.\nAttends demain avant de la récupérer !")
+          .setDescription("Tu as déjà obtenu ta récompense aujourd'hui.\nAttends demain avant de la récupérer !")
           .setFooter("Strad daily");
 
         client.channels.get('413678978990080010').send(gb.embed);
