@@ -5,6 +5,7 @@ exports.run = (client, message, args, userData) => {
 
   try {
     // DB connection
+    var gb = {embed: undefined};
     var mysql = require("mysql");
 
     var con = mysql.createConnection({
@@ -33,7 +34,7 @@ exports.run = (client, message, args, userData) => {
           con.end();
         })
 
-        var embed = new Discord.RichEmbed()
+        gb.embed = new Discord.RichEmbed()
         .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
         .setColor("#6cb254")
         .addField("**50** <:block:547449530610745364> ont été ajoutés sur ton compte !\nPour y accéder, fais : Strad rank")
@@ -43,7 +44,7 @@ exports.run = (client, message, args, userData) => {
         
         con.end();
         
-        var embed = new Discord.RichEmbed()
+        gb.embed = new Discord.RichEmbed()
           .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
           .setColor("#ff6766")
           .addField("Tu as déjà obtenu ta récompense aujourd'hui.\nAttends demain avant de la récupérer !")
@@ -53,7 +54,7 @@ exports.run = (client, message, args, userData) => {
 
     });
 
-    client.channels.get('413678978990080010').send(embed);
+    client.channels.get('413678978990080010').send(gb.embed);
     message.delete();
 
   } catch (err) {
