@@ -17,7 +17,7 @@ exports.run = (client, message, args, userData) => {
       if (err) console.log(err);
     });
 
-    con.query(`SELECT * FROM users WHERE user_id = "${member.user.id}"`, function (err, rows, fields) {
+    con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
 
       if (err) {
         console.log(err);
@@ -25,7 +25,7 @@ exports.run = (client, message, args, userData) => {
 
       if (rows[0].lastdaily != moment().format("DD/MM/AA")) {
 
-        con.query(`UPDATE users SET money = money + 50 WHERE user_id = "${member.user.id}"`, function (err, rows, fields) {
+        con.query(`UPDATE users SET money = money + 50 WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
           if (err) {
             console.log(err);
           }
