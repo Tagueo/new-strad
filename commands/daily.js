@@ -59,7 +59,7 @@ exports.run = (client, message, args, userData) => {
           .setDescription("Tu as déjà obtenu ta récompense aujourd'hui.\nAttends demain avant de la récupérer !")
           .setFooter("Strad daily");
 
-        client.channels.get('413678978990080010').send(gb.embed);
+        client.channels.get('415633143861739541').send(gb.embed);
         message.delete();
         
         con.end();
