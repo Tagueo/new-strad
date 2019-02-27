@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 var moment = require("moment");
 
 exports.run = (client, message, args, userData) => {
