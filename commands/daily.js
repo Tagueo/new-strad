@@ -1,3 +1,62 @@
+var moment = require("moment");
+
 exports.run = (client, message, args, userData) => {
-  
+
+  try {
+    // DB connection
+    var mysql = require("mysql");
+
+    var con = mysql.createConnection({
+      host: "localhost",
+      user: client.config.mysqlUser,
+      password: client.config.mysqlPass,
+      database: "strad"
+    });
+
+    con.connect((err) => {
+      if (err) console.log(err);
+    });
+
+    con.query(`SELECT * FROM users WHERE user_id = "${member.user.id}"`, function (err, rows, fields) {
+
+      if (err) {
+        console.log(err);
+      }
+
+      if (rows[0].lastdaily != moment().format("DD/MM/AA")) {
+
+        con.query(`UPDATE users SET money = money + 50 WHERE user_id = "${member.user.id}"`, function (err, rows, fields) {
+          if (err) {
+            console.log(err);
+          }
+          con.end();
+        })
+
+        var embed = new Discord.RichEmbed()
+        .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
+        .setColor("#6cb254")
+        .addField("**50** <:block:547449530610745364> ont été ajoutés sur ton compte !\nPour y accéder, fais : Strad rank")
+        .setFooter("Strad daily");
+
+      } else {
+        
+        con.end();
+        
+        var embed = new Discord.RichEmbed()
+          .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
+          .setColor("#ff6766")
+          .addField("Tu as déjà obtenu ta récompense aujourd'hui.\nAttends demain avant de la récupérer !")
+          .setFooter("Strad daily");
+
+      }
+
+    });
+
+    client.channels.get('413678978990080010').send(embed);
+    message.delete();
+
+  } catch (err) {
+    console.log(err);
+  }
+
 };
