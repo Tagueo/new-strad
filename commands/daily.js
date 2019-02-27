@@ -43,7 +43,7 @@ exports.run = (client, message, args, userData) => {
               .setDescription("**50** <:block:547449530610745364> ont été ajoutés sur ton compte !\nPour y accéder, fais : Strad rank")
               .setFooter("Strad daily");
 
-            client.channels.get('413678978990080010').send(gb.embed);
+            client.channels.get('415633143861739541').send(gb.embed);
             message.delete();
 
           })
