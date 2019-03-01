@@ -1,7 +1,10 @@
 const Discord = require("discord.js");
 var moment = require("moment");
+import "moment/locale/fr";
 
 exports.run = (client, message, args, userData) => {
+
+  moment.locale("fr");
 
   try {
     // DB connection
@@ -56,7 +59,7 @@ exports.run = (client, message, args, userData) => {
         gb.embed = new Discord.RichEmbed()
           .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
           .setColor("#ff6766")
-          .setDescription("Tu as déjà obtenu ta récompense aujourd'hui.\nAttends demain avant de la récupérer !")
+          .setDescription(`Tu as déjà obtenu ta récompense aujourd'hui.\nAttends ${moment(new Date()).add(1, "days").toNow(true)} avant de la récupérer !`)
           .setFooter("Strad daily");
 
         client.channels.get('415633143861739541').send(gb.embed);
