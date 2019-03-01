@@ -25,14 +25,14 @@ exports.run = (client, message, args, userData) => {
         console.log(err);
       }
 
-      if (rows[0].lastdaily != moment().format("DD/MM/AA")) {
+      if (rows[0].lastdaily != moment().format("DD/MM/YY")) {
 
         con.query(`UPDATE users SET money = money + 50 WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
           if (err) {
             console.log(err);
           }
 
-          con.query(`UPDATE users SET lastdaily = "${moment().format('DD/MM/AA')}" WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
+          con.query(`UPDATE users SET lastdaily = "${moment().format('DD/MM/YY')}" WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
             if (err) {
               console.log(err);
             }
