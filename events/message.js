@@ -94,7 +94,7 @@ module.exports = (client, message) => {
   }
 
   // Ignores messages not starting with the prefix
-  if (!message.content.startsWith(botPrefix)) {
+  if (!message.content.toLowerCase().startsWith(botPrefix.toLowerCase())) {
     return;
   }
 
