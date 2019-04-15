@@ -15,11 +15,11 @@ module.exports = (client, messageReaction, user) => {
   }
 
   let msg = messageReaction.message.content.toUpperCase(); // Récupération du contenu du message (en majuscules)
-  let creativeChannels = new Set("412622887317405707", "412622912043089920", "412622999267704834", "416227695429550100", "425739003623374848", "438794104621629441", "442374005177974825");
+  let creativeChannels = ["412622887317405707", "412622912043089920", "412622999267704834", "416227695429550100", "425739003623374848", "438794104621629441", "442374005177974825"];
   console.log(creativeChannels);
   console.log(messageReaction.message.channel.id);
-  console.log(creativeChannels.has(messageReaction.message.channel.id));
-  if (creativeChannels.has(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
+  console.log(creativeChannels.includes(messageReaction.message.channel.id));
+  if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
     if (msg.includes("[PARTAGE]")) {
       messageReaction.remove(user);
     }
