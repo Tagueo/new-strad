@@ -10,31 +10,27 @@ var appRoot = process.cwd();
 const logger = require(appRoot + '/scripts/logger.js');
 
 module.exports = (client, messageReaction, user) => {
-  if (messageReaction.message.member.guild.id !== "412369732679893004") {
+  if (messageReaction.message.member.guild.id !== "412369732679893004") { // Si la réaction ne provient pas d'un salon du serveur Stradivarius, alors le script s'arrête.
     return;
   }
 
-  let msg = messageReaction.message.content.toUpperCase();
+  let msg = messageReaction.message.content.toUpperCase(); // Récupération du contenu du message (en majuscules)
+  let creativeChannels = new Set("412622887317405707", "412622912043089920", "412622999267704834", "416227695429550100", "425739003623374848", "438794104621629441", "442374005177974825");
 
-  if (messageReaction.message.channel.id === "412622887317405707" || messageReaction.message.channel.id === "412622912043089920" || messageReaction.message.channel.id === "412622999267704834" || messageReaction.message.channel.id === "416227695429550100" || messageReaction.message.channel.id === "425739003623374848" || messageReaction.message.channel.id === "438794104621629441" || messageReaction.message.channel.id === "442374005177974825") {
+  if (creativeChannels.has(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
     if (msg.includes("[PARTAGE]")) {
       messageReaction.remove(user);
     }
   }
 
-  if (messageReaction.message.member.guild.id !== "412369732679893004") {
-    return;
-    //Si la réaction de vient pas de Stradivarius, alors le script s'arrête.
-  }
-
-  // Roles
+  // Rôles
   let membre = messageReaction.message.guild.roles.find("name", "Membre");
   let apprenti = messageReaction.message.guild.roles.find("name", "Apprenti(e)");
   let enattente = messageReaction.message.guild.roles.find("name", "En attente...");
 
   if (user.id === "412910522833436672") {
     return;
-    //Si la réaction vient de Strad, alors le script s'arrête.
+    // Si la réaction vient de Strad, alors le script s'arrête.
   }
 
   if (messageReaction.message.channel.id === "412557168529899541") {
@@ -43,7 +39,7 @@ module.exports = (client, messageReaction, user) => {
 
       if (messageReaction.message.member.roles.has(apprenti) || messageReaction.message.member.roles.has(enattente)) {
 
-        // Le membre est un apprenti/en attente : on lui ajoute le role membre
+        // Le membre est un apprenti/en attente : on lui ajoute le rôle membre
         messageReaction.message.member.addRole(membre);
         messageReaction.message.member.removeRole(apprenti);
         messageReaction.message.member.removeRole(enattente);
