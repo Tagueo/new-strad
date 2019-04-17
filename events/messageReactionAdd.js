@@ -47,7 +47,7 @@ module.exports = (client, messageReaction, user) => {
           if (err) console.log(err);
       });
 
-      con.query(`SELECT * FROM rewards WHERE rewarder_id = ${user.id} AND message_id = ${messageReaction.message.id}`, function(err, rows, fields) {
+      con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}"`, function(err, rows, fields) {
 
         if (err) {
             console.log(err);
@@ -59,7 +59,7 @@ module.exports = (client, messageReaction, user) => {
 
       });
       
-      con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date) VALUES (${messageReaction.message.id}, ${messageReaction.message.author.id}, ${user.id}, ${vote_type}, ${moment().format('DD/MM/YY')})`, function(err, rows, fields) {
+      con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date) VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}", "${user.id}", "${vote_type}", "${moment().format('DD/MM/YY')}")`, function(err, rows, fields) {
 
         if (err) {
           console.log(err);
