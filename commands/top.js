@@ -30,18 +30,17 @@ exports.run = (client, message, args) => {
       
       gb.results = rows;
 
-      const stradEmoji = "<:block:547449530610745364>";
       const creaEmoji = "<:crea:547482886824001539>";
       var otherLeaders = "";
     
       const embedTop = new Discord.RichEmbed()
-        .setAuthor("Stradivarius - Classement");
+        .setAuthor(`Stradivarius - Classement (Créas ${creaEmoji})`);
 
       for (i=0;i<2;i++) {
-        embedTop.addField(`#${i + 1} - ${gb.results[i].usertag}`, `**${gb.results[i].creas_amount}** ${creaEmoji}`, true);
+        embedTop.addField(`${i + 1}. ${gb.results[i].usertag}`, `**${gb.results[i].creas_amount}** ${creaEmoji}`, true);
       }
       for (i=2;i<15;i++) {
-        otherLeaders += `#${i + 1} - ${gb.results[i].usertag} (**${gb.results[i].creas_amount}** ${creaEmoji})\n`;
+        otherLeaders += `\`\`${i + 1}\`\`. ${gb.results[i].creas_amount} - ${gb.results[i].usertag}\n`;
       }
       embedTop.addField("Top 15", otherLeaders, true);
       embedTop.setFooter("Strad top");
