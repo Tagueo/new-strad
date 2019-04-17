@@ -29,6 +29,11 @@ module.exports = (client, messageReaction, user) => {
     if (!isFeedbackable(messageReaction.message)) {
       return;
     } else if (messageReaction.emoji.identifier == up_emote || messageReaction.emoji.identifier == down_emote) {
+
+      if (messageReaction.message.author.id == user.id) {
+        messageReaction.remove(user);
+        return;
+      }
       
       var vote_type = messageReaction.emoji.identifier == up_emote ? "UV" : "DV";
       var gb = {
