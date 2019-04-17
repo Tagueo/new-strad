@@ -34,13 +34,13 @@ exports.run = (client, message, args) => {
       var otherLeaders = "";
     
       const embedTop = new Discord.RichEmbed()
-        .setAuthor(`Stradivarius - Classement (Créas ${creaEmoji})`);
+        .setAuthor(`Stradivarius - Classement (Créas)`);
 
       for (i=0;i<2;i++) {
         embedTop.addField(`${i + 1}. ${gb.results[i].usertag}`, `**${gb.results[i].creas_amount}** ${creaEmoji}`, true);
       }
       for (i=2;i<15;i++) {
-        otherLeaders += `\`\`${i + 1}\`\`. ${gb.results[i].creas_amount} - ${gb.results[i].usertag}\n`;
+        otherLeaders += `\`\`${i + 1}.\`\` ${gb.results[i].creas_amount} - ${gb.results[i].usertag}\n`;
       }
       embedTop.addField("Top 15", otherLeaders, true);
       embedTop.setFooter("Strad top");
