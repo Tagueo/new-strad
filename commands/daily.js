@@ -36,7 +36,11 @@ exports.run = (client, message, args, userData) => {
             console.log(err);
           }
 
-          gb.uv = rows.length;
+          if (rows) {
+            gb.uv = rows.length;
+          } else {
+            gb.uv = 0;
+          }
           console.log("gb.uv = " + gb.uv)
           
         })
@@ -46,7 +50,11 @@ exports.run = (client, message, args, userData) => {
             console.log(err);
           }
           
-          gb.dv = rows.length;
+          if (rows) {
+            gb.dv = rows.length;
+          } else {
+            gb.dv = 0;
+          }
           console.log("gb.dv = " + gb.dv)
 
         })
