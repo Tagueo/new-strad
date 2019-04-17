@@ -35,7 +35,7 @@ exports.run = (client, message, args) => {
         if (err) {
             console.log(err);
         }
-
+        console.log(rows);
         for (i=0;i<rows.length;i++) {
           if (message.author.id == rows[i].user_id) {
             gb.rank = i + 1;
