@@ -27,6 +27,7 @@ module.exports = (client, messageReaction, user) => {
 
   if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
     console.log("IF #1");
+    console.log(messageReaction.emoji.identifier + " = " + up_emote)
     if (!isFeedbackable(messageReaction.message)) {
       console.log("NOT FEEDBACKABLE");
       messageReaction.remove(user);
