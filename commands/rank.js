@@ -30,7 +30,7 @@ exports.run = (client, message, args) => {
       
       gb.results = rows[0];
 
-      con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function(err, rows, fields) {
+      con.query(`SELECT * FROM users ORDER BY creas_amount DESC LIMIT 5`, function(err, rows) {
 
         console.log(rows);
         // for (i=0;i<rows.length;i++) {
