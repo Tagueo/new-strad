@@ -85,10 +85,11 @@ exports.run = (client, message, args, userData) => {
 
                 client.channels.get('415633143861739541').send(gb.embed);
                 message.delete();
+
+                con.end();
               })
             })
           })
-          con.end();
         })
 
       } else {
