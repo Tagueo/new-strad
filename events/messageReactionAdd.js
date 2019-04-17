@@ -27,7 +27,7 @@ module.exports = (client, messageReaction, user) => {
 
   if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
     if (!isFeedbackable(messageReaction.message)) {
-      messageReaction.remove(user);
+      return;
     } else if (messageReaction.emoji.identifier == up_emote || messageReaction.emoji.identifier == down_emote) {
       
       var vote_type = messageReaction.emoji.identifier == up_emote ? "UV" : "DV";
