@@ -53,14 +53,14 @@ exports.run = (client, message, args) => {
           .setFooter("Strad rank")
           .setColor(message.member.displayColor);
       
-          client.channels.get('415633143861739541').send(embedMoney);
-          message.delete();
+        client.channels.get('415633143861739541').send(embedMoney);
+        message.delete();
+
+        con.end();
 
       });
 
     });
-
-    con.end();
 
   // DB connection
 
