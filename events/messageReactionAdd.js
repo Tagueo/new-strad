@@ -48,19 +48,20 @@ module.exports = (client, messageReaction, user) => {
       });
 
       con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}"`, function(err, rows, fields) {
-
+        console.log("Requête 1 : " + `SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}"`)
+        
         if (err) {
             console.log(err);
         }
         
-        if (rows[0].type) {
+        if (rows[0].type.length > 0) {
           return;
         }
 
       });
       
       con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date) VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}", "${user.id}", "${vote_type}", "${moment().format('DD/MM/YY')}")`, function(err, rows, fields) {
-
+        console.log("Requête 2 : " + `INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date) VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}", "${user.id}", "${vote_type}", "${moment().format('DD/MM/YY')}")`)
         if (err) {
           console.log(err);
         }
