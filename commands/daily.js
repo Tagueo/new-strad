@@ -39,7 +39,6 @@ exports.run = (client, message, args, userData) => {
           } else {
             gb.uv = 0;
           }
-          console.log("gb.uv = " + gb.uv)
 
           con.query(`SELECT * FROM rewards WHERE rewarded_id = "${message.author.id}" AND type = "DV"`, function (err, rows, fields) { // Récupération des DVs
             if (err) {
@@ -51,12 +50,9 @@ exports.run = (client, message, args, userData) => {
             } else {
               gb.dv = 0;
             }
-            console.log("gb.dv = " + gb.dv)
 
             gb.finalReward += gb.uv * 5;
-            console.log(gb.finalReward)
             gb.finalCreaReward += gb.uv - gb.dv;
-            console.log(gb.finalCreaReward)
             if (gb.finalCreaReward < 0) gb.finalCreaReward = 0;
 
             con.query(`DELETE FROM rewards WHERE rewarded_id = "${message.author.id}"`, function (err, rows, fields) { // Suppression des votes
