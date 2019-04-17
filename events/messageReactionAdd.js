@@ -58,7 +58,7 @@ module.exports = (client, messageReaction, user) => {
             console.log(err);
         }
         
-        if (rows[0].type.length > 0) {
+        if (rows[0].length) {
           return;
         }
 
