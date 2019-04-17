@@ -18,7 +18,7 @@ function isFeedbackable(message) { // Vérifie si le message est éligible au fe
 }
 
 module.exports = (client, messageReaction, user) => {
-  if (messageReaction.message.member.guild.id !== "412369732679893004" || messageReaction.message.member.id === "412910522833436672") { // Si la réaction ne provient pas d'un salon du serveur Stradivarius ou s'il vient de Strad, alors le script s'arrête.
+  if (messageReaction.message.member.guild.id !== "412369732679893004" || user.id === "412910522833436672") { // Si la réaction ne provient pas d'un salon du serveur Stradivarius ou s'il vient de Strad, alors le script s'arrête.
     return;
   }
 
@@ -28,6 +28,7 @@ module.exports = (client, messageReaction, user) => {
   if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
     console.log("IF #1");
     if (!isFeedbackable(messageReaction.message)) {
+      console.log("NOT FEEDBACKABLE");
       messageReaction.remove(user);
     } else if (messageReaction.emoji.identifier == up_emote || messageReaction.emoji.identifier == down_emote) {
       console.log("IF #2");
