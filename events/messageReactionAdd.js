@@ -26,10 +26,12 @@ module.exports = (client, messageReaction, user) => {
   let creativeChannels = ["412622887317405707", "412622912043089920", "412622999267704834", "416227695429550100", "425739003623374848", "438794104621629441", "442374005177974825"];
 
   if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
+    console.log("IF #1");
     if (!isFeedbackable(messageReaction.message)) {
       messageReaction.remove(user);
     } else if (messageReaction.emoji.identifier == up_emote || messageReaction.emoji.identifier == down_emote) {
-
+      console.log("IF #2");
+      
       var vote_type = messageReaction.emoji.identifier == up_emote ? "UV" : "DV";
       var gb = {
         results: undefined
