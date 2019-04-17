@@ -30,7 +30,7 @@ exports.run = (client, message, args) => {
       
       gb.results = rows[0];
 
-      con.query(`SELECT * FROM users ORDER BY creas_amount DESC LIMIT 5`, function(err, rows) {
+      con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function(err, rows) {
 
         for (i=0;i<rows.length;i++) {
           if (message.author.id == rows[i].user_id) {
