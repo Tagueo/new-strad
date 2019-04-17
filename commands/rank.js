@@ -32,13 +32,12 @@ exports.run = (client, message, args) => {
 
       con.query(`SELECT * FROM users ORDER BY creas_amount DESC LIMIT 5`, function(err, rows) {
 
-        console.log(rows);
-        // for (i=0;i<rows.length;i++) {
-        //   if (message.author.id == rows[i].user_id) {
-        //     gb.rank = i + 1;
-        //     break;
-        //   }
-        // }
+        for (i=0;i<rows.length;i++) {
+          if (message.author.id == rows[i].user_id) {
+            gb.rank = i + 1;
+            break;
+          }
+        }
 
         const stradEmoji = "<:block:547449530610745364>";
         const creaEmoji = "<:crea:547482886824001539>";
