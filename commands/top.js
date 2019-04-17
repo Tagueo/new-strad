@@ -40,7 +40,7 @@ exports.run = (client, message, args) => {
         embedTop.addField(`${i + 1}. ${gb.results[i].usertag}`, `**${gb.results[i].creas_amount}** ${creaEmoji}`, true);
       }
       for (i=2;i<15;i++) {
-        otherLeaders += `\`\`${i + 1}.\`\` ${gb.results[i].creas_amount} - ${gb.results[i].usertag}\n`;
+        otherLeaders += `\`\`${i + 1}.\`\` \`\`${gb.results[i].creas_amount}\`\` - ${gb.results[i].usertag}\n`;
       }
       embedTop.addField("Top 15", otherLeaders, true);
       embedTop.setFooter("Strad top");
