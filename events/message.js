@@ -18,7 +18,7 @@ module.exports = (client, message) => {
 
   // Gestion des ressources postées
   var msg = message.content.toUpperCase();
-  if (message.channel.id === "412622887317405707" || message.channel.id === "447416122468466688" || message.channel.id === "412622999267704834" || message.channel.id === "416227695429550100" || message.channel.id === "425739003623374848" || message.channel.id === "438794104621629441" || message.channel.id === "442374005177974825") {
+  if (message.channel.id === "412622887317405707" || message.channel.id === "412622912043089920" || message.channel.id === "412622999267704834" || message.channel.id === "416227695429550100" || message.channel.id === "425739003623374848" || message.channel.id === "438794104621629441" || message.channel.id === "442374005177974825") {
     if (msg.includes("[RES]")) {
   	  message.pin();
   	}
