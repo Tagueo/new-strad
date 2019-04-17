@@ -65,7 +65,7 @@ exports.run = (client, message, args, userData) => {
               }
             })
 
-            con.query(`UPDATE users SET money = money + ${finalReward}, creas_amount = creas_amount + ${finalCreaReward} WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
+            con.query(`UPDATE users SET money = money + ${gb.finalReward}, creas_amount = creas_amount + ${gb.finalCreaReward} WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
               if (err) {
                 console.log(err);
               }
@@ -78,8 +78,8 @@ exports.run = (client, message, args, userData) => {
                 gb.embed = new Discord.RichEmbed()
                   .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
                   .setColor("#6cb254")
-                  .addField(`Blocs`, `+ **${finalReward}** <:block:547449530610745364>`, true)
-                  .addField(`Créas`, `+ **${finalCreaReward}** <:crea:547482886824001539>`, true)
+                  .addField(`Blocs`, `+ **${gb.finalReward}** <:block:547449530610745364>`, true)
+                  .addField(`Créas`, `+ **${gb.finalCreaReward}** <:crea:547482886824001539>`, true)
                   .setDescription(`Voici ta récompense journalière (${gb.uv} <:like:419568361110896640> / ${gb.dv} <:dislike:419568377946832896>) ! Pour accéder à ton compte, fais : Strad rank`)
                   .setFooter("Strad daily");
 
