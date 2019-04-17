@@ -38,10 +38,10 @@ exports.run = (client, message, args) => {
         .setAuthor("Stradivarius - Classement");
 
       for (i=0;i<2;i++) {
-        embedTop.addField(`#${i} - `, gb.results[i].usertag + `(${gb.results[i].creas_amount} ${creaEmoji})`, true);
+        embedTop.addField(`#${i + 1} - ${gb.results[i].usertag}`, `**${gb.results[i].creas_amount}** ${creaEmoji}`, true);
       }
       for (i=2;i<15;i++) {
-        otherLeaders += `#${i} - ${gb.results[i].usertag} (${gb.results[i].creas_amount} ${creaEmoji})`;
+        otherLeaders += `#${i + 1} - ${gb.results[i].usertag} (**${gb.results[i].creas_amount}** ${creaEmoji})\n`;
       }
       embedTop.addField("Top 15", otherLeaders, true);
       embedTop.setFooter("Strad top");
