@@ -23,8 +23,10 @@ module.exports = (client, message) => {
   	  message.pin();
   	}
     if (message.type === "PINS_ADD") {
-  		message.delete(5);
-  	}
+  		message.delete();
+    }
+
+    // Conditions déligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
     if (msg.includes("[POST]")) {
   		if (message.attachments.size === 0 && !msg.includes("HTTP")) {
   			return;
@@ -32,7 +34,7 @@ module.exports = (client, message) => {
       message.react(client.emojis.get("419568361110896640"));
       message.react(client.emojis.get("419568377946832896"));
   	}
-    if (message.attachments.size != 0) {
+    if (message.attachments.size !== 0) {
       message.react(client.emojis.get("419568361110896640"));
       message.react(client.emojis.get("419568377946832896"));
   	}

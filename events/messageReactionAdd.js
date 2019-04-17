@@ -9,19 +9,66 @@ var appRoot = process.cwd();
 
 const logger = require(appRoot + '/scripts/logger.js');
 
+const up_emote = ":like:419568361110896640";
+const down_emote = ":dislike:419568377946832896";
+
+function isFeedbackable(message) { // Vérifie si le message est éligible au feedback
+  let mContent = message.content.toUpperCase();
+  return message.attachments.size !== 0 || (mContent.includes("HTTP") && mContent.includes("[POST]")) && !mContent.includes("[PARTAGE]");
+}
+
 module.exports = (client, messageReaction, user) => {
-  if (messageReaction.message.member.guild.id !== "412369732679893004") { // Si la réaction ne provient pas d'un salon du serveur Stradivarius, alors le script s'arrête.
+  if (messageReaction.message.member.guild.id !== "412369732679893004" || messageReaction.message.member.id === "412910522833436672") { // Si la réaction ne provient pas d'un salon du serveur Stradivarius ou s'il vient de Strad, alors le script s'arrête.
     return;
   }
 
   let msg = messageReaction.message.content.toUpperCase(); // Récupération du contenu du message (en majuscules)
   let creativeChannels = ["412622887317405707", "412622912043089920", "412622999267704834", "416227695429550100", "425739003623374848", "438794104621629441", "442374005177974825"];
-  console.log(creativeChannels);
-  console.log(messageReaction.message.channel.id);
-  console.log(creativeChannels.includes(messageReaction.message.channel.id));
+
   if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
-    if (msg.includes("[PARTAGE]")) {
+    if (!isFeedbackable(messageReaction.message)) {
       messageReaction.remove(user);
+    } else if (messageReaction.emoji.identifier == up_emote || messageReaction.emoji.identifier == down_emote) {
+
+      var vote_type = messageReaction.emoji.identifier == up_emote ? "UV" : "DV";
+      var gb = {
+        results: undefined
+      };
+      var mysql = require("mysql");
+      
+      var con = mysql.createConnection({
+        host: "localhost",
+        user: client.config.mysqlUser,
+        password: client.config.mysqlPass,
+        database: "strad"
+      });
+
+      con.connect((err) => {
+          if (err) console.log(err);
+      });
+
+      con.query(`SELECT * FROM rewards WHERE rewarder_id = ${user.id} AND message_id = ${messageReaction.message.id}`, function(err, rows, fields) {
+
+        if (err) {
+            console.log(err);
+        }
+        
+        if (rows[0].type) {
+          return;
+        }
+
+      });
+      
+      con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date) VALUES (${messageReaction.message.id}, ${messageReaction.message.author.id}, ${user.id}, ${vote_type}, ${moment().format('DD/MM/YY')})`, function(err, rows, fields) {
+
+        if (err) {
+          console.log(err);
+        }
+
+      });
+
+      con.end();
+
     }
   }
 
