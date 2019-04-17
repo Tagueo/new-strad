@@ -37,20 +37,24 @@ exports.run = (client, message, args, userData) => {
           }
 
           gb.uv = rows.length;
-
+          console.log("gb.uv = " + gb.uv)
+          
         })
-
+        
         con.query(`SELECT * FROM rewards WHERE rewarded_id = "${message.author.id}" AND type = "DV"`, function (err, rows, fields) { // Récupération des DVs
           if (err) {
             console.log(err);
           }
-
+          
           gb.dv = rows.length;
+          console.log("gb.dv = " + gb.dv)
 
         })
-
+        
         finalReward += gb.uv * 5;
+        console.log(finalReward)
         finalCreaReward += gb.uv - gb.dv;
+        console.log(finalCreaReward)
         if (finalCreaReward < 0) finalCreaReward = 0;
 
         con.query(`DELETE FROM rewards WHERE rewarded_id = "${message.author.id}"`, function (err, rows, fields) { // Suppression des votes
