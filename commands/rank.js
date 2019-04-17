@@ -31,17 +31,14 @@ exports.run = (client, message, args) => {
       gb.results = rows[0];
 
       con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function(err, rows, fields) {
-
-        if (err) {
-            console.log(err);
-        }
+        con.on("")
         console.log(rows);
-        for (i=0;i<rows.length;i++) {
-          if (message.author.id == rows[i].user_id) {
-            gb.rank = i + 1;
-            break;
-          }
-        }
+        // for (i=0;i<rows.length;i++) {
+        //   if (message.author.id == rows[i].user_id) {
+        //     gb.rank = i + 1;
+        //     break;
+        //   }
+        // }
 
         const stradEmoji = "<:block:547449530610745364>";
         const creaEmoji = "<:crea:547482886824001539>";
