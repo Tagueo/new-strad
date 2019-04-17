@@ -31,7 +31,7 @@ exports.run = (client, message, args) => {
       gb.results = rows[0];
 
       con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function(err, rows, fields) {
-        con.on("")
+
         console.log(rows);
         // for (i=0;i<rows.length;i++) {
         //   if (message.author.id == rows[i].user_id) {
