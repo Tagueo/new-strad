@@ -1,6 +1,5 @@
 exports.run = function(member) {
 
-    member.send(`Bienvenue sur ${member.guild.name}, ${member.displayName} ! On n'attendait plus que toi :wink:\n
-    Prends le temps de lire les #règles puis présente-toi !`);
+    member.send(`Bienvenue sur Stradivarius, ${member.displayName} ! On n'attendait plus que toi :wink:\nPrends le temps de lire les #règles puis présente-toi !`);
 
 };
