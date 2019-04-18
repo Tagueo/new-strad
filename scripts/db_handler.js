@@ -1,9 +1,7 @@
-var appRoot = process.cwd();
-
 exports.run = (client, query) => {
 
     var mysql = require("mysql");
-  
+
     var con = mysql.createConnection({
       host: "localhost",
       user: client.config.mysqlUser,
@@ -17,14 +15,16 @@ exports.run = (client, query) => {
 
     con.query(query, function(err, rows, fields) {
 
-        var results = rows;
+        results = rows;
 
         if (err) {
             console.log(err);
             results = [{}];
         }
 
-        return results;
+        callback(results);
+
+        con.end();
 
     });
 
