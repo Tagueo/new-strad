@@ -60,7 +60,7 @@ module.exports = (client, member) => {
       console.log(err);
     }
 
-    welcome(member);
+    welcome.run(member);
     member.guild.channels.find("id", welcome_categ_id).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES");
     logs.send(embed);
     console.log(member.user.username + " a rejoint le serveur !");
