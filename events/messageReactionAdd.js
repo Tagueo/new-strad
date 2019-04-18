@@ -113,7 +113,7 @@ module.exports = (client, messageReaction, user) => {
       return;
       //Si la réaction se trouve sur un message de Strad, alors le script s'arrête.
     }
-    if (messageReaction.users.first().id === messageReaction.message.author.id) {
+    if (user.id === messageReaction.message.author.id) {
       messageReaction.remove(user);
       user.send(`Tu ne peux pas signaler ton propre message.`);
       return;
@@ -152,4 +152,4 @@ module.exports = (client, messageReaction, user) => {
       }
     });
   }
-}
+};

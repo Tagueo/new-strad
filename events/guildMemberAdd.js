@@ -2,12 +2,13 @@ const Discord = require('discord.js');
 
 const chalk = require('chalk');
 const moment = require('moment');
+const welcome = require('../scripts/welcome');
 
 const welcome_categ_id = "443782424653070346";
 
 module.exports = (client, member) => {
   // Récupération du salon de modération
-  const logs = client.channels.get(client.config.logsChannel)
+  const logs = client.channels.get(client.config.logsChannel);
 
   // On vérifie si l'évènement a lieu sur Stradivarius
   if (member.guild.id = '412369732679893004') {
@@ -17,52 +18,52 @@ module.exports = (client, member) => {
     var embed = new Discord.RichEmbed()
       .setColor("#21b1ff")
       .setTitle("Nouveau Membre")
-      .setDescription(`**<@${member.user.id}>** vient de rejoindre le serveur !`)
+      .setDescription(`**<@${member.user.id}>** vient de rejoindre le serveur !`);
 
-      try {
-        // DB connection
-        var gb = {
-          results: undefined
-        };
-        var mysql = require("mysql");
-      
-        var con = mysql.createConnection({
-          host: "localhost",
-          user: client.config.mysqlUser,
-          password: client.config.mysqlPass,
-          database: "strad"
-        });
-    
-        con.connect((err) => {
-            if (err) console.log(err);
-        });
-    
-        con.query(`SELECT * FROM users WHERE user_id = "${member.user.id}"`, function(err, rows, fields) {
-    
-          if (err) {
-              console.log(err);
-          }
-          
-          gb.results = rows[0];
-          if (!gb.results) {
-            con.query(`INSERT INTO users (user_id, usertag) VALUES ("${member.user.id}", "${member.user.tag}")`, function(err, rows, fields) {
-              if (err) {
-                console.log("Membre déjà présent dans la base de données.");
-              }
-              con.end();
-            })
-          } else {
+    try {
+      // DB connection
+      var gb = { results: undefined };
+      var mysql = require("mysql");
+
+      var con = mysql.createConnection({
+        host: "localhost",
+        user: client.config.mysqlUser,
+        password: client.config.mysqlPass,
+        database: "strad"
+      });
+
+      con.connect((err) => {
+          if (err) console.log(err);
+      });
+
+      con.query(`SELECT * FROM users WHERE user_id = "${member.user.id}"`, function(err, rows, fields) {
+
+        if (err) {
+            console.log(err);
+        }
+
+        gb.results = rows[0];
+        if (!gb.results) {
+          con.query(`INSERT INTO users (user_id, usertag) VALUES ("${member.user.id}", "${member.user.tag}")`, function(err, rows, fields) {
+            if (err) {
+              console.log("Membre déjà présent dans la base de données.");
+            }
             con.end();
-          }
-    
-        });
-    
-      } catch (err) {
-        console.log(err);
-      }
+          })
+        } else {
+          con.end();
+        }
 
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+
+    welcome(member);
     member.guild.channels.find("id", welcome_categ_id).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES");
     logs.send(embed);
     console.log(member.user.username + " a rejoint le serveur !");
+
   }
-}
+};
