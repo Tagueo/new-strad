@@ -9,7 +9,7 @@ client.config = require("./config.json");
 
 
 console.log(chalk.cyan('Starting...'));
-
+ 
 // Reads the /events/ folder and attaches each event file to the appropriate event.
 fs.readdir("./events/", (err, files) => {
   console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] ${chalk.cyan('Loading events...')}`)

@@ -9,8 +9,8 @@ var appRoot = process.cwd();
 
 const logger = require(appRoot + '/scripts/logger.js');
 
-const up_emote = "like:568462302974574612";
-const down_emote = "dislike:568462314806706206";
+const up_emote = "like:568493894270976012";
+const down_emote = "dislike:568493872968368149";
 
 function isFeedbackable(message) { // Vérifie si le message est éligible au feedback
   let mContent = message.content.toUpperCase();

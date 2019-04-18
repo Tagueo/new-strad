@@ -31,12 +31,12 @@ module.exports = (client, message) => {
   		if (message.attachments.size === 0 && !msg.includes("HTTP")) {
   			return;
   		}
-      message.react(client.emojis.get("568462302974574612"));
-      message.react(client.emojis.get("568462314806706206"));
+      message.react(client.emojis.get("568493894270976012"));
+      message.react(client.emojis.get("568493872968368149"));
   	}
     if (message.attachments.size !== 0) {
-      message.react(client.emojis.get("568462302974574612"));
-      message.react(client.emojis.get("568462314806706206"));
+      message.react(client.emojis.get("568493894270976012"));
+      message.react(client.emojis.get("568493872968368149"));
   	}
   }
 
