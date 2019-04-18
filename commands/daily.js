@@ -76,7 +76,7 @@ exports.run = (client, message, args, userData) => {
                   .setColor("#6cb254")
                   .addField(`Blocs`, `+ **${gb.finalReward}** <:block:547449530610745364>`, true)
                   .addField(`Créas`, `+ **${gb.finalCreaReward}** <:crea:547482886824001539>`, true)
-                  .setDescription(`Voici ta récompense journalière ! Pour accéder à ton compte, fais : Strad rank\n**${gb.uv} <:like:419568361110896640> / ${gb.dv} <:dislike:419568377946832896>**`)
+                  .setDescription(`Voici ta récompense journalière ! Pour accéder à ton compte, fais : Strad rank\n**${gb.uv} <:like:568456986971209728> / ${gb.dv} <:dislike:568457009091837953>**`)
                   .setFooter("Strad daily");
 
                 client.channels.get('415633143861739541').send(gb.embed);
