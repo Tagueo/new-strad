@@ -23,14 +23,14 @@ module.exports = (client, message) => {
   	  message.pin();
   	}
     if (message.type === "PINS_ADD") {
-  		message.delete();
+      message.delete();
     }
 
     // Conditions déligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
     if (msg.includes("[POST]")) {
-  		if (message.attachments.size === 0 && !msg.includes("HTTP")) {
-  			return;
-  		}
+      if (message.attachments.size === 0 && !msg.includes("HTTP")) {
+  		  return;
+      }
       message.react(client.emojis.get("568493894270976012"));
       message.react(client.emojis.get("568493872968368149"));
   	}
@@ -38,6 +38,9 @@ module.exports = (client, message) => {
       message.react(client.emojis.get("568493894270976012"));
       message.react(client.emojis.get("568493872968368149"));
   	}
+  } else if (message.channel.id === "568677435793604649") {
+    message.member.send("Hey, tu ne peux poster qu'un montage de deux de tes créations, dans le salon #before-after ! :smile:\nCrée une image avec une de tes premières créations avec, à côté, une de tes dernières !\nOn pourra ainsi voir les progrès que tu as fait sur Stradivarius :wink:");
+    message.delete();
   }
 
   const guildId = message.guild.id;
