@@ -14,7 +14,7 @@ exports.checkFeedActivation = function (message) { // Vérifie si l'éligibilit�
         if (r.emoji.name == "like") {
             console.log("messageReactions.exists(\"name\", \"like\")");
             console.log(messageReactions.find("name", "like"));
-            if (messageReactions.find("name", "like").users.exists("id", "412910522833436672")) {
+            if (r.find("name", "like").users.exists("id", "412910522833436672")) {
                 console.log("messageReactions.find(\"name\", \"like\").users.exists(\"id\", \"412910522833436672\")");
                 bl = true;
             }
