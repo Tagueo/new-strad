@@ -9,8 +9,8 @@ exports.check = function(message) { // Vérifie si le message est éligible aux 
 exports.checkFeedActivation = function (message) { // Vérifie si l'éligibilité aux feedbacks a été activée
     let messageReactions = message.reactions;
     let bl = false;
-    if (messageReactions.exists("name", "like") && messageReactions.exists("name", "dislike")) {
-        if (messageReactions.find("name", "like").users.exists("id", "412910522833436672") && messageReactions.find("name", "dislike").users.exists("id", "412910522833436672")) bl = true;
+    if (messageReactions.exists("name", "like")) {
+        if (messageReactions.find("name", "like").users.exists("id", "412910522833436672")) bl = true;
     }
     return bl;
-}
+};
