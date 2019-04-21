@@ -10,13 +10,15 @@ exports.checkFeedActivation = function (message) { // Vérifie si l'éligibilit�
     let messageReactions = message.reactions;
     let bl = false;
     console.log("checkFeedActivation");
-    if (messageReactions.exists("name", "like")) {
-        console.log("messageReactions.exists(\"name\", \"like\")");
-        console.log(messageReactions.find("name", "like"));
-        if (messageReactions.find("name", "like").users.exists("id", "412910522833436672")) {
-            console.log("messageReactions.find(\"name\", \"like\").users.exists(\"id\", \"412910522833436672\")");
-            bl = true;
+    messageReactions.forEach((r) => {
+        if (r.emoji.name == "like") {
+            console.log("messageReactions.exists(\"name\", \"like\")");
+            console.log(messageReactions.find("name", "like"));
+            if (messageReactions.find("name", "like").users.exists("id", "412910522833436672")) {
+                console.log("messageReactions.find(\"name\", \"like\").users.exists(\"id\", \"412910522833436672\")");
+                bl = true;
+            }
         }
-    }
+    });
     return bl;
 };
