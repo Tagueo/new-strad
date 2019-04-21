@@ -68,13 +68,13 @@ module.exports = (client, messageReaction, user) => {
 
       con.end();
 
-    }
-  } else if (messageReaction.emoji.name === "sparkles") {
-    if (user.id === messageReaction.message.author.id) {
-      message.react(client.emojis.get("568493894270976012"));
-      message.react(client.emojis.get("568493872968368149"));
-    } else {
-      messageReaction.remove(user);
+    } else if (messageReaction.emoji.name === "sparkles") {
+        if (user.id === messageReaction.message.author.id) {
+            message.react(client.emojis.get("568493894270976012"));
+            message.react(client.emojis.get("568493872968368149"));
+        } else {
+            messageReaction.remove(user);
+        }
     }
   }
 

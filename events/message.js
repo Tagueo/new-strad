@@ -35,7 +35,7 @@ module.exports = (client, message) => {
       message.reply(`Si tu souhaites activer les votes et recevoir des retours, clique sur ✨ ! :wink:\n`
           + `S'il s'agit d'un post à ne pas prendre en compte (comme un travail en cours, par exemple), ne clique pas dessus !`)
           .then((m) => {
-            m.delete(5000);
+            m.delete(10000);
           });
     } else if (message.channel.id === "568677435793604649" && message.attachments.size === 0) {
       message.member.send("Hey, tu ne peux poster qu'un montage de tes créations, dans le salon #before-after ! :smile:"
