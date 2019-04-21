@@ -11,6 +11,7 @@ const up_emote = "like:568493894270976012";
 const down_emote = "dislike:568493872968368149";
 
 module.exports = (client, messageReaction, user) => {
+    console.log(messageReaction.emoji.name);
   if (messageReaction.message.member.guild.id !== "412369732679893004" || user.id === "412910522833436672") { // Si la réaction ne provient pas d'un salon du serveur Stradivarius ou s'il vient de Strad, alors le script s'arrête.
     return;
   }
