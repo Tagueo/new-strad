@@ -7,6 +7,7 @@ const fs = require('fs');
 var appRoot = process.cwd();
 
 const logger = require(appRoot + '/scripts/logger.js');
+const isFeedbackable = require(appRoot + '/scripts/isFeedbackable.js');
 
 module.exports = (client, message) => {
   if (!message.guild) {
@@ -18,29 +19,30 @@ module.exports = (client, message) => {
 
   // Gestion des ressources postées
   var msg = message.content.toUpperCase();
-  if (message.channel.id === "412622887317405707" || message.channel.id === "412622912043089920" || message.channel.id === "412622999267704834" || message.channel.id === "416227695429550100" || message.channel.id === "425739003623374848" || message.channel.id === "438794104621629441" || message.channel.id === "442374005177974825") {
+  if (message.channel.id === "412622887317405707" || message.channel.id === "412622912043089920"
+      || message.channel.id === "412622999267704834" || message.channel.id === "416227695429550100"
+      || message.channel.id === "425739003623374848" || message.channel.id === "438794104621629441"
+      || message.channel.id === "442374005177974825") {
     if (msg.includes("[RES]")) {
-  	  message.pin();
-  	}
+      message.pin();
+    }
     if (message.type === "PINS_ADD") {
       message.delete();
     }
-
     // Conditions déligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
-    if (msg.includes("[POST]")) {
-      if (message.attachments.size === 0 && !msg.includes("HTTP")) {
-  		  return;
-      }
-      message.react(client.emojis.get("568493894270976012"));
-      message.react(client.emojis.get("568493872968368149"));
-  	}
-    if (message.attachments.size !== 0) {
-      message.react(client.emojis.get("568493894270976012"));
-      message.react(client.emojis.get("568493872968368149"));
-  	}
-  } else if (message.channel.id === "568677435793604649" && message.attachments.size === 0) {
-    message.member.send("Hey, tu ne peux poster qu'un montage de deux de tes créations, dans le salon #before-after ! :smile:\nCrée une image avec une de tes premières créations avec, à côté, une de tes dernières !\nOn pourra ainsi voir les progrès que tu as fait sur Stradivarius :wink:");
-    message.delete();
+    if (isFeedbackable.check(message)) {
+      message.react("✨");
+      message.reply(`Si tu souhaites activer les votes et recevoir des retours, clique sur ✨ ! :wink:\n`
+          + `S'il s'agit d'un post à ne pas prendre en compte (comme un travail en cours, par exemple), ne clique pas dessus !`)
+          .then((m) => {
+            m.delete(5000);
+          });
+    } else if (message.channel.id === "568677435793604649" && message.attachments.size === 0) {
+      message.member.send("Hey, tu ne peux poster qu'un montage de tes créations, dans le salon #before-after ! :smile:"
+      + "\nCrée une image avec quelques de tes premières créations avec, à côté, certaines de tes dernières !"
+      + "\nOn pourra ainsi voir les progrès que tu as fait sur Stradivarius :wink:");
+      message.delete();
+    }
   }
 
   const guildId = message.guild.id;

@@ -1,6 +1,3 @@
-const Discord = require('discord.js');
-
-const chalk = require('chalk');
 const moment = require('moment');
 
 const reactedRecently = new Set();
@@ -8,14 +5,10 @@ const reactedRecently = new Set();
 var appRoot = process.cwd();
 
 const logger = require(appRoot + '/scripts/logger.js');
+const isFeedbackable = require(appRoot + '/scripts/isFeedbackable.js');
 
 const up_emote = "like:568493894270976012";
 const down_emote = "dislike:568493872968368149";
-
-function isFeedbackable(message) { // Vérifie si le message est éligible au feedback
-  let mContent = message.content.toUpperCase();
-  return message.attachments.size !== 0 || (mContent.includes("HTTP") && mContent.includes("[POST]")) && !mContent.includes("[PARTAGE]");
-}
 
 module.exports = (client, messageReaction, user) => {
   if (messageReaction.message.member.guild.id !== "412369732679893004" || user.id === "412910522833436672") { // Si la réaction ne provient pas d'un salon du serveur Stradivarius ou s'il vient de Strad, alors le script s'arrête.
@@ -26,11 +19,12 @@ module.exports = (client, messageReaction, user) => {
   let creativeChannels = ["412622887317405707", "412622912043089920", "412622999267704834", "416227695429550100", "425739003623374848", "438794104621629441", "442374005177974825"];
 
   if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
-    if (!isFeedbackable(messageReaction.message)) {
+    if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.name === "sparkles") {
+      messageReaction.remove(user);
       return;
-    } else if (messageReaction.emoji.identifier == up_emote || messageReaction.emoji.identifier == down_emote) {
+    } else if (messageReaction.emoji.identifier === up_emote || messageReaction.emoji.identifier === down_emote) {
 
-      if (messageReaction.message.author.id == user.id) {
+      if (messageReaction.message.author.id === user.id || !isFeedbackable.checkFeedActivation(messageReaction.message)) {
         messageReaction.remove(user);
         return;
       }
@@ -74,6 +68,13 @@ module.exports = (client, messageReaction, user) => {
 
       con.end();
 
+    }
+  } else if (messageReaction.emoji.name === "sparkles") {
+    if (user.id === messageReaction.message.author.id) {
+      message.react(client.emojis.get("568493894270976012"));
+      message.react(client.emojis.get("568493872968368149"));
+    } else {
+      messageReaction.remove(user);
     }
   }
 
