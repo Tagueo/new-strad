@@ -20,7 +20,7 @@ module.exports = (client, messageReaction, user) => {
   let creativeChannels = ["412622887317405707", "412622912043089920", "412622999267704834", "416227695429550100", "425739003623374848", "438794104621629441", "442374005177974825"];
 
   if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
-    if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.name === "sparkles") {
+    if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.name === "✨") {
       messageReaction.remove(user);
       return;
     } else if (messageReaction.emoji.identifier === up_emote || messageReaction.emoji.identifier === down_emote) {
@@ -69,7 +69,7 @@ module.exports = (client, messageReaction, user) => {
 
       con.end();
 
-    } else if (messageReaction.emoji.name === "sparkles") {
+    } else if (messageReaction.emoji.name === "✨") {
         if (user.id === messageReaction.message.author.id) {
             message.react(client.emojis.get("568493894270976012"));
             message.react(client.emojis.get("568493872968368149"));
