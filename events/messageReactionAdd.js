@@ -73,9 +73,12 @@ module.exports = (client, messageReaction, user) => {
             if (user.id === messageReaction.message.author.id) {
                 messageReaction.message.react(client.emojis.get("568493894270976012"));
                 messageReaction.message.react(client.emojis.get("568493872968368149"));
-            } else {
-                messageReaction.remove(user);
+                messageReaction.message.member.send("Génial, tu viens d'activer les votes sur ta création !\nLe fait de retirer la réaction ne fera cependant pas machine arrière :wink: :sparkles:")
+                    .then((m) => {
+                        m.delete(120000);
+                    });
             }
+            messageReaction.remove(user);
         }
     }
 
