@@ -32,10 +32,9 @@ module.exports = (client, message) => {
     // Conditions déligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
     if (isFeedbackable.check(message)) {
       message.react("✨");
-      message.member.send(`Si tu souhaites activer les votes et recevoir des retours, clique sur ✨ ! :wink: Attention : il doit s'agir d'une création qui t'appartient !\n`
-          + `S'il s'agit d'un post à ne pas prendre en compte (comme un travail en cours, par exemple) ou de celle d'une autre personne, ne clique pas dessus !`)
+      message.channel.send(`**Si tu souhaites activer les votes, clique sur ✨ ! :wink:\n(Attention : il doit s'agir d'une création qui t'appartient !)`)
           .then((m) => {
-            m.delete(120000);
+            m.delete(10000);
           });
     } else if (message.channel.id === "568677435793604649" && message.attachments.size === 0) {
       message.member.send("Hey, tu ne peux poster qu'un montage de tes créations, dans le salon #before-after ! :smile:"
