@@ -7,7 +7,6 @@ var moment = require('moment');
 const client = new Discord.Client();
 client.config = require("./config.json");
 
-
 console.log(chalk.cyan('Starting...'));
  
 // Reads the /events/ folder and attaches each event file to the appropriate event.
