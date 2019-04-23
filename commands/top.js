@@ -42,7 +42,7 @@ exports.run = (client, message, args) => {
       for (i=2;i<15;i++) {
         otherLeaders += `\`\`${i + 1}. ${gb.results[i].creas_amount}\`\` - ${gb.results[i].usertag}\n`;
       }
-      embedTop.addField("Top 15", otherLeaders, true);
+      embedTop.addField("Top 15", otherLeaders, false);
       embedTop.setFooter("Strad top");
       embedTop.setColor(0xff6b3e);
     
