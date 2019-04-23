@@ -1,4 +1,4 @@
-exports.run = function (guild) {
+exports.run = async function (guild) {
     var creativeChannels = new Map();
     var channelsIDs = [
         "412622887317405707",
