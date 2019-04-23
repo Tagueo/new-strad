@@ -82,24 +82,17 @@ module.exports = (client, messageReaction, user) => {
 
     // Rôles
     var membre = messageReaction.message.guild.roles.find("id", "443748696170168321");
-    console.log(membre);
     var apprenti = messageReaction.message.guild.roles.find("id", "412587462892716032");
-    console.log(apprenti);
     var enattente = messageReaction.message.guild.roles.find("id", "444134229710864385");
-    console.log(enattente);
 
     if (messageReaction.message.channel.id === "412557168529899541") {
 
         if (messageReaction.emoji.name === "true") {
 
-            if (messageReaction.message.member.roles.has(apprenti) || messageReaction.message.member.roles.has(enattente)) {
-
-                // Le membre est un apprenti/en attente : on lui ajoute le rôle membre
-                messageReaction.message.member.addRole(membre);
-                messageReaction.message.member.removeRole(apprenti);
-                messageReaction.message.member.removeRole(enattente);
-
-            }
+            // Le membre est un apprenti/en attente : on lui ajoute le rôle membre
+            messageReaction.message.member.addRole(membre);
+            messageReaction.message.member.removeRole(apprenti);
+            messageReaction.message.member.removeRole(enattente);
 
         }
 
