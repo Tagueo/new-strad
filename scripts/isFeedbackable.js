@@ -11,7 +11,7 @@ exports.checkFeedActivation = function (message) { // Vérifie si l'éligibilit�
     let bl = false;
     messageReactions.forEach((r) => {
         if (r.emoji.name == "like") {
-            if (r.find("name", "like").users.exists("id", "412910522833436672")) {
+            if (r.users.exists("id", "412910522833436672")) {
                 bl = true;
             }
         }
