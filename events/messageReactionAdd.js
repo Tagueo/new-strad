@@ -80,18 +80,13 @@ module.exports = (client, messageReaction, user) => {
     }
 
     // Rôles
-    let membre = messageReaction.message.guild.roles.find("name", "Membre");
-    let apprenti = messageReaction.message.guild.roles.find("name", "Apprenti(e)");
-    let enattente = messageReaction.message.guild.roles.find("name", "En attente...");
-
-    if (user.id === "412910522833436672") {
-        return;
-        // Si la réaction vient de Strad, alors le script s'arrête.
-    }
+    var membre = messageReaction.message.guild.roles.find("id", "443748696170168321");
+    var apprenti = messageReaction.message.guild.roles.find("id", "412587462892716032");
+    var enattente = messageReaction.message.guild.roles.find("id", "444134229710864385");
 
     if (messageReaction.message.channel.id === "412557168529899541") {
 
-        if (messageReaction.emoji.identifier === "true:413685423202893826") {
+        if (messageReaction.emoji.name === "true") {
 
             if (messageReaction.message.member.roles.has(apprenti) || messageReaction.message.member.roles.has(enattente)) {
 
