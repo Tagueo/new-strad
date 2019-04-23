@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 const moment = require('moment');
 
 const reactedRecently = new Set();
@@ -98,14 +99,14 @@ module.exports = (client, messageReaction, user) => {
 
     }
 
-    //Si la réaction correspond à la réaction de report, ce bloc s'exécute.
+    // Si la réaction correspond à la réaction de report, ce bloc s'exécute.
     if (messageReaction.emoji.identifier === "report:418441210475053056") {
 
         if (messageReaction.message.member.user.bot) {
             messageReaction.remove(user);
-            user.send(`Tu ne peux pas signaler les messages de Strad.`);
+            user.send(`Tu ne peux pas signaler mes messages. C'est vraiment l'hôpital qui se fout de la charité !`);
             return;
-            //Si la réaction se trouve sur un message de Strad, alors le script s'arrête.
+            // Si la réaction se trouve sur un message de Strad, alors le script s'arrête.
         }
         if (user.id === messageReaction.message.author.id) {
             messageReaction.remove(user);
@@ -133,17 +134,17 @@ module.exports = (client, messageReaction, user) => {
             }, 30000);
         }
 
-        //console.log(messageReaction.users.first().username);
-        //messageReaction.message.react(bot.emojis.get("418441210475053056"));
         console.log("Report !");
         var reportedMessage = messageReaction.message.cleanContent;
         logger.run(`${user.tag} a reporté un message dans le salon #${messageReaction.message.channel.name} du serveur ${messageReaction.message.guild.name}.`);
-        messageReaction.message.member.guild.channels.find("id", client.config.logsChannel).send({
-            embed: {
-                title: "Message signalé",
-                description: `Nouveau message reporté par **${messageReaction.users.first().username}** : *${reportedMessage}* (dans <#${messageReaction.message.channel.id}>, par **${messageReaction.message.author.username}**)`,
-                color: 0xffac00
-            }
-        });
+        var reportEmbed = new Discord.RichEmbed()
+            .setColor(0xffac00)
+            .setAuthor(`Message signalé`)
+            .setDescription(`Un nouveau message a été signalé par ${user}.`)
+            .addField(`Contenu`, reportedMessage, true)
+            .addField(`Localisation`, messageReaction.message.channel, true)
+            .addField(`Lien direct`, messageReaction.message.url, true)
+
+        messageReaction.message.member.guild.channels.find("id", client.config.logsChannel).send(reportEmbed);
     }
 };
