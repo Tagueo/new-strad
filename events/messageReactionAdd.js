@@ -11,7 +11,6 @@ const up_emote = "like:568493894270976012";
 const down_emote = "dislike:568493872968368149";
 
 module.exports = (client, messageReaction, user) => {
-    console.log(messageReaction.emoji.name);
     if (messageReaction.message.member.guild.id !== "412369732679893004" || user.id === "412910522833436672") { // Si la réaction ne provient pas d'un salon du serveur Stradivarius ou s'il vient de Strad, alors le script s'arrête.
         return;
     }
@@ -83,8 +82,11 @@ module.exports = (client, messageReaction, user) => {
 
     // Rôles
     var membre = messageReaction.message.guild.roles.find("id", "443748696170168321");
+    console.log(membre);
     var apprenti = messageReaction.message.guild.roles.find("id", "412587462892716032");
+    console.log(apprenti);
     var enattente = messageReaction.message.guild.roles.find("id", "444134229710864385");
+    console.log(enattente);
 
     if (messageReaction.message.channel.id === "412557168529899541") {
 
