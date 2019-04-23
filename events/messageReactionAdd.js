@@ -112,13 +112,18 @@ module.exports = (client, messageReaction, user) => {
             messageReaction.remove(user);
             user.send(`Tu ne peux pas signaler ton propre message.`);
             return;
-            //Si la réaction se trouve sur un message de la personne qui réagit, alors le script s'arrête.
+            // Si la réaction se trouve sur un message de la personne qui réagit, alors le script s'arrête.
         }
         if (messageReaction.message.member.roles.find("name", client.config.modRole) || messageReaction.message.member.roles.find("name", "Assistant")) {
             messageReaction.remove(user);
             user.send(`Tu ne peux pas signaler le message d'un membre du staff.`);
             return;
-            //Si la réaction se trouve sur un message d'un membre du Staff, alors le script s'arrête.
+            // Si la réaction se trouve sur un message d'un membre du Staff, alors le script s'arrête.
+        }
+        if (messageReaction.message.reactions.find(r => r.emoji.name === "report").array().length > 1) {
+            user.send(`Ce message a déjà été signalé, merci pour ta contribution !`);
+            return;
+            // Si le message a déjà été reporté, alors le script s'arrête MAIS ON NE RETIRE PAS LA RÉACTION DE L'UTILISATEUR.
         }
         if (reactedRecently.has(user.id)) {
             messageReaction.remove(user);
@@ -141,7 +146,7 @@ module.exports = (client, messageReaction, user) => {
             .setColor(0xffac00)
             .setAuthor(`Message signalé`)
             .setDescription(`Un nouveau message a été signalé par ${user}.`)
-            .addField(`Contenu`, reportedMessage, true)
+            .addField(`Contenu`, `"${reportedMessage}"`, true)
             .addField(`Localisation`, messageReaction.message.channel, true)
             .addField(`Lien direct`, messageReaction.message.url, true)
 
