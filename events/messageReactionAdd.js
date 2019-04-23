@@ -120,7 +120,7 @@ module.exports = (client, messageReaction, user) => {
             return;
             // Si la réaction se trouve sur un message d'un membre du Staff, alors le script s'arrête.
         }
-        if (messageReaction.message.reactions.find(r => r.emoji.name === "report").array().length > 1) {
+        if (messageReaction.message.reactions.find(r => r.emoji.name === "report").users.array().length > 1) {
             user.send(`Ce message a déjà été signalé, merci pour ta contribution !`);
             return;
             // Si le message a déjà été reporté, alors le script s'arrête MAIS ON NE RETIRE PAS LA RÉACTION DE L'UTILISATEUR.
