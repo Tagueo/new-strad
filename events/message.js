@@ -32,7 +32,7 @@ module.exports = (client, message) => {
     // Conditions déligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
     if (isFeedbackable.check(message)) {
       message.react("✨");
-      message.channel.send(`**Si tu souhaites activer les votes, clique sur ✨ ! :wink:\n(Attention : il doit s'agir d'une création qui t'appartient !)`)
+      message.channel.send(`**Si tu souhaites activer les votes, clique sur ✨ ! :wink:\n(Attention : il doit s'agir d'une création qui t'appartient !)**`)
           .then((m) => {
             m.delete(10000);
           });
