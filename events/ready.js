@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const Discord = require('discord.js');
 var moment = require('moment');
 
 const fetcher = require('../scripts/fetcher');
@@ -13,5 +14,29 @@ module.exports = async (client) => {
 
     // Mise en cache des 50 derniers messages de chaque salon créatif...
     await fetcher.run(client.guilds.find("id", "412369732679893004"));
-    console.log("Messages mis en cache !")
+    console.log("Messages mis en cache !");
+
+    // Distributeur de rôles
+    var roleDistrib = new Discord.RichEMbed()
+        .setTitle("Késako ?")
+        .setDescription("Choisis les rôles qui correspondent aux activités qui t'intéressent le plus sur Stradivarius ! Par exemple, tu n'as pas besoin d'être un véritable graphiste pour avoir le rôle **Graphiste** :smile:")
+        .setAuthor("Distributeur de rôles")
+        .addField("Liste des rôles",
+            ":pencil: • **Graphiste** - Dessine-moi un logo !\n"
+            + ":film_frames: • **Vidéaste** - Eeeeet... Action !"
+            + ":art: • **Dessinateur** - Dessine-moi un mouton !\n"
+            + ":camera_with_flash: • **Photographe** - Clic !\n"
+            + ":computer: • **Développeur/peuse** - \"Hello World!\"\n"
+            + ":musical_keyboard: • **Audiophile** - Pas d'autotune, svp !")
+        .setFooter("Clique sur la/les réaction(s) qui te font envie !")
+        .setColor("#ff6b3e");
+    client.guilds.find("412369732679893004").channels.find("id", "570605835172970496").send(roleDistrib)
+        .then(m => {
+            m.react("📝");
+            m.react("🎞");
+            m.react("🎨");
+            m.react("📸");
+            m.react("💻");
+            m.react("🎹");
+        })
 };
