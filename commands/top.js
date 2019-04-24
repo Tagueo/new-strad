@@ -4,6 +4,8 @@ const Discord = require("discord.js")
 
 exports.run = (client, message, args) => {
 
+  var quantity = 10; // Quantité de membres affichés dans le top 15
+
   // DB connection
 
   var gb = {
@@ -22,7 +24,7 @@ exports.run = (client, message, args) => {
         if (err) console.log(err);
     });
 
-    con.query(`SELECT * FROM users ORDER BY creas_amount DESC LIMIT 15`, function(err, rows, fields) {
+    con.query(`SELECT * FROM users ORDER BY creas_amount DESC LIMIT ${quantity}`, function(err, rows, fields) {
 
       if (err) {
           console.log(err);
@@ -39,10 +41,10 @@ exports.run = (client, message, args) => {
       for (i=0;i<2;i++) {
         embedTop.addField(`${i + 1}. ${gb.results[i].usertag}`, `**${gb.results[i].creas_amount}** ${creaEmoji}`, true);
       }
-      for (i=2;i<15;i++) {
+      for (i=2;i<quantity;i++) {
         otherLeaders += `\`\`${i + 1}. ${gb.results[i].creas_amount}\`\` - ${gb.results[i].usertag}\n`;
       }
-      embedTop.addField("Top 15", otherLeaders, false);
+      embedTop.addField(`Top ${quantity}`, otherLeaders, false);
       embedTop.setFooter("Strad top");
       embedTop.setColor(0xff6b3e);
     
