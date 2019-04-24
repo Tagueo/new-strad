@@ -30,7 +30,7 @@ module.exports = async (client) => {
             + ":musical_keyboard: • **Audiophile** - Pas d'autotune, svp !")
         .setFooter("Clique sur la/les réaction(s) qui te font envie !")
         .setColor("#ff6b3e");
-    client.guilds.find("412369732679893004").channels.find("id", "570605835172970496").send(roleDistrib)
+    client.guilds.find("id", "412369732679893004").channels.find("id", "570605835172970496").send(roleDistrib)
         .then(m => {
             m.react("📝");
             m.react("🎞");
