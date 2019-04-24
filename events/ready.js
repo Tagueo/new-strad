@@ -17,7 +17,7 @@ module.exports = async (client) => {
     console.log("Messages mis en cache !");
 
     // Distributeur de rôles
-    var roleDistrib = new Discord.RichEMbed()
+    var roleDistrib = new Discord.RichEmbed()
         .setTitle("Késako ?")
         .setDescription("Choisis les rôles qui correspondent aux activités qui t'intéressent le plus sur Stradivarius ! Par exemple, tu n'as pas besoin d'être un véritable graphiste pour avoir le rôle **Graphiste** :smile:")
         .setAuthor("Distributeur de rôles")
