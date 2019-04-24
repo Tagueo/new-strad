@@ -20,7 +20,11 @@ module.exports = (client, messageReaction, user) => {
 
     if (messageReaction.message.id === "570618282177069076") { // Distributeur de rôles
         var emojiName = messageReaction.emoji.name;
-        var member = messageReaction.users.find("id", user.id);
+        var member;
+        messageReaction.fetchUsers(stradivarius.memberCount)
+            .then(users => {
+                member = users.find("id", user.id);
+            });
         var stradivarius = client.guilds.find("id", "412369732679893004");
 
         switch (emojiName) {
