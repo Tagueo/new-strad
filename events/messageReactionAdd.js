@@ -18,6 +18,36 @@ module.exports = (client, messageReaction, user) => {
 
     let msg = messageReaction.message.content.toUpperCase(); // Récupération du contenu du message (en majuscules)
 
+    if (messageReaction.message.id === "570618282177069076") { // Distributeur de rôles
+        var emojiName = messageReaction.emoji.name;
+        var member = messageReaction.users.get(user.id);
+        var stradivarius = client.guilds.find("id", "412369732679893004");
+
+        switch (emojiName) {
+            case "📝":
+                member.addRole(stradivarius.roles.find("name", "Graphiste"));
+                break;
+            case "🎞":
+                member.addRole(stradivarius.roles.find("name", "Vidéaste"));
+                break;
+            case "🎨":
+                member.addRole(stradivarius.roles.find("name", "Dessinateur/trice"));
+                break;
+            case "📸":
+                member.addRole(stradivarius.roles.find("name", "Photographe"));
+                break;
+            case "💻":
+                member.addRole(stradivarius.roles.find("name", "Développeur/peuse"));
+                break;
+            case "🎹":
+                member.addRole(stradivarius.roles.find("name", "Audiophile"));
+                break;
+            default:
+                messageReaction.remove(user);
+                return;
+        }
+    }
+
     if (messageReaction.message.channel.id === "412622887317405707" || messageReaction.message.channel.id === "412622912043089920"
         || messageReaction.message.channel.id === "412622999267704834" || messageReaction.message.channel.id === "416227695429550100"
         || messageReaction.message.channel.id === "425739003623374848" || messageReaction.message.channel.id === "438794104621629441"
