@@ -23,7 +23,7 @@ module.exports = async (client) => {
         .setAuthor("Distributeur de rôles")
         .addField("Liste des rôles",
             ":pencil: • **Graphiste** - Dessine-moi un logo !\n"
-            + ":film_frames: • **Vidéaste** - Eeeeet... Action !"
+            + ":film_frames: • **Vidéaste** - Eeeeet... Action !\n"
             + ":art: • **Dessinateur** - Dessine-moi un mouton !\n"
             + ":camera_with_flash: • **Photographe** - Clic !\n"
             + ":computer: • **Développeur/peuse** - \"Hello World!\"\n"
