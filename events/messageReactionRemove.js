@@ -6,22 +6,22 @@ module.exports = (client, messageReaction, user) => {
 
         switch (emojiName) {
             case "📝":
-                member.addRole(stradivarius.roles.find("name", "Graphiste"));
+                member.removeRole(stradivarius.roles.find("name", "Graphiste"));
                 break;
             case "🎞":
-                member.addRole(stradivarius.roles.find("name", "Vidéaste"));
+                member.removeRole(stradivarius.roles.find("name", "Vidéaste"));
                 break;
             case "🎨":
-                member.addRole(stradivarius.roles.find("name", "Dessinateur/trice"));
+                member.removeRole(stradivarius.roles.find("name", "Dessinateur/trice"));
                 break;
             case "📸":
-                member.addRole(stradivarius.roles.find("name", "Photographe"));
+                member.removeRole(stradivarius.roles.find("name", "Photographe"));
                 break;
             case "💻":
-                member.addRole(stradivarius.roles.find("name", "Développeur/peuse"));
+                member.removeRole(stradivarius.roles.find("name", "Développeur/peuse"));
                 break;
             case "🎹":
-                member.addRole(stradivarius.roles.find("name", "Audiophile"));
+                member.removeRole(stradivarius.roles.find("name", "Audiophile"));
                 break;
             default:
                 messageReaction.remove(user);
