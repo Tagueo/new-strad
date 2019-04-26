@@ -4,64 +4,63 @@ const Discord = require("discord.js")
 
 exports.run = (client, message, args) => {
 
-    // DB connection
+  // DB connection
 
-    var gb = {
-        results: undefined, rank: undefined
-    };
+  var gb = {
+    results: undefined, rank: undefined
+  };
+  var mysql = require("mysql");
+  
+    var con = mysql.createConnection({
+      host: "localhost",
+      user: client.config.mysqlUser,
+      password: client.config.mysqlPass,
+      database: "strad"
+    });
 
-    try {
+    con.connect((err) => {
+        if (err) console.log(err);
+    });
 
-        client.pool.getConnection((err, con) => {
-            if (err) {
-                con.release();
-                throw err;
-            }
+    con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, function(err, rows, fields) {
 
-            con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, (err, rows) => {
+      if (err) {
+          console.log(err);
+      }
+      
+      gb.results = rows[0];
 
-                if (!rows) {
-                    con.release();
-                    return;
-                }
+      con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function(err, rows) {
 
-                gb.results = rows[0];
+        for (i=0;i<rows.length;i++) {
+          if (message.author.id == rows[i].user_id) {
+            gb.rank = i + 1;
+            break;
+          }
+        }
 
-                con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function (err, rows) {
+        const stradEmoji = "<:block:547449530610745364>";
+        const creaEmoji = "<:crea:547482886824001539>";
+      
+        const embedMoney = new Discord.RichEmbed()
+          .setAuthor(message.author.tag, message.author.avatarURL)
+          .setThumbnail(message.author.avatarURL)
+          .addField("Valeur du compte", `${gb.results.money} ${stradEmoji}`, true)
+          .addField("Nombre de Créas", `${gb.results.creas_amount} ${creaEmoji}`, true)
+          .addField("Rang", `#${gb.rank}`, true)
+          .addField("Titre artistique", `${gb.results.rank}`, true)
+          .setFooter("Strad rank")
+          .setColor(message.member.displayColor);
+      
+        client.channels.get('415633143861739541').send(embedMoney);
+        message.delete();
 
-                    for (i = 0; i < rows.length; i++) {
-                        if (message.author.id == rows[i].user_id) {
-                            gb.rank = i + 1;
-                            break;
-                        }
-                    }
+        con.end();
 
-                    const stradEmoji = "<:block:547449530610745364>";
-                    const creaEmoji = "<:crea:547482886824001539>";
+      });
 
-                    const embedMoney = new Discord.RichEmbed()
-                        .setAuthor(message.author.tag, message.author.avatarURL)
-                        .setThumbnail(message.author.avatarURL)
-                        .addField("Valeur du compte", `${gb.results.money} ${stradEmoji}`, true)
-                        .addField("Nombre de Créas", `${gb.results.creas_amount} ${creaEmoji}`, true)
-                        .addField("Rang", `#${gb.rank}`, true)
-                        .addField("Titre artistique", `${gb.results.rank}`, true)
-                        .setFooter("Strad rank")
-                        .setColor(message.member.displayColor);
+    });
 
-                    client.channels.get('415633143861739541').send(embedMoney);
-                    message.delete();
-
-                    con.release();
-
-                });
-            })
-        });
-
-    } catch (err) {
-
-        console.log(err);
-
-    }
+  // DB connection
 
 };

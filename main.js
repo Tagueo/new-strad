@@ -5,14 +5,7 @@ const chalk = require('chalk');
 var moment = require('moment');
 
 const client = new Discord.Client();
-
 client.config = require("./config.json");
-client.pool = mysql.createPool({
-  host: "localhost",
-  user: client.config.mysqlUser,
-  password: client.config.mysqlPass,
-  database: "strad"
-});
 
 console.log(chalk.cyan('Starting...'));
  
