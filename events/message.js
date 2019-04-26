@@ -52,53 +52,6 @@ module.exports = (client, message) => {
   // Ignores all bots
   if (message.author.bot) return;
 
-  try {
-    // DB connection
-    var gb = {
-      results: undefined
-    };
-    var mysql = require("mysql");
-  
-    var con = mysql.createConnection({
-      host: "localhost",
-      user: client.config.mysqlUser,
-      password: client.config.mysqlPass,
-      database: "strad"
-    });
-
-    con.connect((err) => {
-        if (err) console.log(err);
-    });
-
-    con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`, function(err, rows, fields) {
-
-      if (err) {
-          console.log(err);
-      }
-      
-      if (rows) {
-        gb.results = rows[0];
-      } else {
-        con.end();
-        return;
-      }
-      if (!gb.results) {
-        con.query(`INSERT INTO users (user_id, usertag) VALUES ("${message.author.id}", "${message.author.tag}")`, function(err, rows, fields) {
-          if (err) {
-            console.log("Membre déjà présent dans la base de données.");
-          }
-          con.end();
-        })
-      } else {
-        con.end();
-      }
-
-    });
-
-  } catch (err) {
-    console.log(err);
-  }
-
   // Checks automatic answers
   if (ANSWERS[message.cleanContent.toLowerCase()]) {
     message.channel.send(ANSWERS[message.cleanContent.toLowerCase()]);
