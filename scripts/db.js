@@ -1,4 +1,4 @@
-exports.executeQuery = (pool, query, callback) => {
+exports.executeQuery = (query, callback) => {
 
     pool.getConnection(function(err,connection){
         if (err) {

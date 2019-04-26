@@ -21,11 +21,11 @@ exports.run = (client, message, args) => {
             database: "strad"
         });
 
-        db.executeQuery(pool, `SELECT * FROM users WHERE user_id = ${message.author.id}`, (err, rows) => {
+        db.executeQuery(`SELECT * FROM users WHERE user_id = ${message.author.id}`, (err, rows) => {
 
             gb.results = rows[0];
 
-            db.executeQuery(pool, `SELECT * FROM users ORDER BY creas_amount DESC`, (err, rows) => {
+            db.executeQuery(`SELECT * FROM users ORDER BY creas_amount DESC`, (err, rows) => {
 
                 for (i = 0; i < rows.length; i++) {
                     if (message.author.id == rows[i].user_id) {
