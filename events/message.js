@@ -75,6 +75,11 @@ module.exports = (client, message) => {
   };
 
   // Run the command
-  cmd.run(client, message, args);
-  console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`);
+  if (client.config.mtnMode != "true") {
+    cmd.run(client, message, args);
+    console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`);
+  } else {
+    message.channel.send(message.author + " Une maintenance est en cours. Merci de bien vouloir patienter ! :sweat_smile:");
+  }
+
 };

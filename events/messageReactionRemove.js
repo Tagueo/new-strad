@@ -1,4 +1,9 @@
 module.exports = (client, messageReaction, user) => {
+
+    if (client.config.mtnMode == "true") {
+        return;
+    }
+
     if (messageReaction.message.id === "570618282177069076") { // Distributeur de rôles
         var emojiName = messageReaction.emoji.name;
         var stradivarius = client.guilds.find("id", "412369732679893004");
@@ -28,4 +33,5 @@ module.exports = (client, messageReaction, user) => {
                 return;
         }
     }
+
 };
