@@ -59,7 +59,7 @@ exports.run = (client, message, args, userData) => {
               if (err) {
                 console.log(err);
               }
-            })
+            });
 
             con.query(`UPDATE users SET money = money + ${gb.finalReward}, creas_amount = creas_amount + ${gb.finalCreaReward}, usertag = "${message.member.displayName}" WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
               if (err) {
