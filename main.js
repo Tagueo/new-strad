@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const Enmap = require("enmap");
 const fs = require("fs");
 const chalk = require('chalk');
+const mysql = require('mysql');
 var moment = require('moment');
 
 const client = new Discord.Client();
