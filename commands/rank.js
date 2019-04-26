@@ -18,16 +18,16 @@ exports.run = (client, message, args) => {
             }
         });
 
-        con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, (err, rows) => {
+        client.con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, (err, rows) => {
 
             if (!rows) {
-                con.end();
+                client.con.end();
                 return;
             }
 
             gb.results = rows[0];
 
-            con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function (err, rows) {
+            client.con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function (err, rows) {
 
                 for (i = 0; i < rows.length; i++) {
                     if (message.author.id == rows[i].user_id) {
@@ -52,7 +52,7 @@ exports.run = (client, message, args) => {
                 client.channels.get('415633143861739541').send(embedMoney);
                 message.delete();
 
-                con.end();
+                client.con.end();
 
             });
         })
