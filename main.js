@@ -8,12 +8,6 @@ var moment = require('moment');
 const client = new Discord.Client();
 
 client.config = require("./config.json");
-client.con = mysql.createConnection({
-  host: "localhost",
-  user: client.config.mysqlUser,
-  password: client.config.mysqlPass,
-  database: "strad"
-});
 
 console.log(chalk.cyan('Starting...'));
  

@@ -1,6 +1,7 @@
-const Discord = require("discord.js")
+const Discord = require("discord.js");
+const db = require("../scripts/db");
 
-// const db_handler = require("../scripts/db_handler.js");
+// const db_handler = require("../scripts/db.js");
 
 exports.run = (client, message, args) => {
 
@@ -12,22 +13,18 @@ exports.run = (client, message, args) => {
 
     try {
 
-        client.con.connect(err => {
-            if (err) {
-                throw err;
-            }
+        var pool = mysql.createPool({
+            host: "localhost",
+            user: client.config.mysqlUser,
+            password: client.config.mysqlPass,
+            database: "strad"
         });
 
-        client.con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, (err, rows) => {
-
-            if (!rows) {
-                client.con.end();
-                return;
-            }
+        db.executeQuery(`SELECT * FROM users WHERE user_id = ${message.author.id}`, (err, rows) => {
 
             gb.results = rows[0];
 
-            client.con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function (err, rows) {
+            db.executeQuery(`SELECT * FROM users ORDER BY creas_amount DESC`, (err, rows) => {
 
                 for (i = 0; i < rows.length; i++) {
                     if (message.author.id == rows[i].user_id) {
@@ -52,10 +49,10 @@ exports.run = (client, message, args) => {
                 client.channels.get('415633143861739541').send(embedMoney);
                 message.delete();
 
-                client.con.end();
+            })
 
-            });
-        })
+        });
+
 
     } catch (err) {
 
