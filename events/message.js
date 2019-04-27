@@ -26,7 +26,7 @@ module.exports = (client, message) => {
           m.channel.send(message.author + ", la publicité pour les serveurs Discord est défendue sur Stradivarius.")
               .then(m => {
                 m.delete(5000);
-                mLog.run("Tentative de publicité", `${message.author} a tenté de faire sa publicité dans le salon ${message.channel}.\nContenu du message : *${message.cleanContent}*`, mLog.colors.WARNING);
+                mLog.run(client, "Tentative de publicité", `${message.author} a tenté de faire sa publicité dans le salon ${message.channel}.\nContenu du message : *${message.cleanContent}*`, mLog.colors.WARNING);
               });
         });
   }

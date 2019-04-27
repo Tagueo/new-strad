@@ -1,4 +1,4 @@
-exports.run = (client, message, aegs) => {
+exports.run = (client, message, args) => {
 
     var con = client.con;
 

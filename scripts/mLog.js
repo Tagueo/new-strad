@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-exports.run = (title, content, color=exports.colors.NEUTRAL, callback=undefined) => {
+exports.run = (client, title, content, color=exports.colors.NEUTRAL, callback=undefined) => {
     var logChannel = client.guilds.find(g => g.id === "412369732679893004").channels.find(c => c.id === client.config.logsChannel);
     var logEmbed = new Discord.RichEmbed()
         .setAuthor(title)
