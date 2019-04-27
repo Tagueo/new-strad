@@ -19,7 +19,7 @@ module.exports = (client, message) => {
   var msg = message.content.toUpperCase();
 
   // Vérification du contenu du message
-  if (msg.includes("DISCORD.ME") || msg.includes("DISCORD.GG")) {
+  if ((msg.includes("DISCORD.ME") || msg.includes("DISCORD.GG")) && !message.member.roles.find(r => r.name === "Mentor")) {
 
     message.delete()
         .then(m => {
