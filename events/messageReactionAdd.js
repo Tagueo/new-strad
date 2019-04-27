@@ -13,7 +13,7 @@ const down_emote = "dislike:568493872968368149";
 
 module.exports = (client, messageReaction, user) => {
 
-    if (client.config.mtnMode == "true") {
+    if (client.config.mtnMode === "true") {
         return;
     }
 
@@ -25,27 +25,27 @@ module.exports = (client, messageReaction, user) => {
 
     if (messageReaction.message.id === "570618282177069076") { // Distributeur de rôles
         var emojiName = messageReaction.emoji.name;
-        var stradivarius = client.guilds.find("id", "412369732679893004");
-        var member = stradivarius.members.find("id", user.id);
+        var stradivarius = client.guilds.find(g => g.id === "412369732679893004");
+        var member = stradivarius.members.find(m => m.id === user.id);
 
         switch (emojiName) {
             case "📝":
-                member.addRole(stradivarius.roles.find("name", "Graphiste"));
+                member.addRole(stradivarius.roles.find(r => r.name === "Graphiste"));
                 break;
             case "🎞":
-                member.addRole(stradivarius.roles.find("name", "Vidéaste"));
+                member.addRole(stradivarius.roles.find(r => r.name === "Vidéaste"));
                 break;
             case "🎨":
-                member.addRole(stradivarius.roles.find("name", "Dessinateur/trice"));
+                member.addRole(stradivarius.roles.find(r => r.name === "Dessinateur/trice"));
                 break;
             case "📸":
-                member.addRole(stradivarius.roles.find("name", "Photographe"));
+                member.addRole(stradivarius.roles.find(r => r.name === "Photographe"));
                 break;
             case "💻":
-                member.addRole(stradivarius.roles.find("name", "Développeur/peuse"));
+                member.addRole(stradivarius.roles.find(r => r.name === "Développeur/peuse"));
                 break;
             case "🎹":
-                member.addRole(stradivarius.roles.find("name", "Audiophile"));
+                member.addRole(stradivarius.roles.find(r => r.name === "Audiophile"));
                 break;
             default:
                 messageReaction.remove(user);
@@ -117,9 +117,9 @@ module.exports = (client, messageReaction, user) => {
     }
 
     // Rôles
-    var membre = messageReaction.message.guild.roles.find("id", "443748696170168321");
-    var apprenti = messageReaction.message.guild.roles.find("id", "412587462892716032");
-    var enattente = messageReaction.message.guild.roles.find("id", "444134229710864385");
+    var membre = messageReaction.message.guild.roles.find(r => r.id === "443748696170168321");
+    var apprenti = messageReaction.message.guild.roles.find(r => r.id === "412587462892716032");
+    var enattente = messageReaction.message.guild.roles.find(r => r.id === "444134229710864385");
 
     if (messageReaction.message.channel.id === "412557168529899541") {
 
@@ -149,7 +149,7 @@ module.exports = (client, messageReaction, user) => {
             return;
             // Si la réaction se trouve sur un message de la personne qui réagit, alors le script s'arrête.
         }
-        if (messageReaction.message.member.roles.find("name", client.config.modRole) || messageReaction.message.member.roles.find("name", "Assistant")) {
+        if (messageReaction.message.member.roles.find(r => r.name === client.config.modRole) || messageReaction.message.member.roles.find(r => r.name === "Assistant")) {
             messageReaction.remove(user);
             user.send(`Tu ne peux pas signaler le message d'un membre du staff.`);
             return;
@@ -185,6 +185,6 @@ module.exports = (client, messageReaction, user) => {
             .addField(`Localisation`, messageReaction.message.channel, true)
             .addField(`Lien direct`, messageReaction.message.url, true)
 
-        messageReaction.message.member.guild.channels.find("id", client.config.logsChannel).send(reportEmbed);
+        messageReaction.message.member.guild.channels.find(c => c.id === client.config.logsChannel).send(reportEmbed);
     }
 };

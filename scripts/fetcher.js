@@ -10,7 +10,7 @@ exports.run = async function (guild) {
         "442374005177974825"
     ];
     for (i=0;i<creativeChannels.length;i++) {
-        creativeChannels.add(guild.channels.find("id", channelsIDs[i]));
+        creativeChannels.add(guild.channels.find(c => c.id === channelsIDs[i]));
     }
     creativeChannels.forEach(channel => {
         channel.fetchMessages({limit: 50});

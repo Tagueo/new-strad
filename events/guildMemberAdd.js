@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const moment = require('moment');
 const welcome = require('../scripts/welcome.js');
 
-const welcome_categ_id = "443782424653070346";
+const welcomeCategId = "443782424653070346";
 
 module.exports = (client, member) => {
   // Récupération du salon de modération
@@ -61,7 +61,7 @@ module.exports = (client, member) => {
     }
 
     welcome.run(member);
-    member.guild.channels.find("id", welcome_categ_id).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES");
+    member.guild.channels.find(c => c.id === welcomeCategId).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES");
     logs.send(embed);
     console.log(member.user.username + " a rejoint le serveur !");
 

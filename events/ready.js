@@ -5,7 +5,7 @@ var moment = require('moment');
 const fetcher = require('../scripts/fetcher');
 
 module.exports = async (client) => {
-    var stradivarius = client.guilds.find("id", "412369732679893004");
+    var stradivarius = client.guilds.find(g => g.id === "412369732679893004");
 
     console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(client.user.tag)}] Pret à servir dans ${chalk.cyan(client.channels.size)} channels sur ${chalk.cyan(client.guilds.size)} serveurs, pour un total de ${chalk.cyan(client.users.size)} utilisateurs.`);
     client.user.setActivity(`Strad help`, {
@@ -20,7 +20,7 @@ module.exports = async (client) => {
 
     // Distributeur de rôles
     var roleMsgId = "570618282177069076";
-    stradivarius.channels.find("id", "570605835172970496").fetchMessage(roleMsgId);
+    stradivarius.channels.find(c => c.id === "570605835172970496").fetchMessage(roleMsgId);
 
     // var roleDistrib = new Discord.RichEmbed()
     //     .setTitle("Késako ?")

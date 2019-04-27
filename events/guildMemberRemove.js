@@ -4,7 +4,7 @@ const client = new Discord.Client();
 const chalk = require('chalk');
 const moment = require('moment');
 
-const welcome_categ_id = "443782424653070346";
+const welcomeCategId = "443782424653070346";
 
 module.exports = (client, member) => {
   const logs = client.channels.get(client.config.logsChannel)
@@ -16,7 +16,7 @@ module.exports = (client, member) => {
       .setTitle("Ancien Membre")
       .setDescription(`**${member.user.tag}** vient de quitter le serveur :/`)
 
-    member.guild.channels.find("id", welcome_categ_id).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES")
+    member.guild.channels.find(c => c.id === welcomeCategId).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES")
     logs.send(embed)
   }
-}
+};
