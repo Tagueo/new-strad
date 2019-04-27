@@ -1,4 +1,4 @@
-const Discord = require("discord.js")
+const Discord = require("discord.js");
 
 // const db_handler = require("../scripts/db_handler.js");
 

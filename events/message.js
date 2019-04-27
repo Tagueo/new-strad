@@ -6,19 +6,31 @@ const fs = require('fs');
 
 var appRoot = process.cwd();
 
-const logger = require(appRoot + '/scripts/logger.js');
-const isFeedbackable = require(appRoot + '/scripts/isFeedbackable.js');
+const logger = require(appRoot + '/scripts/logger');
+const isFeedbackable = require(appRoot + '/scripts/isFeedbackable');
+const mLog = require('../scripts/mLog');
 
 module.exports = (client, message) => {
-  if (!message.guild) {
-    return;
-  }
   
   // Écriture dans les logs
   logger.run(message);
 
   // Gestion des ressources postées
   var msg = message.content.toUpperCase();
+
+  // Vérification du contenu du message
+  if (msg.includes("DISCORD.ME") || msg.includes("DISCORD.GG")) {
+
+    message.delete()
+        .then(m => {
+          m.channel.send(message.author + ", la publicité pour les serveurs Discord est défendue sur Stradivarius.")
+              .then(m => {
+                m.delete(5000);
+                mLog.run("Tentative de publicité", `${message.author} a tenté de faire sa publicité dans le salon ${message.channel}.\nContenu du message : *${message.cleanContent}*`, mLog.colors.WARNING);
+              });
+        });
+  }
+
   if (message.channel.id === "412622887317405707" || message.channel.id === "412622912043089920"
       || message.channel.id === "412622999267704834" || message.channel.id === "416227695429550100"
       || message.channel.id === "425739003623374848" || message.channel.id === "438794104621629441"
