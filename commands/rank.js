@@ -21,7 +21,12 @@ exports.run = (client, message, args) => {
             console.log(err);
         }
 
-        gb.results = rows[0];
+        if (rows) {
+            gb.results = rows[0];
+        } else {
+            con.end();
+            return;
+        }
 
         con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function (err, rows) {
 
