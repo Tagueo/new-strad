@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const mysql = require("mysql");
 
 // const db_handler = require("../scripts/db_handler.js");
 
@@ -9,7 +10,13 @@ exports.run = (client, message, args) => {
 
         // DB connection
 
-        var con = client.con;
+        var con = mysql.createConnection({
+            host: "localhost",
+            user: client.config.mysqlUser,
+            password: client.config.mysqlPass,
+            database: "strad"
+        });
+
         var gb = {
             results: undefined, rank: undefined
         };
@@ -24,6 +31,11 @@ exports.run = (client, message, args) => {
                 console.log(err);
             }
 
+            if (!rows) {
+                con.end();
+                return;
+            }
+            
             gb.results = rows[0];
 
             con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function (err, rows) {
@@ -60,7 +72,7 @@ exports.run = (client, message, args) => {
     } catch (e) {
 
         console.log(e);
-        
+
     }
 
     // DB connection
