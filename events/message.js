@@ -11,6 +11,8 @@ const isFeedbackable = require(appRoot + '/scripts/isFeedbackable');
 const mLog = require('../scripts/mLog');
 
 module.exports = (client, message) => {
+
+  if (message.channel.type !== "text") return;
   
   // Écriture dans les logs
   logger.run(message);

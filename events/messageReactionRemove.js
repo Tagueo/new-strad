@@ -1,5 +1,7 @@
 module.exports = (client, messageReaction, user) => {
 
+    if (messageReaction.message.channel.type !== "text") return;
+
     if (client.config.mtnMode == "true") {
         return;
     }

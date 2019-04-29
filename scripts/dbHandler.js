@@ -1,6 +1,8 @@
-exports.run = (client, query) => {
+var mysql = require("mysql");
 
-    var mysql = require("mysql");
+exports.run = (client, query, callback) => {
+
+    var results;
 
     var con = mysql.createConnection({
       host: "localhost",
@@ -13,13 +15,13 @@ exports.run = (client, query) => {
         if (err) console.log(err);
     });
 
-    con.query(query, function(err, rows, fields) {
+    con.query(query, function(err, rows) {
 
         results = rows;
 
         if (err) {
             console.log(err);
-            results = [{}];
+            return;
         }
 
         callback(results);
@@ -28,4 +30,4 @@ exports.run = (client, query) => {
 
     });
 
-}
+};
