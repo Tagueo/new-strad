@@ -21,7 +21,7 @@ exports.run = (client, message, args) => {
             results: undefined, rank: undefined
         };
 
-        con.connect((err) => {
+        con.connect((err) => { // TODO REMPLACER PAR UN CREATEPOOL()
             if (err) console.log(err);
         });
 
@@ -35,7 +35,7 @@ exports.run = (client, message, args) => {
                 con.end();
                 return;
             }
-            
+
             gb.results = rows[0];
 
             con.query(`SELECT * FROM users ORDER BY creas_amount DESC`, function (err, rows) {
