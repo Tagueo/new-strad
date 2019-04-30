@@ -1,7 +1,7 @@
 exports.check = function (message) { // Vérifie si le message est éligible aux feedbacks
 
     let mContent = message.content.toUpperCase();
-    let bl = (message.attachments.size !== 0 || mContent.includes("HTTP")) && !mContent.includes("[PARTAGE]") && !mContent.includes("GIPHY.COM") && !mContent.includes("TENOR.COM");
+    let bl = (message.attachments.size !== 0 || mContent.includes("HTTP")) && !mContent.includes("[PARTAGE]") && !mContent.includes("[RES]") && !mContent.includes("GIPHY.COM") && !mContent.includes("TENOR.COM");
     return bl;
 
 };
