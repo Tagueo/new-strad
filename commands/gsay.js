@@ -18,7 +18,7 @@ exports.run = (client, message, args) => {
 
     if (channel && args[1]) {
         args.splice(0, 1);
-        client.channels.get(channel).send(args.join(' '));
+        channel.send(args.join(' '));
         message.author.send('<:true:413685423202893826> Envoyé !');
     }
 
