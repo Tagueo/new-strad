@@ -7,9 +7,9 @@ exports.run = (client, message, args) => {
     if (!args[0]) {
     var channel = message.guild.channels.get(message.channel.id);
 } else {
-    var channel = message.guild.channels.get(args[1]) || message.guild.channels.find("name", args[1]);
+    var channel = message.guild.channels.get(args[0]) || message.guild.channels.find("name", args[0]);
     if (!channel) {
-        var tempChannel = args[1];
+        var tempChannel = args[0];
         tempChannel = tempChannel.slice(2, -1);
         var channel = message.guild.channels.get(tempChannel);
     }
