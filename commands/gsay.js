@@ -4,24 +4,19 @@ exports.run = (client, message, args) => {
 
   if (message.member.roles.find(x => x.name === "Mentor")) {
 
-    switch (args[0]) {
-
-      case 'general':
-        var channel = '412369732679893008';
-        break;
-
-      case 'shit-post':
-        var channel = '412545861256740877';
-        break;
-
-      case 'flash-annonces':
-        var channel = '428548201939992600';
-        break;
-
-      default:
-        message.channel.send('Tu dois indiquer un salon :\n`general`\n`shit-post`\n`flash-annonces`');
-        return;
+    if (!args[0]) {
+    var channel = message.guild.channels.get(message.channel.id);
+} else {
+    var channel = message.guild.channels.get(args[1]) || message.guild.channels.find("name", args[1]);
+    if (!channel) {
+        var tempChannel = args[1];
+        tempChannel = tempChannel.slice(2, -1);
+        var channel = message.guild.channels.get(tempChannel);
     }
+    if (!channel) {
+        error.run(client, message, 'Channel invalide\nUsage : .ignorechannel on/off <channel>');
+    }
+}
 
     if (channel && args[1]) {
       args.splice(0, 1);
