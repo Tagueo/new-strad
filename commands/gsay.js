@@ -12,7 +12,7 @@ exports.run = (client, message, args) => {
             var channel = message.guild.channels.get(tempChannel);
         }
         if (!channel) {
-            error.run(client, message, 'Channel invalide\nUsage : gsay <channel> <message>');
+            message.channel.send('Channel invalide\nUsage : gsay <channel> <message>');
         }
     }
 
