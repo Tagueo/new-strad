@@ -11,7 +11,7 @@ const isFeedbackable = require(appRoot + '/scripts/isFeedbackable.js');
 const up_emote = "like:568493894270976012";
 const down_emote = "dislike:568493872968368149";
 
-module.exports = (client, messageReaction, user) => {
+module.exports = async (client, messageReaction, user) => {
 
     if (messageReaction.message.channel.type !== "text") return;
 
@@ -111,8 +111,8 @@ module.exports = (client, messageReaction, user) => {
         } else if (messageReaction.emoji.name === "✨") {
             if (user.id === messageReaction.message.author.id && !isFeedbackable.checkFeedActivation(messageReaction.message)) {
                 messageReaction.message.react(client.emojis.get("568493894270976012"));
-                messageReaction.message.react(client.emojis.get("568493872968368149"));
-                messageReaction.remove(client.user);
+                await messageReaction.message.react(client.emojis.get("568493872968368149"));
+                await messageReaction.remove(client.user);
             }
             messageReaction.remove(user);
         }
