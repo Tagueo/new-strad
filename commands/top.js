@@ -1,6 +1,6 @@
-const Discord = require("discord.js")
+const Discord = require("discord.js");
 
-// const db_handler = require("../scripts/dbHandler.js");
+// const db_handler = require("../scripts/db.js");
 
 exports.run = (client, message, args) => {
 

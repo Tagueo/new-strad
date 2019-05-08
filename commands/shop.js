@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+var con = require("../scripts/conInit");
 
 exports.run = (client, message, args) => {
 
