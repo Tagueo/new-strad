@@ -21,7 +21,7 @@ module.exports = (client, message) => {
     var msg = message.content.toUpperCase();
 
     // Suppression des messages envoyés par les sanctionnés
-    if ((message.author.roles.find(r => r.name === "Sanctionné(e)"))) {
+    if ((message.member.roles.find(r => r.name === "Sanctionné(e)"))) {
         message.delete(10000);
     }
 
