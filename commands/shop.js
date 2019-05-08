@@ -1,4 +1,4 @@
-var con = require("../scripts/conInit");
+var con = require("../scripts/db");
 
 exports.run = (client, message, args) => {
 
