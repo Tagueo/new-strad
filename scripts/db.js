@@ -1,33 +1,28 @@
 var mysql = require("mysql");
 
-exports.run = (client, query, callback) => {
+exports.Connection = class Connection {
 
-    var results;
+    constructor(host, user, pass, dbname) {
+        this.core = mysql.createConnection({
+            host: host,
+            user: user,
+            password: pass,
+            database: dbname
+        });
+        this.core.connect((err) => {
+            if (err) throw err;
+        });
+    }
 
-    var con = mysql.createConnection({
-        host: "localhost",
-        user: client.config.mysqlUser,
-        password: client.config.mysqlPass,
-        database: "strad"
-    });
+    query(sql, callback) {
+        this.core.query(sql, function (err, rows) {
+            if (err) throw err;
+            callback(rows);
+        });
+    }
 
-    con.connect((err) => {
-        if (err) console.log(err);
-    });
-
-    con.query(query, function (err, rows) {
-
-        results = rows;
-
-        if (err) {
-            console.log(err);
-            return;
-        }
-
-        callback(results);
-
-        con.end();
-
-    });
+    end() {
+        this.core.end();
+    }
 
 };
