@@ -30,8 +30,8 @@ exports.run = (client, message, args) => {
                     .setThumbnail(message.author.avatarURL)
                     .addField("Valeur du compte", `${dg["results"].money} ${stradEmoji}`, true)
                     .addField("Nombre de Créas", `${dg["results"].creas_amount} ${creaEmoji}`, true)
-                    .addField("Titre artistique", `${dg["results"].rank}`, true)
                     .addField("Rang", `#${dg["rank"]}`, true)
+                    .addField("Titre artistique", `${dg["results"].rank}`, true)
                     .setFooter("Strad rank")
                     .setColor(message.member.displayColor);
 
