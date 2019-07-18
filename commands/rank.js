@@ -7,7 +7,7 @@ exports.run = (client, message, args) => {
 
         var con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-        con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, {}, (rows, dg) => {
+        con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, {}, rows => {
 
             if (!rows) {
                 con.end();

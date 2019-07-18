@@ -17,7 +17,10 @@ exports.Connection = class Connection {
     query(sql, datagate={}, callback) {
         this.core.query(sql, function (err, rows) {
             if (err) throw err;
-            callback(rows, datagate);
+            if (datagate !== {})
+                callback(rows, datagate);
+            else
+                callback(rows);
         });
     }
 
