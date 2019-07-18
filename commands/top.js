@@ -1,7 +1,5 @@
 const Discord = require("discord.js");
 
-// const db_handler = require("../scripts/db.js");
-
 exports.run = (client, message, args) => {
 
   var quantity = 10; // Quantité de membres affichés dans le top 15

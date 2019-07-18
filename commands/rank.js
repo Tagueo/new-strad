@@ -1,9 +1,6 @@
 const Discord = require("discord.js");
 const mysql = require("mysql");
 
-// const db_handler = require("../scripts/db.js");
-
-
 exports.run = (client, message, args) => {
 
     try {

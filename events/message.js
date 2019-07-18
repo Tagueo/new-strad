@@ -22,7 +22,7 @@ module.exports = (client, message) => {
 
     // Suppression des messages envoyés par les sanctionnés
     if ((message.member.roles.find(r => r.name === "Sanctionné(e)"))) {
-        message.delete(10000);
+        message.delete(20000);
     }
 
     // Vérification du contenu du message
