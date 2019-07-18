@@ -31,6 +31,7 @@ exports.run = (client, message, args) => {
                     .addField("Valeur du compte", `${dg["results"].money} ${stradEmoji}`, true)
                     .addField("Nombre de Créas", `${dg["results"].creas_amount} ${creaEmoji}`, true)
                     .addField("Titre artistique", `${dg["results"].rank}`, true)
+                    .addField("Rang", `#${dg["rank"]}`, true)
                     .setFooter("Strad rank")
                     .setColor(message.member.displayColor);
 
