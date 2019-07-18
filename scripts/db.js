@@ -14,10 +14,10 @@ exports.Connection = class Connection {
         });
     }
 
-    query(sql, callback) {
+    query(sql, datagate={}, callback) {
         this.core.query(sql, function (err, rows) {
             if (err) throw err;
-            callback(rows);
+            callback(rows, datagate);
         });
     }
 
