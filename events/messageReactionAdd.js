@@ -70,15 +70,22 @@ module.exports = async (client, messageReaction, user) => {
 
         switch (emojiName) {
             case "🔔":
-                member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "News"));
-                addSeparator(member);
+                member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "News"))
+                    .then(m => {
+                        addSeparator(m);
+                    });
                 break;
             case "🎉":
-                member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "Events"));
-                addSeparator(member);
+                member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "Events"))
+                    .then(m => {
+                        addSeparator(m);
+                    });
                 break;
             case "📡":
-                member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "Streams"));
+                member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "Streams"))
+                    .then(m => {
+                        addSeparator(m);
+                    });
                 addSeparator(member);
                 break;
             default:

@@ -50,13 +50,22 @@ module.exports = (client, messageReaction, user) => {
 
         switch (emojiName) {
             case "🔔":
-                member.removeRole(stradivarius.roles.find(r => r.name === rolePrefix + "News"));
+                member.removeRole(stradivarius.roles.find(r => r.name === rolePrefix + "News"))
+                    .then(m => {
+                        removeSeparator(m);
+                    });
                 break;
             case "🎉":
-                member.removeRole(stradivarius.roles.find(r => r.name === rolePrefix + "Events"));
+                member.removeRole(stradivarius.roles.find(r => r.name === rolePrefix + "Events"))
+                    .then(m => {
+                        removeSeparator(m);
+                    });
                 break;
             case "📡":
-                member.removeRole(stradivarius.roles.find(r => r.name === rolePrefix + "Streams"));
+                member.removeRole(stradivarius.roles.find(r => r.name === rolePrefix + "Streams"))
+                    .then(m => {
+                        removeSeparator(m);
+                    });
                 break;
             default:
                 return;
