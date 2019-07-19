@@ -50,10 +50,10 @@ module.exports = async (client) => {
 
     var notifDistrib = new Discord.RichEmbed()
         .setAuthor("Notifications")
-        .setDescription("Clique sur les types notifications que tu souhaites recevoir sur le serveur !")
+        .setDescription("Clique sur les types de notifications que tu souhaites recevoir sur le serveur !")
         .addField("Liste des notif's",
             ":bell: • **Annonces générales** - Soyez au courant des annonces et nouveautés importantes de Stradivarius !\n"
-            + ":tada: • **Concours & Évènements** - Ne loupez aucun concours créatif ni aucun autre type d'évènement sur le serveur !\n"
+            + ":tada: • **Concours & Évènements** - Ne loupez aucun concours créatif ni aucun autre type d'évènements sur le serveur !\n"
             + ":satellite: • **Streams** - Ne ratez aucune de mes diffusions sur Twitch !")
         .setFooter("Clique sur la/les réaction(s) qui te font envie !")
         .setColor("#ff9800");
