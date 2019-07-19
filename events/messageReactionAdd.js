@@ -63,6 +63,7 @@ module.exports = async (client, messageReaction, user) => {
 
         switch (emojiName) {
             case "🔔":
+                console.log(rolePrefix + "News");
                 member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "News"));
                 break;
             case "🎉":
