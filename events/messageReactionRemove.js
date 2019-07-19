@@ -36,6 +36,13 @@ module.exports = (client, messageReaction, user) => {
     }
 
     if (messageReaction.message.id === "601739344163897344") { // Distributeur de rôles
+        function removeSeparator(member) {
+            if (!member.roles.find(r => r.name === rolePrefix + "News")
+                && !member.roles.find(r => r.name === rolePrefix + "Events")
+                && !member.roles.find(r => r.name === rolePrefix + "Streams")) {
+                member.removeRole(stradivarius.roles.find(r => r.name === "------------ Notifications ------------"));
+            }
+        }
         var emojiName = messageReaction.emoji.name;
         var stradivarius = client.guilds.find(g => g.id === "412369732679893004");
         var member = stradivarius.members.find(m => m.id === user.id);
