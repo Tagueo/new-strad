@@ -55,6 +55,28 @@ module.exports = async (client, messageReaction, user) => {
         }
     }
 
+    if (messageReaction.message.id === "601739344163897344") { // Distributeur de rôles
+        var emojiName = messageReaction.emoji.name;
+        var stradivarius = client.guilds.find(g => g.id === "412369732679893004");
+        var member = stradivarius.members.find(m => m.id === user.id);
+        var rolePrefix = "Notif's - ";
+
+        switch (emojiName) {
+            case "🔔":
+                member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "News"));
+                break;
+            case "🎉":
+                member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "Events"));
+                break;
+            case "📡":
+                member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "Streams"));
+                break;
+            default:
+                messageReaction.remove(user);
+                return;
+        }
+    }
+
     if (messageReaction.message.channel.id === "412622887317405707" || messageReaction.message.channel.id === "412622912043089920"
         || messageReaction.message.channel.id === "412622999267704834" || messageReaction.message.channel.id === "416227695429550100"
         || messageReaction.message.channel.id === "425739003623374848" || messageReaction.message.channel.id === "438794104621629441"
