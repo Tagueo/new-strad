@@ -48,19 +48,19 @@ module.exports = async (client) => {
     //         m.react("🎹");
     //     });
 
-    var notifDistrib = new Discord.RichEmbed()
-        .setAuthor("Notifications")
-        .setDescription("Clique sur les types de notifications que tu souhaites recevoir sur le serveur !")
-        .addField("Liste des notif's",
-            ":bell: • **Annonces générales** - Soyez au courant des annonces et nouveautés importantes de Stradivarius !\n"
-            + ":tada: • **Concours & Évènements** - Ne loupez aucun concours créatif ni aucun autre type d'évènements sur le serveur !\n"
-            + ":satellite: • **Streams** - Ne ratez aucune de mes diffusions sur Twitch !")
-        .setFooter("Clique sur la/les réaction(s) qui te font envie !")
-        .setColor("#ff9800");
-    client.guilds.find("id", "412369732679893004").channels.find("id", "570605835172970496").send(notifDistrib)
-        .then(m => {
-            m.react("🔔");
-            m.react("🎉");
-            m.react("📡");
-        });
+    // var notifDistrib = new Discord.RichEmbed()
+    //     .setAuthor("Notifications")
+    //     .setDescription("Clique sur les types de notifications que tu souhaites recevoir sur le serveur !")
+    //     .addField("Liste des notif's",
+    //         ":bell: • **Annonces générales** - Soyez au courant des annonces et nouveautés importantes de Stradivarius !\n"
+    //         + ":tada: • **Concours & Évènements** - Ne loupez aucun concours créatif ni aucun autre type d'évènements sur le serveur !\n"
+    //         + ":satellite: • **Streams** - Ne ratez aucune de mes diffusions sur Twitch !")
+    //     .setFooter("Clique sur la/les réaction(s) qui te font envie !")
+    //     .setColor("#ff9800");
+    // client.guilds.find("id", "412369732679893004").channels.find("id", "570605835172970496").send(notifDistrib)
+    //     .then(m => {
+    //         m.react("🔔");
+    //         m.react("🎉");
+    //         m.react("📡");
+    //     });
 };
