@@ -19,9 +19,9 @@ module.exports = async (client) => {
     console.log("Messages mis en cache !");
 
     // Distributeur de rôles
-    var roleMsgId = "570618282177069076";
+    var roleMsgId = "570618282177069076", notifMsgId = "601739344163897344";
     stradivarius.channels.find(c => c.id === "570605835172970496").fetchMessage(roleMsgId);
-    stradivarius.channels.find(c => c.id === "601739344163897344").fetchMessage(roleMsgId);
+    stradivarius.channels.find(c => c.id === "570605835172970496").fetchMessage(notifMsgId);
 
     // var roleDistrib = new Discord.RichEmbed()
     //     .setTitle("Késako ?")
