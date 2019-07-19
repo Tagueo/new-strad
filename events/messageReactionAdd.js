@@ -68,17 +68,18 @@ module.exports = async (client, messageReaction, user) => {
         var member = stradivarius.members.find(m => m.id === user.id);
         var rolePrefix = "Notif's - ";
 
-        addSeparator(member);
-
         switch (emojiName) {
             case "🔔":
                 member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "News"));
+                addSeparator(member);
                 break;
             case "🎉":
                 member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "Events"));
+                addSeparator(member);
                 break;
             case "📡":
                 member.addRole(stradivarius.roles.find(r => r.name === rolePrefix + "Streams"));
+                addSeparator(member);
                 break;
             default:
                 messageReaction.remove(user);
