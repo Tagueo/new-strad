@@ -21,6 +21,7 @@ module.exports = async (client) => {
     // Distributeur de rôles
     var roleMsgId = "570618282177069076";
     stradivarius.channels.find(c => c.id === "570605835172970496").fetchMessage(roleMsgId);
+    stradivarius.channels.find(c => c.id === "601739344163897344").fetchMessage(roleMsgId);
 
     // var roleDistrib = new Discord.RichEmbed()
     //     .setTitle("Késako ?")
