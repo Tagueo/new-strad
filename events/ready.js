@@ -14,9 +14,9 @@ module.exports = async (client) => {
         .then(presence => console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(client.user.tag)}] Activity set`))
         .catch(console.error);
 
-    // Mise en cache des 50 derniers messages de chaque salon créatif...
-    await fetcher.run(stradivarius);
-    console.log("Messages mis en cache !");
+    // // Mise en cache des 50 derniers messages de chaque salon créatif...
+    // await fetcher.run(stradivarius);
+    // console.log("Messages mis en cache !");
 
     // Distributeur de rôles
     var roleMsgId = "570618282177069076", notifMsgId = "601739344163897344";
