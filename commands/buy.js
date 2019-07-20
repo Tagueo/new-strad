@@ -14,6 +14,7 @@ exports.run = (client, message, args) => {
     var commandChannel = client.channels.get('415633143861739541'), choosenId;
 
     try {
+        console.log(args[0]);
         choosenId = parseInt(args[0]);
     } catch (e) {
         let errorEmbed = new Discord.RichEmbed()
