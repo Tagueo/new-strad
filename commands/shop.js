@@ -31,8 +31,8 @@ exports.run = (client, message, args) => {
             .setColor("#ffd500")
             .setAuthor("Boutique")
             .addField("Aide", "• Acheter un article : **Strad buy"
-                + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n\n"
-                + "Accéder aux détails d'un article : **Strad view <numéro de l'article>**.")
+                + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n"
+                + "• Accéder aux détails d'un article : **Strad view <numéro de l'article>**.")
             .addBlankField();
         rows.forEach(row => {
             let item = {
