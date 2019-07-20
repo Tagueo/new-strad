@@ -1,24 +1,18 @@
-var con = require("../scripts/db");
+const db = require("../scripts/db.js");
 
 exports.run = (client, message, args) => {
 
-    var con = mysql.createConnection({
-        host: "localhost",
-        user: client.config.mysqlUser,
-        password: client.config.mysqlPass,
-        database: "strad"
+    if (!message.member.roles.find(r => r.name === "Mentor")) return; // TODO À retirer après le développement
+
+    var con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+
+    con.connect();
+
+    sql = "SELECT item_id AS id, item_name AS name, item_emoji AS emoji, description, price, is_buyable AS buyable,"
+        + " is_saleable AS saleable, quantity, buy_amount, discount, script_name, type FROM items WHERE is_buyable = 1";
+    con.query(sql, {}, (rows) => {
+        console.log(rows);
+        con.end();
     });
-
-    con.connect((err) => {
-        if (err) console.log(err);
-    });
-
-    con.query("SELECT * FROM items", (err, rows) => {
-
-        if (err) console.log(err)
-
-    });
-
-    con.end();
 
 };
