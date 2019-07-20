@@ -12,7 +12,7 @@ function addItem(client, embed, item) {
     if (item.emoji.trim().length > 1) item.emoji = client.emojis.get(item.emoji);
     embed
         .addBlankField()
-        .addField(`${item.buy_amount} x ${item.name}`, `${item.description}\n\n`
+        .addField(`${item.emoji} ${item.buy_amount} x ${item.name}`, `${item.description}\n\n`
             + `Item : ${item.emoji}\nNuméro d'article : ${item.id}\nPrix : ${item.price} <:block:547449530610745364>` + notSaleableText);
 }
 
