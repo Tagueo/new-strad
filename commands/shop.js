@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
     con.query(sql, {}, (rows) => {
         var shopEmbed = new Discord.RichEmbed()
             .setAuthor("Boutique")
-            .setThumbnail("https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png")
+            .setThumbnail("https://cdn.discordapp.com/attachments/543888518167003136/602227009468235791/SDVR_item.png")
             .addField("Aide", "• Acheter un article : **Strad buy"
                 + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n"
                 + "• Accéder aux détails d'un article : **Strad view <numéro de l'article>**.");
