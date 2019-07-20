@@ -8,7 +8,7 @@ exports.Connection = class Connection {
             user: user,
             password: pass,
             database: dbname,
-            charset: "utf8mb4"
+            charset: "UTF32_GENERAL_CI"
         });
         this.core.connect((err) => {
             if (err) throw err;
