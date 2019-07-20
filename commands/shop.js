@@ -8,10 +8,10 @@ function addItem(embed, item) {
         notSaleableText = "";
     else
         notSaleableText = "\nCet item ne peut être vendu.";
-    if (item.emoji.length > 1) item.emoji = client.emojis.get(item.emoji);
+    if (item.emoji.trim().length > 1) item.emoji = client.emojis.get(item.emoji);
     embed
         .addBlankField()
-        .addField(`${item.buy_amount} x ${item.name} ${item.emoji}`, `${item.description}\n\n`
+        .addField(`${item.buy_amount} x ${item.name}`, `${item.description}\n\n`
             + `Item : ${item.emoji}\nNuméro d'article : ${item.id}\nPrix : ${item.price} <:block:547449530610745364>` + notSaleableText);
 }
 
