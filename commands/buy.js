@@ -81,14 +81,15 @@ exports.run = (client, message, args) => {
 
             con.query(`UPDATE users SET money = ${dg["money"] - item["price"]} WHERE user_id = "${message.member.id}"`,
                 {"item": item}, (rows, dg) => {
-                con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${item["item_id"]}`,
-                    {"item": item}, (rows, dg) => {
-                    let sql;
+                con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${dg["item"]["item_id"]}`,
+                    {"item": dg["item"]}, (rows, dg) => {
+                    let sql, item = dg["item"];
                     if (rows[0])
                         sql = `UPDATE has_items SET amount = amount + ${item["buy_amount"]} WHERE user_id = "${message.member.id}" AND item_id = ${item["item_id"]}`;
                     else
                         sql = `INSERT INTO has_items (user_id, item_id, amount) VALUES("${message.member.id}", ${item["item_id"]}, ${item["buy_amount"]})`;
-                    con.query(sql, {}, rows => {
+                    con.query(sql, {"item": item}, (rows, dg) => {
+                        let item = dg["item"];
                         let successEmbed = new Discord.RichEmbed()
                             .setAuthor("Achat réussi")
                             .setDescription(`Tu as acheté **${item["buy_amount"]} x ${item["item_name"]}** pour **${item["price"]}** <:block:547449530610745364> !`)
