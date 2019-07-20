@@ -8,7 +8,7 @@ function addItem(client, embed, item) {
         notSaleableText = "";
     else
         notSaleableText = "\nCet item ne peut être vendu.";
-    if (item.emoji.trim().length > 1) item.emoji = client.emojis.get(item.emoji);
+    item.emoji = client.emojis.get(item.emoji);
     embed
         .addField(`${item.emoji} ${item.buy_amount} x ${item.name}`, `${item.description}\n`
             + `\n**Prix :** ${item.price} <:block:547449530610745364>\n**Numéro d'article :** ${item.id}` + notSaleableText);
