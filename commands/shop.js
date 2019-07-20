@@ -1,4 +1,4 @@
-const Discord = require("discord");
+const Discord = require("discord.js");
 const db = require("../scripts/db");
 const mp = require("../scripts/msgPresets");
 
