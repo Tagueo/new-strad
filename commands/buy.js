@@ -36,7 +36,17 @@ exports.run = (client, message, args) => {
         con.query(`SELECT * FROM items WHERE item_id = ${choosenId}`, {"money": money}, (rows, dg) => {
             let item = rows[0];
 
-            if (item["is_buyable"] === 0) {
+            if (!item) {
+                let errorEmbed = new Discord.RichEmbed()
+                    .setAuthor("Achat impossible")
+                    .setDescription("Cet article est introuvable.")
+                    .setColor(mLog.colors.ALERT);
+                message.delete();
+                // commandChannel.send(errorEmbed);
+                sendToTemp(errorEmbed); // TODO À retirer
+                con.end();
+                return;
+            } else if (item["is_buyable"] === 0) {
                 let errorEmbed = new Discord.RichEmbed()
                     .setAuthor("Achat impossible")
                     .setDescription("Cet article n'est pas à vendre.")
@@ -81,7 +91,7 @@ exports.run = (client, message, args) => {
                     con.query(sql, {}, rows => {
                         let successEmbed = new Discord.RichEmbed()
                             .setAuthor("Achat réussi")
-                            .setDescription(`Tu as acheté **${item["buy_amount"]} x ${item["item_name"]}** pour ${item["price"]} <:block:547449530610745364> !`)
+                            .setDescription(`Tu as acheté **${item["buy_amount"]} x ${item["item_name"]}** pour **${item["price"]}** <:block:547449530610745364> !`)
                             .setFooter("Tape \"Strad rank\" pour accéder à ton inventaire")
                             .setColor(mLog.colors.VALID);
                         message.delete();
