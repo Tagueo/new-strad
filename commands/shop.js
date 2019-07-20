@@ -30,6 +30,8 @@ exports.run = (client, message, args) => {
         var shopEmbed = new Discord.RichEmbed()
             .setColor("#ffd500")
             .setAuthor("Boutique")
+            .setImage("https://cdn.discordapp.com/attachments/413678978990080010/602226016500580353/SDVR_item.png")
+            .setFooter("Strad shop")
             .addField("Aide", "• Acheter un article : **Strad buy"
                 + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n"
                 + "• Accéder aux détails d'un article : **Strad view <numéro de l'article>**.");
