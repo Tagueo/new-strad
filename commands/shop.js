@@ -7,7 +7,7 @@ function addItem(client, embed, item) {
     if (item.saleable === 1)
         notSaleableText = "";
     else
-        notSaleableText = "\nCet item ne peut être vendu.";
+        notSaleableText = "\nCet item ne peut pas être vendu.";
     item.emoji = client.emojis.get(item.emoji);
     embed
         .addField(`${item.emoji} ${item.buy_amount} x ${item.name}`, `${item.description}\n`
@@ -28,10 +28,10 @@ exports.run = (client, message, args) => {
         + " is_saleable AS saleable, quantity, buy_amount, discount, script_name, type FROM items WHERE is_buyable = 1 ORDER BY id ASC";
     con.query(sql, {}, (rows) => {
         var shopEmbed = new Discord.RichEmbed()
-            .setColor("#ffeb00")
+            .setColor("#ffd500")
             .setAuthor("Boutique")
-            .addField("Aide", "Pour acheter un article dans la boutique, tape la commande **Strad buy"
-                + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n"
+            .addField("Aide", "• Acheter un article : **Strad buy"
+                + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n\n"
                 + "Pour accéder aux détails d'un article, tape la commande **Strad view <numéro de l'article>**.")
             .addBlankField();
         rows.forEach(row => {
