@@ -13,10 +13,7 @@ exports.run = (client, message, args) => {
 
     var commandChannel = client.channels.get('415633143861739541'), choosenId;
 
-    try {
-        console.log(args[0]);
-        choosenId = parseInt(args[0]);
-    } catch (e) {
+    if (!args[0] || isNaN(args[0])) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Commande erronée")
             .setDescription("Merci de saisir un numéro d'article valide.")
@@ -24,7 +21,8 @@ exports.run = (client, message, args) => {
         message.delete();
         commandChannel.send(errorEmbed);
         return;
-    }
+    } else
+        choosenId = parseInt(args[0]);
 
     var con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
