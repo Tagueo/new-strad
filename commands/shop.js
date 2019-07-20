@@ -50,7 +50,7 @@ exports.run = (client, message, args) => {
             if (item.buyable === 1) addItem(client, shopEmbed, item);
         });
         shopEmbed.setFooter("Strad shop")
-            .setColor("#ffd500");
+            .setColor("#00f33f");
 
         message.delete();
         message.channel.send(shopEmbed); // TODO Mettre l'id du salon #commandes après le développement
