@@ -28,10 +28,8 @@ exports.run = (client, message, args) => {
         + " is_saleable AS saleable, quantity, buy_amount, discount, script_name, type FROM items WHERE is_buyable = 1 ORDER BY id ASC";
     con.query(sql, {}, (rows) => {
         var shopEmbed = new Discord.RichEmbed()
-            .setColor("#ffd500")
             .setAuthor("Boutique")
             .setThumbnail("https://cdn.discordapp.com/attachments/413678978990080010/602226016500580353/SDVR_item.png")
-            .setFooter("Strad shop")
             .addField("Aide", "• Acheter un article : **Strad buy"
                 + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n"
                 + "• Accéder aux détails d'un article : **Strad view <numéro de l'article>**.");
@@ -52,6 +50,8 @@ exports.run = (client, message, args) => {
             };
             if (item.buyable === 1) addItem(client, shopEmbed, item);
         });
+        shopEmbed.setFooter("Strad shop")
+            .setColor("#ffd500");
 
         message.delete();
         message.channel.send(shopEmbed); // TODO Mettre l'id du salon #commandes après le développement
