@@ -8,6 +8,7 @@ function addItem(embed, item) {
         notSaleableText = "";
     else
         notSaleableText = "\nCet item ne peut être vendu.";
+    console.log(item.emoji);
     if (item.emoji.trim().length > 1) item.emoji = client.emojis.get(item.emoji);
     embed
         .addBlankField()
