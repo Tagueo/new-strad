@@ -34,7 +34,7 @@ exports.run = (client, message, args) => {
                 + "Pour accéder aux détails d'un article, tape la commande **Strad view <numéro de l'article>**.");
         rows.forEach(row => {
             let item = {
-                id: id,
+                id: row["id"],
                 name: row["name"],
                 emoji: row["emoji"],
                 description: row["description"],
@@ -49,6 +49,8 @@ exports.run = (client, message, args) => {
             };
             if (item.buyable === 1) addItem(shopEmbed, item);
         });
+
+        message.delete();
         message.channel.send(shopEmbed); // TODO Mettre l'id du salon #commandes après le développement
 
         con.end();
