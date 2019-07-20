@@ -32,20 +32,20 @@ exports.run = (client, message, args) => {
             .addField("Aide", "Pour acheter un article dans la boutique, tape la commande **Strad buy"
                 + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n"
                 + "Pour accéder aux détails d'un article, tape la commande **Strad view <numéro de l'article>**.");
-        rows["id"].forEach(id => {
+        rows.forEach(row => {
             let item = {
                 id: id,
-                name: rows["name"][id - 1],
-                emoji: rows["emoji"][id - 1],
-                description: rows["description"][id - 1],
-                price: rows["price"][id - 1],
-                buyable: rows["buyable"][id - 1],
-                saleable: rows["saleable"][id - 1],
-                quantity: rows["quantity"][id - 1],
-                buy_amount: rows["buy_amount"][id - 1],
-                discount: rows["discount"][id - 1],
-                script_name: rows["script_name"][id - 1],
-                type: rows["type"][id - 1]
+                name: row["name"],
+                emoji: row["emoji"],
+                description: row["description"],
+                price: row["price"],
+                buyable: row["buyable"],
+                saleable: row["saleable"],
+                quantity: row["quantity"],
+                buy_amount: row["buy_amount"],
+                discount: row["discount"],
+                script_name: row["script_name"],
+                type: row["type"]
             };
             if (item.buyable === 1) addItem(shopEmbed, item);
         });
