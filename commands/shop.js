@@ -8,12 +8,11 @@ function addItem(client, embed, item) {
         notSaleableText = "";
     else
         notSaleableText = "\nCet item ne peut être vendu.";
-    console.log(item.emoji);
     if (item.emoji.trim().length > 1) item.emoji = client.emojis.get(item.emoji);
     embed
         .addBlankField()
         .addField(`${item.emoji} ${item.buy_amount} x ${item.name}`, `${item.description}\n\n`
-            + `Item : ${item.emoji}\nNuméro d'article : ${item.id}\nPrix : ${item.price} <:block:547449530610745364>` + notSaleableText);
+            + `\nNuméro d'article : ${item.id}\nPrix : ${item.price} <:block:547449530610745364>` + notSaleableText);
 }
 
 exports.run = (client, message, args) => {
@@ -35,6 +34,7 @@ exports.run = (client, message, args) => {
             .addField("Aide", "Pour acheter un article dans la boutique, tape la commande **Strad buy"
                 + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n"
                 + "Pour accéder aux détails d'un article, tape la commande **Strad view <numéro de l'article>**.");
+            .addBlankField();
         rows.forEach(row => {
             let item = {
                 id: row["id"],
