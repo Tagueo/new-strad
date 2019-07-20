@@ -33,7 +33,7 @@ exports.run = (client, message, args) => {
             .setAuthor("Boutique")
             .addField("Aide", "Pour acheter un article dans la boutique, tape la commande **Strad buy"
                 + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)\n"
-                + "Pour accéder aux détails d'un article, tape la commande **Strad view <numéro de l'article>**.");
+                + "Pour accéder aux détails d'un article, tape la commande **Strad view <numéro de l'article>**.")
             .addBlankField();
         rows.forEach(row => {
             let item = {
