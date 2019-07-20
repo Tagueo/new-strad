@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const db = require("../scripts/db");
 const mp = require("../scripts/msgPresets");
 
-function addItem(embed, item) {
+function addItem(client, embed, item) {
     var notSaleableText;
     if (item.saleable === 1)
         notSaleableText = "";
@@ -50,7 +50,7 @@ exports.run = (client, message, args) => {
                 script_name: row["script_name"],
                 type: row["type"]
             };
-            if (item.buyable === 1) addItem(shopEmbed, item);
+            if (item.buyable === 1) addItem(client, shopEmbed, item);
         });
 
         message.delete();
