@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 var moment = require("moment");
+const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
 
@@ -73,7 +74,7 @@ exports.run = (client, message, args) => {
 
                 gb.embed = new Discord.RichEmbed()
                   .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
-                  .setColor("#5ab244")
+                  .setColor(mLog.colors.VALID)
                   .addField(`Blocs`, `+ **${gb.finalReward}** <:block:547449530610745364>`, true)
                   .addField(`Créas`, `+ **${gb.finalCreaReward}** <:crea:547482886824001539>`, true)
                   .setDescription(`Voici ta récompense journalière ! Pour accéder à ton compte, fais : Strad rank\n**${gb.uv} <:like:568493894270976012> / ${gb.dv} <:dislike:568493872968368149>**`)
@@ -92,7 +93,7 @@ exports.run = (client, message, args) => {
 
         gb.embed = new Discord.RichEmbed()
           .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
-          .setColor("#f44242")
+          .setColor(mLog.colors.ALERT)
           .setDescription(`Tu as déjà obtenu ta récompense aujourd'hui.\nAttends ${moment(new Date()).add(1, "days").toNow(true)} avant de la récupérer !`)
           .setFooter("Strad daily");
 

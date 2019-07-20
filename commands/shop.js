@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db");
-const mp = require("../scripts/msgPresets");
+const mp = require("../scripts/msgPresets"); // TODO À retirer
 
 function addItem(client, embed, item) {
     var notSaleableText;
