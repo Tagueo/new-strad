@@ -5,7 +5,7 @@ exports.run = (client, message) => {
     var embed = new Discord.RichEmbed()
         .setAuthor('Help', client.user.avatarURL)
         .setColor(mLog.colors.NEUTRAL_BLUE)
-        .setDescription("Pour m'appeler, utilise le prefix **Strad** (c'est mon nom !)."
+        .setDescription("Pour m'appeler, utilise le préfixe **Strad** (c'est mon nom !)."
             + "\nExemple : ``Strad help`` pour afficher cet encart ^^")
         .addField("Général", "``help`` • Affiche cet encart."
             + "\n``rank`` • Affiche ton profil."
