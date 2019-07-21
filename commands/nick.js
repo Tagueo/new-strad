@@ -5,7 +5,7 @@ const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
 
-    if (!message.member.id === "315816143137013761") {
+    if (message.member.id === "315816143137013761") {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Changement de pseudonyme")
             .setDescription("Rôôôh Delphi, tu sais très bien que je n'ai pas la permission de te renommer... :confused:")
