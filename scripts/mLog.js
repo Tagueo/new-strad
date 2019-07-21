@@ -14,7 +14,10 @@ exports.run = (client, title, content, color=exports.colors.NEUTRAL, callback=un
 
 exports.colors = {
     "NEUTRAL": 0xffffff,
+    "NEUTRAL_BLUE": 0x21b1ff,
     "VALID": 0x5ab244,
     "WARNING": 0xffac00,
-    "ALERT": 0xf44242
+    "ALERT": 0xf44242,
+
+    "SHOP": 0x00f33f
 };

@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db");
 const mp = require("../scripts/msgPresets"); // TODO À retirer
+const mLog = require("../scripts/mLog");
 
 function addItem(client, embed, item) {
     var notSaleableText;
@@ -10,7 +11,7 @@ function addItem(client, embed, item) {
         notSaleableText = "\nCet item ne peut pas être vendu.";
     item.emoji = client.emojis.get(item.emoji);
     embed
-        .addField(`${item.emoji} ${item.buy_amount} x ${item.name}`, `${item.description}\n`
+        .addField(`${item.emoji} ${item.buy_amount} x ${item.name}`, `**Description :** ${item.description}\n`
             + `**Prix :** ${item.price} <:block:547449530610745364>\n**Numéro d'article :** ${item.id}` + notSaleableText);
 }
 
@@ -31,7 +32,7 @@ exports.run = (client, message, args) => {
             .setAuthor("Boutique")
             .setThumbnail("https://cdn.discordapp.com/attachments/543888518167003136/602227009468235791/SDVR_item.png")
             .addField("Aide", "Acheter un article : **Strad buy"
-                + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme)");
+                + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme).");
         rows.forEach(row => {
             let item = {
                 id: row["id"],
@@ -50,7 +51,7 @@ exports.run = (client, message, args) => {
             if (item.buyable === 1) addItem(client, shopEmbed, item);
         });
         shopEmbed.setFooter("Strad shop")
-            .setColor("#00f33f");
+            .setColor(mLog.colors.SHOP);
 
         message.delete();
         message.channel.send(shopEmbed); // TODO Mettre l'id du salon #commandes après le développement
