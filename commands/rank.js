@@ -44,9 +44,7 @@ exports.run = (client, message, args) => {
         });
 
     } catch (e) {
-
         console.log(e);
-
     }
 
 };
