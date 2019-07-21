@@ -56,7 +56,7 @@ exports.run = (client, message, args) => {
         if (!rows[0] || rows[0]["amount"] < 1) {
             let errorEmbed = new Discord.RichEmbed()
                 .setAuthor("Boutique")
-                .setDescription("Pour avoir accès à ça, fais **Strad shop** !")
+                .setDescription("Pour avoir accès à ça, fais ``Strad shop`` !")
                 .setColor(mLog.colors.SHOP);
             message.delete();
             // commandChannel.send(errorEmbed);

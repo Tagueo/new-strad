@@ -31,8 +31,8 @@ exports.run = (client, message, args) => {
         var shopEmbed = new Discord.RichEmbed()
             .setAuthor("Boutique")
             .setThumbnail("https://cdn.discordapp.com/attachments/543888518167003136/602227009468235791/SDVR_item.png")
-            .addField("Aide", "Acheter un article : **Strad buy"
-                + " <numéro de l'article>**.\nExemple : Strad buy 1 (pour acheter un changement de pseudonyme).");
+            .addField("Aide", "Acheter un article : ``Strad buy"
+                + " <numéro de l'article>``.\nExemple : ``Strad buy 1`` (pour acheter un changement de pseudonyme).");
         rows.forEach(row => {
             let item = {
                 id: row["id"],
