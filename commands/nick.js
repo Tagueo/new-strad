@@ -53,7 +53,7 @@ exports.run = (client, message, args) => {
         con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = 1`, {}, rows => {
-        if (!rows || rows[0]["amount"] < 1) {
+        if (!rows[0] || rows[0]["amount"] < 1) {
             let errorEmbed = new Discord.RichEmbed()
                 .setAuthor("Boutique")
                 .setDescription("Pour avoir accès à ça, fais **Strad shop** !")
