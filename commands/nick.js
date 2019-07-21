@@ -5,6 +5,17 @@ const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
 
+    if (!message.member.id === "315816143137013761") {
+        let errorEmbed = new Discord.RichEmbed()
+            .setAuthor("Changement de pseudonyme")
+            .setDescription("Rôôôh Delphi, tu sais très bien que je n'ai pas la permission de te renommer... :confused:")
+            .setColor(mLog.colors.ALERT);
+        message.delete();
+        // commandChannel.send(errorEmbed);
+        sendToTemp(errorEmbed); // TODO À retirer
+        return;
+    }
+
     if (!message.member.roles.find(r => r.name === "Mentor")) {
         message.delete();
         mp.sendWIP(client.channels.get('415633143861739541'));
