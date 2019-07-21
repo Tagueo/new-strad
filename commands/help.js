@@ -1,9 +1,10 @@
-const Discord = require("discord.js")
+const Discord = require("discord.js");
+const mLog = require("../scripts/mLog");
 
 exports.run = (client, message) => {
     var embed = new Discord.RichEmbed()
         .setAuthor('Help', client.user.avatarURL)
-        .setColor("#21b1ff")
+        .setColor(mLog.colors.NEUTRAL_BLUE)
         .setDescription("Pour m'appeler, utilise le prefix **Strad** (c'est mon nom !)."
             + "\nExemple : ``Strad help`` pour afficher cet encart ^^")
         .addField("Commandes", "``help`` • Affiche cet encart.\n``stats`` • Affiche des informations "
