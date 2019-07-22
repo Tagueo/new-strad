@@ -46,6 +46,7 @@ exports.run = (client, message, args) => {
 
         message.delete();
         message.channel.send(msg);
+        mLog.run(client, "Strad say", `${message.author} a envoyé un message via Strad : "${msg}"`, mLog.colors.NEUTRAL_BLUE);
 
         con.query(`UPDATE has_items SET amount = amount - 1 WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`, {}, rows => {
             con.end();

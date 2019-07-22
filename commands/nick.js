@@ -49,7 +49,7 @@ exports.run = (client, message, args) => {
         return;
     }
 
-    var newNickname = args[0], itemId = 1
+    var newNickname = args[0], itemId = 1, username = message.author.username,
         con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`, {}, rows => {
@@ -87,6 +87,8 @@ exports.run = (client, message, args) => {
             message.delete();
             // commandChannel.send(successEmbed);
             sendToTemp(successEmbed); // TODO À retirer
+
+            mLog.run(client, "Changement de pseudonyme", `${username} a changé son pseudo en "${newNickname}"`, mLog.colors.NEUTRAL_BLUE);
             con.end();
         });
     });
