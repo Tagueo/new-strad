@@ -26,12 +26,12 @@ exports.run = (client, message, args) => {
         message.channel.send(messageContent);
     }
 
-    var commandChannel = client.channels.get('415633143861739541');
+    let commandChannel = client.channels.get('415633143861739541');
 
     if (!args[0]) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Aide")
-            .setDescription("Changer de pseudonyme : **Strad nick <pseudonyme>**.\nRétablir le pseudonyme par défaut (gratuit) : **Strad nick default**.")
+            .setDescription("Changer de pseudonyme : ``Strad nick <pseudonyme>``.\nRétablir le pseudonyme par défaut (gratuit) : ``Strad nick default``.")
             .setColor(mLog.colors.NEUTRAL_BLUE);
         message.delete();
         // commandChannel.send(errorEmbed);
@@ -49,10 +49,10 @@ exports.run = (client, message, args) => {
         return;
     }
 
-    var newNickname = args[0],
+    var newNickname = args[0], itemId = 1
         con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-    con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = 1`, {}, rows => {
+    con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`, {}, rows => {
         if (!rows[0] || rows[0]["amount"] < 1) {
             let errorEmbed = new Discord.RichEmbed()
                 .setAuthor("Boutique")
@@ -79,7 +79,7 @@ exports.run = (client, message, args) => {
             return;
         }
 
-        con.query(`UPDATE has_items SET amount = amount - 1`, {}, rows => {
+        con.query(`UPDATE has_items SET amount = amount - 1 WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`, {}, rows => {
             let successEmbed = new Discord.RichEmbed()
                 .setAuthor("Changement de pseudonyme")
                 .setDescription(`Génial, ta nouvelle identité est prête !`)
@@ -87,6 +87,7 @@ exports.run = (client, message, args) => {
             message.delete();
             // commandChannel.send(successEmbed);
             sendToTemp(successEmbed); // TODO À retirer
+            con.end();
         });
     });
 
