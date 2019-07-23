@@ -5,7 +5,7 @@ exports.run = (client, message, args) => {
 
     try {
 
-        var con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+        let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
         con.query(`SELECT * FROM users WHERE user_id = ${message.author.id}`, {}, rows => {
 
@@ -22,23 +22,39 @@ exports.run = (client, message, args) => {
                     }
                 }
 
-                const stradEmoji = "<:block:547449530610745364>";
-                const creaEmoji = "<:crea:547482886824001539>";
+                con.query(`SELECT item_id AS id, item_emoji AS emoji, has_items.amount AS amount FROM has_items INNER JOIN items ON items.item_id = has_items.item_id`
+                    + ` WHERE user_id = "${message.author.id}" AND amount != 0 ORDER BY item_id ASC`, {}, rows => {
+                    const stradEmoji = "<:block:547449530610745364>";
+                    const creaEmoji = "<:crea:547482886824001539>";
+                    let inventory = [];
 
-                const embedMoney = new Discord.RichEmbed()
-                    .setAuthor(message.author.tag, message.author.avatarURL)
-                    .setThumbnail(message.author.avatarURL)
-                    .addField("Valeur du compte", `${dg["results"].money} ${stradEmoji}`, true)
-                    .addField("Nombre de Créas", `${dg["results"].creas_amount} ${creaEmoji}`, true)
-                    .addField("Rang", `#${dg["rank"]}`, true)
-                    .addField("Titre artistique", `${dg["results"].rank}`, true)
-                    .setFooter("Strad rank")
-                    .setColor(message.member.displayColor);
+                    if (rows[0]) {
+                        for (let i=0;i<rows.length;i++) {
+                            let emoji = client.emojis.get(rows[i]["emoji"]);
+                            inventory[i] = `${emoji} x ${rows[0]["amount"]}`;
+                        }
+                    }
 
-                client.channels.get('415633143861739541').send(embedMoney);
-                message.delete();
+                    inventory = inventory.join(" • ");
 
-                con.end();
+                    if (inventory === "") inventory = "Ton inventaire est vide. Fais ``Strad shop`` pour acheter des items !";
+
+                    const embedMoney = new Discord.RichEmbed()
+                        .setAuthor(message.author.tag, message.author.avatarURL)
+                        .setThumbnail(message.author.avatarURL)
+                        .addField("Valeur du compte", `${dg["results"].money} ${stradEmoji}`, true)
+                        .addField("Nombre de Créas", `${dg["results"].creas_amount} ${creaEmoji}`, true)
+                        .addField("Rang", `#${dg["rank"]}`, true)
+                        .addField("Titre artistique", dg["results"].rank, true)
+                        .addField("Inventaire", inventory)
+                        .setFooter("Strad rank")
+                        .setColor(message.member.displayColor);
+
+                    client.channels.get('415633143861739541').send(embedMoney);
+                    message.delete();
+
+                    con.end();
+                })
             })
 
         });
