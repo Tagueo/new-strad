@@ -4,15 +4,20 @@ const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
 
 function addItem(client, embed, item) {
-    var notSaleableText;
+    let notSaleableText, discountText = "", priceText = `${item.price}`, discountEmoji = client.emojis.get("603356048107241483");
+    let priceAfterDiscount = item.price - item.price * (item.discount / 100);
     if (item.saleable === 1)
         notSaleableText = "";
     else
         notSaleableText = "\nCet item ne peut pas être vendu.";
     item.emoji = client.emojis.get(item.emoji);
+    if (item.discount > 0) {
+        discountText = ` • ${discountEmoji}`;
+        priceText = `~~${item.price}~~ ${priceAfterDiscount}`;
+    }
     embed
-        .addField(`${item.emoji} ${item.buy_amount} x ${item.name}`, "**Description :** " + item.description + "\n"
-            + `**Prix :** ${item.price} <:block:547449530610745364>\n**Numéro d'article :** ${item.id}` + notSaleableText);
+        .addField(`${item.emoji} ${item.buy_amount} x ${item.name}${discountText}`, "**Description :** " + item.description + "\n"
+            + `**Prix :** ${priceText} <:block:547449530610745364>\n**Numéro d'article :** ${item.id}` + notSaleableText);
 }
 
 exports.run = (client, message, args) => {

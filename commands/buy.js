@@ -79,7 +79,9 @@ exports.run = (client, message, args) => {
                 return;
             }
 
-            con.query(`UPDATE users SET money = ${dg["money"] - item["price"]} WHERE user_id = "${message.member.id}"`,
+            let priceAfterDiscount = item["price"] - item["price"] * (item["discount"] / 100);
+
+            con.query(`UPDATE users SET money = ${dg["money"] - priceAfterDiscount} WHERE user_id = "${message.member.id}"`,
                 {"item": item}, (rows, dg) => {
                 con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${dg["item"]["item_id"]}`,
                     {"item": dg["item"]}, (rows, dg) => {
