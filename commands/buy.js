@@ -94,7 +94,7 @@ exports.run = (client, message, args) => {
                         var item = dg["item"];
                         let successEmbed = new Discord.RichEmbed()
                             .setAuthor("Achat réussi")
-                            .setDescription(`Tu as acheté **${item["buy_amount"]} x ${item["item_name"]}** pour **${item["price"]}** <:block:547449530610745364> !`)
+                            .setDescription(`Tu as acheté **${item["buy_amount"]} x ${item["item_name"]}** pour **${priceAfterDiscount}** <:block:547449530610745364> !`)
                             .setFooter("Tape \"Strad rank\" pour accéder à ton inventaire")
                             .setColor(mLog.colors.VALID);
                         message.delete();
