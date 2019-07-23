@@ -22,7 +22,7 @@ exports.run = (client, message, args) => {
                     }
                 }
 
-                con.query(`SELECT item_id AS id, item_emoji AS emoji, has_items.amount AS amount FROM has_items INNER JOIN items ON items.item_id = has_items.item_id`
+                con.query(`SELECT has_items.item_id AS id, item_emoji AS emoji, has_items.amount AS amount FROM has_items INNER JOIN items ON items.item_id = has_items.item_id`
                     + ` WHERE user_id = "${message.author.id}" AND amount != 0 ORDER BY has_items.item_id ASC`, {}, rows => {
                     const stradEmoji = "<:block:547449530610745364>";
                     const creaEmoji = "<:crea:547482886824001539>";
