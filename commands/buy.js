@@ -79,7 +79,7 @@ exports.run = (client, message, args) => {
                 return;
             }
 
-            let priceAfterDiscount = item["price"] - item["price"] * (item["discount"] / 100);
+            let priceAfterDiscount = Math.round(["price"] - item["price"] * (item["discount"] / 100));
 
             con.query(`UPDATE users SET money = ${dg["money"] - priceAfterDiscount} WHERE user_id = "${message.member.id}"`,
                 {"item": item}, (rows, dg) => {

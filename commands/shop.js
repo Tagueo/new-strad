@@ -5,7 +5,7 @@ const mLog = require("../scripts/mLog");
 
 function addItem(client, embed, item) {
     let notSaleableText, discountText = "", priceText = `${item.price}`, discountEmoji = client.emojis.get("603356048107241483");
-    let priceAfterDiscount = item.price - item.price * (item.discount / 100);
+    let priceAfterDiscount = Math.round(item.price - item.price * (item.discount / 100));
     if (item.saleable === 1)
         notSaleableText = "";
     else
