@@ -4,7 +4,7 @@ const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
 
 function addItem(client, embed, item) {
-    let notSaleableText, discountText = "", priceText = `${item.price}`, discountEmoji = client.emojis.get("603356048107241483");
+    let notSaleableText, discountText = "", priceText = `${item.price} <:block:547449530610745364>`, discountEmoji = client.emojis.get("603356048107241483");
     let priceAfterDiscount = Math.round(item.price - item.price * (item.discount / 100));
     if (item.saleable === 1)
         notSaleableText = "";
@@ -13,11 +13,11 @@ function addItem(client, embed, item) {
     item.emoji = client.emojis.get(item.emoji);
     if (item.discount > 0) {
         discountText = ` • ${discountEmoji}`;
-        priceText = `~~${item.price}~~ ${priceAfterDiscount}`;
+        priceText = `~~${item.price}~~ ${priceAfterDiscount} <:block:547449530610745364> (-${item.discount} %)`;
     }
     embed
         .addField(`${item.emoji} ${item.buy_amount} x ${item.name}${discountText}`, "**Description :** " + item.description + "\n"
-            + `**Prix :** ${priceText} <:block:547449530610745364>\n**Numéro d'article :** ${item.id}` + notSaleableText);
+            + `**Prix :** ${priceText}\n**Numéro d'article :** ${item.id}` + notSaleableText);
 }
 
 exports.run = (client, message, args) => {
