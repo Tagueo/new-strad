@@ -79,13 +79,13 @@ exports.run = (client, message, args) => {
                 return;
             }
 
-            let priceAfterDiscount = Math.round(["price"] - item["price"] * (item["discount"] / 100));
+            let priceAfterDiscount = Math.round(item["price"] - item["price"] * (item["discount"] / 100));
 
             con.query(`UPDATE users SET money = ${dg["money"] - priceAfterDiscount} WHERE user_id = "${message.member.id}"`,
                 {"item": item}, (rows, dg) => {
                 con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${dg["item"]["item_id"]}`,
                     {"item": dg["item"]}, (rows, dg) => {
-                    var sql, item = dg["item"];
+                    let sql, item = dg["item"];
                     if (rows[0])
                         sql = `UPDATE has_items SET amount = amount + ${item["buy_amount"]} WHERE user_id = "${message.member.id}" AND item_id = ${item["item_id"]}`;
                     else
