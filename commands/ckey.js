@@ -1,10 +1,21 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db");
+const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
 
-    let commandChannel = client.channels.get('415633143861739541'), choosenId;
+    if (!message.member.roles.find(r => r.name === "Mentor")) {
+        message.delete();
+        mp.sendWIP(client.channels.get('415633143861739541'));
+        return;
+    } // TODO À retirer après le développement
+
+    function sendToTemp(messageContent) {
+        message.channel.send(messageContent);
+    }
+
+    var commandChannel = client.channels.get('415633143861739541'), choosenId;
 
     if (!args[0] || isNaN(args[0])) {
         let errorEmbed = new Discord.RichEmbed()
@@ -12,12 +23,13 @@ exports.run = (client, message, args) => {
             .setDescription("Merci de saisir un numéro d'article valide.")
             .setColor(mLog.colors.ALERT);
         message.delete();
-        commandChannel.send(errorEmbed);
+        // commandChannel.send(errorEmbed);
+        sendToTemp(errorEmbed); // TODO À retirer
         return;
     } else
         choosenId = parseInt(args[0]);
 
-    let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+    var con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`, {}, rows => {
         let money = rows[0]["money"];
@@ -30,7 +42,8 @@ exports.run = (client, message, args) => {
                     .setDescription("Cet article est introuvable.")
                     .setColor(mLog.colors.ALERT);
                 message.delete();
-                commandChannel.send(errorEmbed);
+                // commandChannel.send(errorEmbed);
+                sendToTemp(errorEmbed); // TODO À retirer
                 con.end();
                 return;
             } else if (item["is_buyable"] === 0) {
@@ -39,7 +52,8 @@ exports.run = (client, message, args) => {
                     .setDescription("Cet article n'est pas à vendre.")
                     .setColor(mLog.colors.ALERT);
                 message.delete();
-                commandChannel.send(errorEmbed);
+                // commandChannel.send(errorEmbed);
+                sendToTemp(errorEmbed); // TODO À retirer
                 con.end();
                 return;
             } else if ((item["quantity"] > -1) && (item["quantity"] < item["buy_amount"])) {
@@ -48,7 +62,8 @@ exports.run = (client, message, args) => {
                     .setDescription(`Il ne reste plus assez de stocks pour acheter **${item["buy_amount"]} x ${item["item_name"]}**.`)
                     .setColor(mLog.colors.ALERT);
                 message.delete();
-                commandChannel.send(errorEmbed);
+                // commandChannel.send(errorEmbed);
+                sendToTemp(errorEmbed); // TODO À retirer
                 con.end();
                 return;
             } else if (dg["money"] < item["price"]) {
@@ -58,7 +73,8 @@ exports.run = (client, message, args) => {
                         + " x ${item["item_name"]}**. Il te manque encore ${item["price"] - dg["money"]} <:block:547449530610745364> !`)
                     .setColor(mLog.colors.ALERT);
                 message.delete();
-                commandChannel.send(errorEmbed);
+                // commandChannel.send(errorEmbed);
+                sendToTemp(errorEmbed); // TODO À retirer
                 con.end();
                 return;
             }
@@ -82,7 +98,8 @@ exports.run = (client, message, args) => {
                             .setFooter("Tape \"Strad rank\" pour accéder à ton inventaire")
                             .setColor(mLog.colors.VALID);
                         message.delete();
-                        commandChannel.send(successEmbed);
+                        // commandChannel.send(successEmbed);
+                        sendToTemp(successEmbed); // TODO À retirer
                         if (item["quantity"] !== -1) {
                             con.query(`UPDATE items SET quantity = quantity - ${item["buy_amount"]} WHERE item_id = ${item["item_id"]}`, {}, rows => {
                                 con.end();

@@ -21,5 +21,7 @@ exports.Inventory = class Inventory {
  * @param {Array} rawData The data the MySQL query has returned.
  */
 exports._Item = class Item {
-    constructor(rawData)
+    constructor(rawData) {
+        // TODO À continuer plus tard
+    }
 }

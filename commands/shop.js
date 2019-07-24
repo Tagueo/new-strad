@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db");
-const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
 
 function addItem(client, embed, item) {
@@ -28,18 +27,13 @@ function addItem(client, embed, item) {
 
 exports.run = (client, message, args) => {
 
-    if (!message.member.roles.find(r => r.name === "Mentor")) {
-        message.delete();
-        mp.sendWIP(client.channels.get('415633143861739541'));
-        return;
-    } // TODO À retirer après le développement
+    let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad"),
+        sql = "SELECT item_id AS id, item_name AS name, item_emoji AS emoji, description, price, is_buyable AS buyable,"
+        + " is_saleable AS saleable, quantity, buy_amount, discount, script_name, type FROM items WHERE is_buyable = 1 ORDER BY id ASC",
+        commandChannel = client.channels.get('415633143861739541');
 
-    var con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
-
-    sql = "SELECT item_id AS id, item_name AS name, item_emoji AS emoji, description, price, is_buyable AS buyable,"
-        + " is_saleable AS saleable, quantity, buy_amount, discount, script_name, type FROM items WHERE is_buyable = 1 ORDER BY id ASC";
     con.query(sql, {}, (rows) => {
-        var shopEmbed = new Discord.RichEmbed()
+        let shopEmbed = new Discord.RichEmbed()
             .setAuthor("Boutique")
             .setThumbnail("https://cdn.discordapp.com/attachments/543888518167003136/602227009468235791/SDVR_item.png")
             .addField("Aide", "Acheter un article : ``Strad buy"
@@ -65,7 +59,7 @@ exports.run = (client, message, args) => {
             .setColor(mLog.colors.SHOP);
 
         message.delete();
-        message.channel.send(shopEmbed); // TODO Mettre l'id du salon #commandes après le développement
+        commandChannel.send(shopEmbed);
 
         con.end();
     });
