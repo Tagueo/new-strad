@@ -31,7 +31,7 @@ exports.run = (client, message, args) => {
                     if (rows[0]) {
                         for (let i=0;i<rows.length;i++) {
                             let emoji = client.emojis.get(rows[i]["emoji"]);
-                            inventory[i] = `${emoji} x ${rows[0]["amount"]}`;
+                            inventory[i] = `${emoji} x ${rows[i]["amount"]}`;
                         }
                     }
 
