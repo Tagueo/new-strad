@@ -4,8 +4,14 @@ const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
 
 function addItem(client, embed, item) {
+    if (item.discount > 100)
+        item.discount = 100;
+    else if (item.discount < 0)
+        item.discount = 0;
+
     let notSaleableText, discountText = "", priceText = `${item.price} <:block:547449530610745364>`, discountEmoji = client.emojis.get("603356048107241483");
     let priceAfterDiscount = Math.round(item.price - item.price * (item.discount / 100));
+
     if (item.saleable === 1)
         notSaleableText = "";
     else
