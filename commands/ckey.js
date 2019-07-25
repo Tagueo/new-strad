@@ -15,7 +15,7 @@ exports.run = (client, message, args) => {
         message.channel.send(messageContent);
     }
 
-    var commandChannel = client.channels.get('415633143861739541'), choosenId;
+    let commandChannel = client.channels.get('415633143861739541'), choosenId;
 
     if (!args[0] || isNaN(args[0])) {
         let errorEmbed = new Discord.RichEmbed()
@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
     } else
         choosenId = parseInt(args[0]);
 
-    var con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+    let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`, {}, rows => {
         let money = rows[0]["money"];
