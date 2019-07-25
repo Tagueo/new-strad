@@ -94,7 +94,7 @@ exports.run = (client, message, args) => {
         gb.embed = new Discord.RichEmbed()
           .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
           .setColor(mLog.colors.ALERT)
-          .setDescription(`Tu as déjà obtenu ta récompense aujourd'hui.\nTu pourras la recevoir ${moment().endOf("day").fromNow()} !`)
+          .setDescription(`Tu as déjà obtenu ta récompense aujourd'hui.\nRécupère-la ${moment().endOf("day").fromNow()} !`)
           .setFooter("Strad daily");
 
         client.channels.get('415633143861739541').send(gb.embed);
