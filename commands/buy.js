@@ -24,6 +24,8 @@ exports.run = (client, message, args) => {
         con.query(`SELECT * FROM items WHERE item_id = ${choosenId}`, {"money": money}, (rows, dg) => {
             let item = rows[0];
 
+            let priceAfterDiscount = Math.round(item["price"] - item["price"] * (item["discount"] / 100));
+
             if (!item) {
                 let errorEmbed = new Discord.RichEmbed()
                     .setAuthor("Achat impossible")
@@ -51,19 +53,17 @@ exports.run = (client, message, args) => {
                 commandChannel.send(errorEmbed);
                 con.end();
                 return;
-            } else if (dg["money"] < item["price"]) {
+            } else if (dg["money"] < priceAfterDiscount) {
                 let errorEmbed = new Discord.RichEmbed()
                     .setAuthor("Achat impossible")
-                    .setDescription(`Tu n'as pas assez d'argent pour acheter **${item["buy_amount"]}"
-                        + " x ${item["item_name"]}**. Il te manque encore ${item["price"] - dg["money"]} <:block:547449530610745364> !`)
+                    .setDescription(`Tu n'as pas assez d'argent pour acheter **${item["buy_amount"]}`
+                        + ` x ${item["item_name"]}**. Il te manque encore ${priceAfterDiscount - dg["money"]} <:block:547449530610745364> !`)
                     .setColor(mLog.colors.ALERT);
                 message.delete();
                 commandChannel.send(errorEmbed);
                 con.end();
                 return;
             }
-
-            let priceAfterDiscount = Math.round(item["price"] - item["price"] * (item["discount"] / 100));
 
             con.query(`UPDATE users SET money = ${dg["money"] - priceAfterDiscount} WHERE user_id = "${message.member.id}"`,
                 {"item": item}, (rows, dg) => {
