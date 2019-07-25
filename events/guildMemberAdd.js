@@ -1,7 +1,4 @@
 const Discord = require('discord.js');
-
-const chalk = require('chalk');
-const moment = require('moment');
 const welcome = require('../scripts/welcome.js');
 
 const welcomeCategId = "443782424653070346";

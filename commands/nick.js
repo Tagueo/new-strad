@@ -39,7 +39,7 @@ exports.run = (client, message, args) => {
         return;
     }
 
-    var newNickname = args[0], itemId = 1, username = message.author.username,
+    var newNickname = args.join(" "), itemId = 1, username = message.author.username,
         con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`, {}, rows => {
