@@ -108,7 +108,7 @@ exports.run = (client, message, args) => {
                         .setDescription("Voici ta clé d'une valeur de **" + chosenValue + "** <:block:547449530610745364> :\n"
                             + "||```" + keyFace + "```||\nFais bien attention de ne pas la partager à n'importe qui !\n"
                             + "Afin de l'utiliser, le bénéficiaire de la clé devra taper la commande : ``Strad redeem <clé>``.")
-                        .setColor(mLog.colors.ALERT);
+                        .setColor(mLog.colors.NEUTRAL_BLUE);
                     message.member.send(privateSuccessEmbed);
 
                     mLog.run(client, "Création de clé", `${message.author} a créé une clé d'une valeur de **${chosenValue}** <:block:547449530610745364>.`,
