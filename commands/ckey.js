@@ -97,7 +97,7 @@ exports.run = (client, message, args) => {
 
                     let publicSuccessEmbed = new Discord.RichEmbed()
                         .setAuthor("Création effectuée")
-                        .setDescription("Ta clé a correctement été débloquée. Tu l'as reçue en message privé !")
+                        .setDescription("Ta clé a correctement été débloquée. Tu viens de la recevoir en message privé !")
                         .setColor(mLog.colors.VALID);
                     message.delete();
                     // commandChannel.send(errorEmbed);
