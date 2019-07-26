@@ -11,7 +11,9 @@ exports.run = (client, message) => {
             + "\n``rank`` • Affiche ton profil."
             + "\n``top`` • Affiche le classement du serveur.\n``daily`` • Permet de récupérer ta récompense journalière !"
             + "\n``ckey <valeur>`` • Crée une clé ayant la valeur en Blocs définie en argument.**[SOON]**"
-            + "\n``redeem <clé>`` • Utilise la clé spécifiée en argument afin de recevoir sa valeur en Blocs. **[SOON]**")
+            + "\n``redeem <clé>`` • Utilise la clé spécifiée en argument afin que tu puisses sa valeur en Blocs. **[SOON]**"
+            + "\n``check` <empreinte>`` • Permet de vérifier l'existence, la validité, la propriété et la valeur d'une clé en spécifiant"
+            + "son empreinte en argument. **[SOON]**")
         .addField("Premium", "``nick <pseudonyme>`` • Change de pseudonyme, et ce, seulement sur Stradivarius !"
             + "\n``say <message>`` • Fais parler Strad avec le message de ton choix !")
         .addField("Boutique", "``shop`` • Ouvre la boutique du serveur.\n``buy <numéro de l'article>`` "
