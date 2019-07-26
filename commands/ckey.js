@@ -85,33 +85,33 @@ exports.run = (client, message, args) => {
 
         con.query(`SELECT * FROM blocks_keys`, {}, keys => {
 
-            // if (keys[0]) {
-            //     while (keyExists(keys, keyFace)) {
-            //         keyFace = createKey();
-            //     }
-            // }
+            if (keys[0]) {
+                while (keyExists(keys, keyFace)) {
+                    keyFace = createKey();
+                }
+            }
 
             con.query(`INSERT INTO blocks_keys (key_face, key_value, creator_id) VALUES ("${keyFace}", ${chosenValue}, "${message.author.id}")`, {}, rows => {
+                con.query(`UPDATE users SET money = money - ${chosenValue} WHERE user_id = "${message.author.id}"`, {}, rows => {
 
-                con.query(`UPDATE users SET money = money - ${chosenValue} WHERE user_id = "${message.author.id}"`)
+                    let publicSuccessEmbed = new Discord.RichEmbed()
+                        .setAuthor("Création effectuée")
+                        .setDescription("Ta clé a correctement été débloquée. Tu l'as reçue en message privé !")
+                        .setColor(mLog.colors.ALERT);
+                    message.delete();
+                    // commandChannel.send(errorEmbed);
+                    sendToTemp(publicSuccessEmbed); // TODO À retirer
 
-                let publicSuccessEmbed = new Discord.RichEmbed()
-                    .setAuthor("Création effectuée")
-                    .setDescription("Ta clé a correctement été débloquée. Tu l'as reçue en message privé !")
-                    .setColor(mLog.colors.ALERT);
-                message.delete();
-                // commandChannel.send(errorEmbed);
-                sendToTemp(publicSuccessEmbed); // TODO À retirer
+                    let privateSuccessEmbed = new Discord.RichEmbed()
+                        .setAuthor("Ceci est un test")
+                        .setDescription("Cet article est introuvable.")
+                        .setColor(mLog.colors.ALERT);
+                    message.delete();
+                    message.member.send(privateSuccessEmbed);
 
-                let privateSuccessEmbed = new Discord.RichEmbed()
-                    .setAuthor("Ceci est un test")
-                    .setDescription("Cet article est introuvable.")
-                    .setColor(mLog.colors.ALERT);
-                message.delete();
-                message.member.send(privateSuccessEmbed);
+                    con.end();
 
-                con.end();
-
+                });
             });
         });
     });
