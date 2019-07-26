@@ -73,7 +73,7 @@ exports.run = (client, message, args) => {
                     if (rows[0])
                         sql = `UPDATE has_items SET amount = amount + ${item["buy_amount"]} WHERE user_id = "${message.member.id}" AND item_id = ${item["item_id"]}`;
                     else
-                        sql = `INSERT INTO has_items (user_id, item_id, amount) VALUES("${message.member.id}", ${item["item_id"]}, ${item["buy_amount"]})`;
+                        sql = `INSERT INTO has_items (user_id, item_id, amount) VALUES ("${message.member.id}", ${item["item_id"]}, ${item["buy_amount"]})`;
                     con.query(sql, {"item": item}, (rows, dg) => {
                         let item = dg["item"];
                         let successEmbed = new Discord.RichEmbed()

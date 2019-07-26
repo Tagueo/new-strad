@@ -48,7 +48,7 @@ module.exports = (client, message) => {
         if (message.type === "PINS_ADD") {
             message.delete();
         }
-        // Conditions déligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
+        // Conditions d'éligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
         if (isFeedbackable.check(message)) {
             message.react("✨");
             message.channel.send(`**Si tu souhaites activer les votes, clique sur ✨ ! :wink:\n(Attention : il doit s'agir d'une création qui t'appartient !)**`)
@@ -63,10 +63,9 @@ module.exports = (client, message) => {
         }
     }
 
-    const guildId = message.guild.id;
     const ANSWERS = JSON.parse(fs.readFileSync(appRoot + "/static_data/answers.json", "utf8"));
 
-    var botPrefix = client.config.prefix;
+    let botPrefix = client.config.prefix;
 
     // Ignores all bots
     if (message.author.bot) return;
@@ -92,7 +91,6 @@ module.exports = (client, message) => {
     if (!cmd) {
         return;
     }
-    ;
 
     // Run the command
     if (client.config.mtnMode != "true") {
