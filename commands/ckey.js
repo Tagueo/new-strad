@@ -13,7 +13,7 @@ exports.run = (client, message, args) => {
             res = ""
             for (let j=0;j<4;i++) {
                 randomNumber = Math.floor(Math.random() * 26);
-                res += alphabet[randomNumber]
+                res += possibleChars[randomNumber]
             }
             keyFace[i] = res;
         }
