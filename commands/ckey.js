@@ -5,6 +5,29 @@ const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
 
+    function createKey() {
+        let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+            "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], res = "", randomNumber, keyFace = [];
+
+        for (let i=0;i<4;i++) {
+            res = ""
+            for (let j=0;j<4;i++) {
+                randomNumber = Math.floor(Math.random() * 26);
+                res += alphabet[randomNumber]
+            }
+            keyFace[i] = res;
+        }
+        return keyFace.join("-");
+    }
+
+    function keyExists(rows, keyFace) {
+        let b = false;
+        for (let i=0;i<rows.length;i++) {
+            if (rows[i]["keyface"] === keyFace) b = true;
+        }
+        return b;
+    }
+
     if (!message.member.roles.find(r => r.name === "Mentor")) {
         message.delete();
         mp.sendWIP(client.channels.get('415633143861739541'));
@@ -16,23 +39,45 @@ exports.run = (client, message, args) => {
     }
 
     let commandChannel = client.channels.get('415633143861739541'), choosenId;
+    let minAllowedValue = 50, maxAllowedValue = 15000;
 
     if (!args[0] || isNaN(args[0])) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Commande erronée")
-            .setDescription("Merci de saisir un numéro d'article valide.")
+            .setDescription("Merci de saisir une valeur en Blocs valide. Utilisation : ``Strad ckey <valeur>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
         // commandChannel.send(errorEmbed);
         sendToTemp(errorEmbed); // TODO À retirer
         return;
     } else
-        choosenId = parseInt(args[0]);
+        chosenValue = parseInt(args[0]);
+
+    if ((chosenValue < minAllowedValue) || (chosenValue > maxAllowedValue)) {
+        let errorEmbed = new Discord.RichEmbed()
+            .setAuthor("Création de clé impossible")
+            .setDescription("Tu dois saisir une valeur en Blocs comprise entre 50 et 15000.")
+            .setColor(mLog.colors.ALERT);
+        message.delete();
+        // commandChannel.send(errorEmbed);
+        sendToTemp(errorEmbed); // TODO À retirer
+        return;
+    }
+
+    let keyFace = createKey();
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-    con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`, {}, rows => {
-        let money = rows[0]["money"];
+    con.query(`SELECT * FROM blocks_keys`, {}, keys => {
+
+        if (keys[0]) {
+            while (keyExists(keys, keyFace)) {
+                keyFace = createKey();
+            }
+        } else {
+
+        }
+
         con.query(`SELECT * FROM items WHERE item_id = ${choosenId}`, {"money": money}, (rows, dg) => {
             let item = rows[0];
 

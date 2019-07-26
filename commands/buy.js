@@ -4,7 +4,7 @@ const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
 
-    let commandChannel = client.channels.get('415633143861739541'), choosenId;
+    let commandChannel = client.channels.get('415633143861739541'), chosenId;
 
     if (!args[0] || isNaN(args[0])) {
         let errorEmbed = new Discord.RichEmbed()
@@ -15,13 +15,13 @@ exports.run = (client, message, args) => {
         commandChannel.send(errorEmbed);
         return;
     } else
-        choosenId = parseInt(args[0]);
+        chosenId = parseInt(args[0]);
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`, {}, rows => {
         let money = rows[0]["money"];
-        con.query(`SELECT * FROM items WHERE item_id = ${choosenId}`, {"money": money}, (rows, dg) => {
+        con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`, {"money": money}, (rows, dg) => {
             let item = rows[0];
 
             let priceAfterDiscount = Math.round(item["price"] - item["price"] * (item["discount"] / 100));
@@ -75,7 +75,7 @@ exports.run = (client, message, args) => {
                     else
                         sql = `INSERT INTO has_items (user_id, item_id, amount) VALUES("${message.member.id}", ${item["item_id"]}, ${item["buy_amount"]})`;
                     con.query(sql, {"item": item}, (rows, dg) => {
-                        var item = dg["item"];
+                        let item = dg["item"];
                         let successEmbed = new Discord.RichEmbed()
                             .setAuthor("Achat réussi")
                             .setDescription(`Tu as acheté **${item["buy_amount"]} x ${item["item_name"]}** pour **${priceAfterDiscount}** <:block:547449530610745364> !`)
