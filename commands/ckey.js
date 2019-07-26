@@ -11,12 +11,13 @@ exports.run = (client, message, args) => {
 
         for (let i=0;i<4;i++) {
             res = "";
-            for (let j=0;j<4;i++) {
+            for (let j=0;j<4;j++) {
                 randomNumber = Math.floor(Math.random() * 26);
                 res += possibleChars[randomNumber]
             }
             keyFace[i] = res;
         }
+
         return keyFace.join("-");
     }
 
