@@ -5,15 +5,20 @@ const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
 
-    function createKey() {
+    function _randomChar() {
         let possibleChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
-            "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9"], res = "", randomNumber, keyFace = [];
+            "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9"], randomNumber;
+        randomNumber = Math.floor(Math.random() * possibleChars.length);
+        return possibleChars[randomNumber];
+    }
+
+    function createKey() {
+        let res = "", keyFace = [];
 
         for (let i=0;i<4;i++) {
             res = "";
             for (let j=0;j<4;j++) {
-                randomNumber = Math.floor(Math.random() * 26);
-                res += possibleChars[randomNumber]
+                res += _randomChar();
             }
             keyFace[i] = res;
         }
@@ -21,10 +26,31 @@ exports.run = (client, message, args) => {
         return keyFace.join("-");
     }
 
+    function createFingerPrint() {
+        let part1 = "", part2 = "";
+
+        for (let i=0;i<2;i++) {
+            part1 += _randomChar();
+        }
+        for (let i=0;i<4;i++) {
+            part2 += _randomChar();
+        }
+
+        return part1 + "-" + part2;
+    }
+
     function keyExists(rows, keyFace) {
         let b = false;
         for (let i=0;i<rows.length;i++) {
-            if (rows[i]["keyface"] === keyFace) b = true;
+            if (rows[i]["key_face"] === keyFace) b = true;
+        }
+        return b;
+    }
+
+    function printExists(rows, keyPrint) {
+        let b = false;
+        for (let i=0;i<rows.length;i++) {
+            if (rows[i]["key_print"] === keyPrint) b = true;
         }
         return b;
     }
@@ -65,7 +91,7 @@ exports.run = (client, message, args) => {
         return;
     }
 
-    let keyFace = createKey();
+    let keyFace = createKey(), keyPrint = createFingerPrint();
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     con.query(`SELECT money FROM users WHERE user_id = "${message.author.id}"`, {}, rows => {
@@ -90,9 +116,12 @@ exports.run = (client, message, args) => {
                 while (keyExists(keys, keyFace)) {
                     keyFace = createKey();
                 }
+                while (printExists(keys, keyPrint)) {
+                    keyPrint = createFingerPrint();
+                }
             }
 
-            con.query(`INSERT INTO blocks_keys (key_face, key_value, creator_id) VALUES ("${keyFace}", ${chosenValue}, "${message.author.id}")`, {}, rows => {
+            con.query(`INSERT INTO blocks_keys (key_face, key_print, key_value, creator_id) VALUES ("${keyFace}", "${keyPrint}", ${chosenValue}, "${message.author.id}")`, {}, rows => {
                 con.query(`UPDATE users SET money = money - ${chosenValue} WHERE user_id = "${message.author.id}"`, {}, rows => {
 
                     let publicSuccessEmbed = new Discord.RichEmbed()
@@ -108,6 +137,9 @@ exports.run = (client, message, args) => {
                         .setDescription("Voici ta clé d'une valeur de **" + chosenValue + "** <:block:547449530610745364> (clique pour l'afficher) :\n"
                             + "||```" + keyFace + "```||\nFais bien attention de ne pas la partager à n'importe qui !\n"
                             + "Afin de l'utiliser, le bénéficiaire de la clé devra taper la commande : ``Strad redeem <clé>``.")
+                        .addField("Empreinte", "```" + keyPrint + "```"
+                            + "Note : l'empreinte d'une clé n'est pas secrète. Elle est directement liée à celle-ci et tu peux la partager au destinataire de la clé"
+                            + "afin d'attester que ta clé est valide et qu'elle a bien la valeur en Blocs annoncée. Cela peut se révéler utile dans le cas d'un échange !")
                         .setColor(mLog.colors.NEUTRAL_BLUE);
                     message.member.send(privateSuccessEmbed);
 

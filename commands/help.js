@@ -10,7 +10,7 @@ exports.run = (client, message) => {
         .addField("Général", "``help`` • Affiche cet encart."
             + "\n``rank`` • Affiche ton profil."
             + "\n``top`` • Affiche le classement du serveur.\n``daily`` • Permet de récupérer ta récompense journalière !"
-            + "\n``ckey <valeur>`` • Crée une clé ayant la valeur en Blocs définie en argument. **[SOON]**"
+            + "\n``ckey <valeur>`` • Crée une clé ayant la valeur en Blocs définie en argument.**[SOON]**"
             + "\n``redeem <clé>`` • Utilise la clé spécifiée en argument afin de recevoir sa valeur en Blocs. **[SOON]**")
         .addField("Premium", "``nick <pseudonyme>`` • Change de pseudonyme, et ce, seulement sur Stradivarius !"
             + "\n``say <message>`` • Fais parler Strad avec le message de ton choix !")
