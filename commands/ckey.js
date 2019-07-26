@@ -106,7 +106,6 @@ exports.run = (client, message, args) => {
                         .setAuthor("Ceci est un test")
                         .setDescription("Cet article est introuvable.")
                         .setColor(mLog.colors.ALERT);
-                    message.delete();
                     message.member.send(privateSuccessEmbed);
 
                     con.end();
