@@ -75,7 +75,7 @@ exports.run = (client, message, args) => {
         if (chosenValue > money) {
             let errorEmbed = new Discord.RichEmbed()
                 .setAuthor("Création de clé impossible")
-                .setDescription(`Tu n'as pas assez de Blocs pour créer cette clé. Il te manque ${chosenValue - money} <:block:547449530610745364> !`)
+                .setDescription(`Tu n'as pas assez de Blocs pour créer cette clé. Il te manque **${chosenValue - money}** <:block:547449530610745364> !`)
                 .setColor(mLog.colors.ALERT);
             message.delete();
             // commandChannel.send(errorEmbed);
@@ -98,16 +98,21 @@ exports.run = (client, message, args) => {
                     let publicSuccessEmbed = new Discord.RichEmbed()
                         .setAuthor("Création effectuée")
                         .setDescription("Ta clé a correctement été débloquée. Tu l'as reçue en message privé !")
-                        .setColor(mLog.colors.ALERT);
+                        .setColor(mLog.colors.VALID);
                     message.delete();
                     // commandChannel.send(errorEmbed);
                     sendToTemp(publicSuccessEmbed); // TODO À retirer
 
                     let privateSuccessEmbed = new Discord.RichEmbed()
-                        .setAuthor("Ceci est un test")
-                        .setDescription("Cet article est introuvable.")
+                        .setAuthor("Création de clé")
+                        .setDescription("Voici ta clé d'une valeur de **" + chosenValue + "** <:block:547449530610745364> :\n"
+                            + "||```" + keyFace + "```||\nFais bien attention de ne pas la partager à n'importe qui !\n"
+                            + "Afin de l'utiliser, le bénéficiaire de la clé devra taper la commande : ``Strad redeem <clé>``.")
                         .setColor(mLog.colors.ALERT);
                     message.member.send(privateSuccessEmbed);
+
+                    mLog.run(client, "Création de clé", `${message.author} a créé une clé d'une valeur de **${chosenValue}** <:block:547449530610745364>.`,
+                        mLog.colors.NEUTRAL_BLUE);
 
                     con.end();
 
