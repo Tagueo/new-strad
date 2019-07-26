@@ -72,7 +72,7 @@ exports.run = (client, message, args) => {
 
         let money = rows[0]["money"];
 
-        if (chosenValue < money) {
+        if (chosenValue > money) {
             let errorEmbed = new Discord.RichEmbed()
                 .setAuthor("Création de clé impossible")
                 .setDescription(`Tu n'as pas assez de Blocs pour créer cette clé. Il te manque ${chosenValue - money} <:block:547449530610745364> !`)
