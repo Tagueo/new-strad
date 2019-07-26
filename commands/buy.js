@@ -83,6 +83,10 @@ exports.run = (client, message, args) => {
                             .setColor(mLog.colors.VALID);
                         message.delete();
                         commandChannel.send(successEmbed);
+
+                        mLog.run(client, "Strad buy", `${message.author} a acheté **${item["buy_amount"]} x ${item["item_name"]}** pour **${priceAfterDiscount}** <:block:547449530610745364>.`,
+                            mLog.colors.NEUTRAL_BLUE);
+
                         if (item["quantity"] !== -1) {
                             con.query(`UPDATE items SET quantity = quantity - ${item["buy_amount"]} WHERE item_id = ${item["item_id"]}`, {}, rows => {
                                 con.end();
