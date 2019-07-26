@@ -10,7 +10,7 @@ exports.run = (client, message, args) => {
             "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9"], res = "", randomNumber, keyFace = [];
 
         for (let i=0;i<4;i++) {
-            res = ""
+            res = "";
             for (let j=0;j<4;i++) {
                 randomNumber = Math.floor(Math.random() * 26);
                 res += possibleChars[randomNumber]
@@ -85,11 +85,11 @@ exports.run = (client, message, args) => {
 
         con.query(`SELECT * FROM blocks_keys`, {}, keys => {
 
-            if (keys[0]) {
-                while (keyExists(keys, keyFace)) {
-                    keyFace = createKey();
-                }
-            }
+            // if (keys[0]) {
+            //     while (keyExists(keys, keyFace)) {
+            //         keyFace = createKey();
+            //     }
+            // }
 
             con.query(`INSERT INTO blocks_keys (key_face, key_value, creator_id) VALUES ("${keyFace}", ${chosenValue}, "${message.author.id}")`, {}, rows => {
 
