@@ -5,14 +5,6 @@ const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
 
-    function keyExists(rows, keyFace) {
-        let b = false;
-        for (let i=0;i<rows.length;i++) {
-            if (rows[i]["keyface"] === keyFace) b = true;
-        }
-        return b;
-    }
-
     if (!message.member.roles.find(r => r.name === "Mentor")) {
         message.delete();
         mp.sendWIP(client.channels.get('415633143861739541'));
@@ -24,19 +16,19 @@ exports.run = (client, message, args) => {
     }
 
     let commandChannel = client.channels.get('415633143861739541'), chosenValue;
-    let minAllowedValue = 50, maxAllowedValue = 15000;
 
-    if (!args[0] || isNaN(args[0])) {
+    if (!args[0]) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Commande erronée")
-            .setDescription("Merci de saisir une valeur en Blocs valide. Utilisation : ``Strad ckey <valeur>``.")
+            .setDescription("Merci de saisir la clé à utiliser. Utilisation : ``Strad redeem <clé>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
         // commandChannel.send(errorEmbed);
         sendToTemp(errorEmbed); // TODO À retirer
         return;
-    } else
-        chosenValue = parseInt(args[0]);
+    }
+
+    keyFace = args[0]; // TODO Faire la suite
 
     if ((chosenValue < minAllowedValue) || (chosenValue > maxAllowedValue)) {
         let errorEmbed = new Discord.RichEmbed()
@@ -89,7 +81,7 @@ exports.run = (client, message, args) => {
 
                     let privateSuccessEmbed = new Discord.RichEmbed()
                         .setAuthor("Création de clé")
-                        .setDescription("Voici ta clé d'une valeur de **" + chosenValue + "** <:block:547449530610745364> (clique pour l'afficher) :\n"
+                        .setDescription("Voici ta clé d'une valeur de **" + chosenValue + "** <:block:547449530610745364> (clique pour l'afficher) :\n\n"
                             + "||```" + keyFace + "```||\nFais bien attention de ne pas la partager à n'importe qui !\n"
                             + "Afin de l'utiliser, le bénéficiaire de la clé devra taper la commande : ``Strad redeem <clé>``.")
                         .setColor(mLog.colors.NEUTRAL_BLUE);
