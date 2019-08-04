@@ -1,3 +1,5 @@
+const sendMP = require("../scripts/sendMP");
+
 exports.run = (client, message, args) => {
 
   if (message.member.roles.find(x => x.name === "Mentor")) {
@@ -19,7 +21,7 @@ exports.run = (client, message, args) => {
     if (channel && args[1]) {
         args.splice(0, 1);
         channel.send(args.join(' '));
-        message.author.send('<:true:413685423202893826> Envoyé !');
+        sendMP.run(client, '<:true:413685423202893826> Envoyé !', message.member);
     }
 
   } else {

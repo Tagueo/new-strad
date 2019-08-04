@@ -1,11 +1,12 @@
 const Discord = require('discord.js');
 const welcome = require('../scripts/welcome.js');
 
-const welcomeCategId = "443782424653070346";
-
 module.exports = (client, member) => {
   // Récupération du salon de modération
   const logs = client.channels.get(client.config.logsChannel);
+
+  // Récupération de la catégorie de bienvenue
+  const welcomeCategId = "443782424653070346";
 
   // On vérifie si l'évènement a lieu sur Stradivarius
   if (member.guild.id = '412369732679893004') {
@@ -57,7 +58,7 @@ module.exports = (client, member) => {
       console.log(err);
     }
 
-    welcome.run(member);
+    welcome.run(client, member);
     member.guild.channels.find(c => c.id === welcomeCategId).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES");
     logs.send(embed);
     console.log(member.user.username + " a rejoint le serveur !");

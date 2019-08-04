@@ -7,6 +7,7 @@ var appRoot = process.cwd();
 
 const logger = require(appRoot + '/scripts/logger.js');
 const isFeedbackable = require(appRoot + '/scripts/isFeedbackable.js');
+const sendMP = require('../scripts/sendMP');
 
 const up_emote = "like:568493894270976012";
 const down_emote = "dislike:568493872968368149";
@@ -180,32 +181,32 @@ module.exports = async (client, messageReaction, user) => {
 
         if (messageReaction.message.member.user.bot) {
             messageReaction.remove(user);
-            user.send(`Tu ne peux pas signaler mes messages. C'est vraiment l'hôpital qui se fout de la charité !`);
+            sendMP.run(client, `Tu ne peux pas signaler mes messages. C'est vraiment l'hôpital qui se fout de la charité !`, user);
             return;
             // Si la réaction se trouve sur un message de Strad, alors le script s'arrête.
         }
         if (user.id === messageReaction.message.author.id) {
             messageReaction.remove(user);
-            user.send(`Tu ne peux pas signaler ton propre message.`);
+            sendMP.run(client, `Tu ne peux pas signaler ton propre message.`, user);
             return;
             // Si la réaction se trouve sur un message de la personne qui réagit, alors le script s'arrête.
         }
         if (messageReaction.message.member.roles.find(r => r.name === client.config.modRole) || messageReaction.message.member.roles.find(r => r.name === "Assistant")) {
             messageReaction.remove(user);
-            user.send(`Tu ne peux pas signaler le message d'un membre du staff.`);
+            sendMP.run(client, `Tu ne peux pas signaler le message d'un membre du staff.`, user);
             return;
             // Si la réaction se trouve sur un message d'un membre du Staff, alors le script s'arrête.
         }
         if (messageReaction.message.reactions.find(r => r.emoji.name === "report").users.array().length > 1) {
-            user.send(`Ce message a déjà été signalé, merci pour ta contribution !`);
+            sendMP.run(client, `Ce message a déjà été signalé, merci pour ta contribution !`, user);
             return;
             // Si le message a déjà été reporté, alors le script s'arrête MAIS ON NE RETIRE PAS LA RÉACTION DE L'UTILISATEUR.
         }
         if (reactedRecently.has(user.id)) {
             messageReaction.remove(user);
-            user.send(`Tu ne peux signaler un message que toutes les 30 secondes !`);
+            sendMP.run(client, `Tu ne peux signaler un message que toutes les 30 secondes !`, user);
             return;
-            //Si l'utilisateur a déjà signalé un message il y a moins de 30 secondes, alors le script s'arrête.
+            // Si l'utilisateur a déjà signalé un message il y a moins de 30 secondes, alors le script s'arrête.
         } else {
             // Adds the user to the set so that they can't talk for a minute
             reactedRecently.add(user.id);

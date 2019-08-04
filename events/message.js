@@ -9,6 +9,7 @@ var appRoot = process.cwd();
 const logger = require(appRoot + '/scripts/logger');
 const isFeedbackable = require(appRoot + '/scripts/isFeedbackable');
 const mLog = require('../scripts/mLog');
+const sendMP = require('../scripts/sendMP');
 
 module.exports = (client, message) => {
 
@@ -56,9 +57,9 @@ module.exports = (client, message) => {
                     m.delete(10000);
                 });
         } else if (message.channel.id === "568677435793604649" && message.attachments.size === 0) {
-            message.member.send("Hey, tu ne peux poster qu'un montage de tes créations, dans le salon #before-after ! :smile:"
+            sendMP.run(client, "Hey, tu ne peux poster qu'un montage de tes créations, dans le salon #before-after ! :smile:"
                 + "\nCrée une image avec quelques de tes premières créations avec, à côté, certaines de tes dernières !"
-                + "\nOn pourra ainsi voir les progrès que tu as fait sur Stradivarius :wink:");
+                + "\nOn pourra ainsi voir les progrès que tu as fait sur Stradivarius :wink:", message.member);
             message.delete();
         }
     }
