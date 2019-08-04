@@ -28,7 +28,7 @@ exports.run = (client, message, args) => {
         console.log(err);
       }
 
-      if (rows[0].lastdaily != moment().format("DD/MM/YY")) { // Si l'utilisateur n'a pas encore demandé son daily aujourd'hui, alors...
+      if (rows[0].lastdaily !== moment().format("DD/MM/YY")) { // Si l'utilisateur n'a pas encore demandé son daily aujourd'hui, alors...
 
         con.query(`SELECT * FROM rewards WHERE rewarded_id = "${message.author.id}" AND type = "UV"`, function (err, rows, fields) { // Récupération des UVs
           if (err) {

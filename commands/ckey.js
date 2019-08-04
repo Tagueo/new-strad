@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const db = require("../scripts/db");
 const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
+var moment = require("moment");
 
 exports.run = (client, message, args) => {
 
@@ -91,7 +92,7 @@ exports.run = (client, message, args) => {
         return;
     }
 
-    let keyFace = createKey(), keyPrint = createFingerPrint();
+    let keyFace = createKey(), keyPrint = createFingerPrint(), todayDate = moment().format('DD/MM/YY');
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     con.query(`SELECT money FROM users WHERE user_id = "${message.author.id}"`, {}, rows => {
@@ -121,7 +122,8 @@ exports.run = (client, message, args) => {
                 }
             }
 
-            con.query(`INSERT INTO blocks_keys (key_face, key_print, key_value, creator_id) VALUES ("${keyFace}", "${keyPrint}", ${chosenValue}, "${message.author.id}")`, {}, rows => {
+            con.query(`INSERT INTO blocks_keys (key_face, key_print, key_value, creator_id, creation_date) VALUES ("${keyFace}", "${keyPrint}", ${chosenValue},
+                "${message.author.id}", "${moment().format('DD/MM/YY')}")`, {}, rows => {
                 con.query(`UPDATE users SET money = money - ${chosenValue} WHERE user_id = "${message.author.id}"`, {}, rows => {
 
                     let publicSuccessEmbed = new Discord.RichEmbed()
@@ -129,7 +131,7 @@ exports.run = (client, message, args) => {
                         .setDescription("Ta clé a correctement été débloquée. Tu viens de la recevoir en message privé !")
                         .setColor(mLog.colors.VALID);
                     message.delete();
-                    // commandChannel.send(errorEmbed);
+                    // commandChannel.send(publicSuccessEmbed);
                     sendToTemp(publicSuccessEmbed); // TODO À retirer
 
                     let privateSuccessEmbed = new Discord.RichEmbed()
