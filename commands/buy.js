@@ -24,8 +24,6 @@ exports.run = (client, message, args) => {
         con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`, {"money": money}, (rows, dg) => {
             let item = rows[0];
 
-            let priceAfterDiscount = Math.round(item["price"] - item["price"] * (item["discount"] / 100));
-
             if (!item) {
                 let errorEmbed = new Discord.RichEmbed()
                     .setAuthor("Achat impossible")
@@ -35,7 +33,11 @@ exports.run = (client, message, args) => {
                 commandChannel.send(errorEmbed);
                 con.end();
                 return;
-            } else if (item["is_buyable"] === 0) {
+            }
+
+            let priceAfterDiscount = Math.round(item["price"] - item["price"] * (item["discount"] / 100));
+
+            if (item["is_buyable"] === 0) {
                 let errorEmbed = new Discord.RichEmbed()
                     .setAuthor("Achat impossible")
                     .setDescription("Cet article n'est pas à vendre.")

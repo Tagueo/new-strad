@@ -5,6 +5,14 @@ const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
 
+    function keyExists(rows, keyFace) {
+        let b = false;
+        for (let i=0;i<rows.length;i++) {
+            if (rows[i]["key_face"] === keyFace) b = true;
+        }
+        return b;
+    }
+
     if (!message.member.roles.find(r => r.name === "Mentor")) {
         message.delete();
         mp.sendWIP(client.channels.get('415633143861739541'));
@@ -28,71 +36,39 @@ exports.run = (client, message, args) => {
         return;
     }
 
-    keyFace = args[0]; // TODO Faire la suite
-
-    if ((chosenValue < minAllowedValue) || (chosenValue > maxAllowedValue)) {
-        let errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Création de clé impossible")
-            .setDescription("Tu dois saisir une valeur en Blocs comprise entre 50 et 15000.")
-            .setColor(mLog.colors.ALERT);
-        message.delete();
-        // commandChannel.send(errorEmbed);
-        sendToTemp(errorEmbed); // TODO À retirer
-        return;
-    }
-
-    let keyFace = createKey();
+    let keyFace = args[0]; // TODO Faire la suite
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-    con.query(`SELECT money FROM users WHERE user_id = "${message.author.id}"`, {}, rows => {
+    con.query(`SELECT * FROM blocks_keys`, {}, keys => {
 
-        let money = rows[0]["money"];
-
-        if (chosenValue > money) {
-            let errorEmbed = new Discord.RichEmbed()
-                .setAuthor("Création de clé impossible")
-                .setDescription(`Tu n'as pas assez de Blocs pour créer cette clé. Il te manque **${chosenValue - money}** <:block:547449530610745364> !`)
-                .setColor(mLog.colors.ALERT);
-            message.delete();
-            // commandChannel.send(errorEmbed);
-            sendToTemp(errorEmbed); // TODO À retirer
-            con.end();
-            return;
+        if (keys[0]) {
+            if (key)
         }
 
-        con.query(`SELECT * FROM blocks_keys`, {}, keys => {
+        con.query(`INSERT INTO blocks_keys (key_face, key_value, creator_id) VALUES ("${keyFace}", ${chosenValue}, "${message.author.id}")`, {}, rows => {
+            con.query(`UPDATE users SET money = money - ${chosenValue} WHERE user_id = "${message.author.id}"`, {}, rows => {
 
-            if (keys[0]) {
-                while (keyExists(keys, keyFace)) {
-                    keyFace = createKey();
-                }
-            }
+                let publicSuccessEmbed = new Discord.RichEmbed()
+                    .setAuthor("Création effectuée")
+                    .setDescription("Ta clé a correctement été débloquée. Tu viens de la recevoir en message privé !")
+                    .setColor(mLog.colors.VALID);
+                message.delete();
+                // commandChannel.send(errorEmbed);
+                sendToTemp(publicSuccessEmbed); // TODO À retirer
 
-            con.query(`INSERT INTO blocks_keys (key_face, key_value, creator_id) VALUES ("${keyFace}", ${chosenValue}, "${message.author.id}")`, {}, rows => {
-                con.query(`UPDATE users SET money = money - ${chosenValue} WHERE user_id = "${message.author.id}"`, {}, rows => {
+                let privateSuccessEmbed = new Discord.RichEmbed()
+                    .setAuthor("Création de clé")
+                    .setDescription("Voici ta clé d'une valeur de **" + chosenValue + "** <:block:547449530610745364> (clique pour l'afficher) :\n"
+                        + "||```" + keyFace + "```||\nFais bien attention de ne pas la partager à n'importe qui !\n"
+                        + "Afin de l'utiliser, le bénéficiaire de la clé devra taper la commande : ``Strad redeem <clé>``.")
+                    .setColor(mLog.colors.NEUTRAL_BLUE);
+                message.member.send(privateSuccessEmbed);
 
-                    let publicSuccessEmbed = new Discord.RichEmbed()
-                        .setAuthor("Création effectuée")
-                        .setDescription("Ta clé a correctement été débloquée. Tu viens de la recevoir en message privé !")
-                        .setColor(mLog.colors.VALID);
-                    message.delete();
-                    // commandChannel.send(errorEmbed);
-                    sendToTemp(publicSuccessEmbed); // TODO À retirer
+                mLog.run(client, "Création de clé", `${message.author} a créé une clé d'une valeur de **${chosenValue}** <:block:547449530610745364>.`,
+                    mLog.colors.NEUTRAL_BLUE);
 
-                    let privateSuccessEmbed = new Discord.RichEmbed()
-                        .setAuthor("Création de clé")
-                        .setDescription("Voici ta clé d'une valeur de **" + chosenValue + "** <:block:547449530610745364> (clique pour l'afficher) :\n"
-                            + "||```" + keyFace + "```||\nFais bien attention de ne pas la partager à n'importe qui !\n"
-                            + "Afin de l'utiliser, le bénéficiaire de la clé devra taper la commande : ``Strad redeem <clé>``.")
-                        .setColor(mLog.colors.NEUTRAL_BLUE);
-                    message.member.send(privateSuccessEmbed);
+                con.end();
 
-                    mLog.run(client, "Création de clé", `${message.author} a créé une clé d'une valeur de **${chosenValue}** <:block:547449530610745364>.`,
-                        mLog.colors.NEUTRAL_BLUE);
-
-                    con.end();
-
-                });
             });
         });
     });
