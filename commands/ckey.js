@@ -145,7 +145,7 @@ exports.run = (client, message, args) => {
                         .setColor(mLog.colors.NEUTRAL_BLUE);
                     message.member.send(privateSuccessEmbed);
 
-                    mLog.run(client, "Création de clé", message.member.username + " a créé une clé d'empreinte ``" + keyPrint + " et d'une valeur de **" + chosenValue + "** <:block:547449530610745364>.",
+                    mLog.run(client, "Création de clé", message.author + " a créé une clé d'empreinte ``" + keyPrint + " et d'une valeur de **" + chosenValue + "** <:block:547449530610745364>.",
                         mLog.colors.NEUTRAL_BLUE);
 
                     con.end();

@@ -58,7 +58,7 @@ exports.run = (client, message, args) => {
                             // commandChannel.send(successEmbed);
                             sendToTemp(successEmbed); // TODO À retirer
 
-                            mLog.run(client, "Récupération de clé", message.member.username + " a utilisé la clé ``" + keyFace + "`` d'une valeur de **" + key["key_value"] + "** <:block:547449530610745364>.",
+                            mLog.run(client, "Récupération de clé", message.author + " a utilisé la clé ``" + keyFace + "`` d'une valeur de **" + key["key_value"] + "** <:block:547449530610745364>.",
                                 mLog.colors.NEUTRAL_BLUE);
 
                             con.end();
