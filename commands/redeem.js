@@ -11,7 +11,7 @@ exports.run = (client, message, args) => {
         for (let i=0;i<rows.length;i++) {
             if (rows[i]["key_face"] === keyFace) key = rows[i];
         }
-        return b;
+        return key;
     }
 
     if (!message.member.roles.find(r => r.name === "Mentor")) {
