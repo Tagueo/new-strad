@@ -1,3 +1,5 @@
+const Discord = require("discord.js");
+
 exports.run = (client, messageContent, member) => {
     member.send(messageContent)
         .catch((e) => {
