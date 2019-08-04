@@ -42,7 +42,7 @@ exports.run = (client, message, args) => {
     con.query(`SELECT * FROM blocks_keys`, {}, keys => {
 
         if (keys[0]) {
-            if (key)
+            // if (key)
         }
 
         con.query(`INSERT INTO blocks_keys (key_face, key_value, creator_id) VALUES ("${keyFace}", ${chosenValue}, "${message.author.id}")`, {}, rows => {
