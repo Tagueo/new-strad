@@ -79,7 +79,7 @@ exports.run = (client, message, args) => {
             } else {
                 let errorEmbed = new Discord.RichEmbed()
                     .setAuthor("Récupération impossible")
-                    .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Pour créer une clé, utilise : ``Strad ckey <valeur>``.")
+                    .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
                     .setColor(mLog.colors.ALERT);
                 message.delete();
                 // commandChannel.send(errorEmbed);
