@@ -87,6 +87,15 @@ exports.run = (client, message, args) => {
                 con.end();
                 return;
             }
+        } else {
+            let errorEmbed = new Discord.RichEmbed()
+                .setAuthor("Récupération impossible")
+                .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
+                .setColor(mLog.colors.ALERT);
+            message.delete();
+            // commandChannel.send(errorEmbed);
+            sendToTemp(errorEmbed); // TODO À retirer
+            con.end();
         }
 
     });

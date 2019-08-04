@@ -2,14 +2,13 @@ const Discord = require("discord.js");
 const db = require("../scripts/db");
 const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
-var moment = require("moment");
 
 exports.run = (client, message, args) => {
 
-    function findKey(rows, keyFace) {
+    function findKey(rows, keyPrint) {
         let key = null;
         for (let i=0;i<rows.length;i++) {
-            if (rows[i]["key_face"] === keyFace) key = rows[i];
+            if (rows[i]["key_print"] === keyPrint) key = rows[i];
         }
         return key;
     }
@@ -24,12 +23,12 @@ exports.run = (client, message, args) => {
         message.channel.send(messageContent);
     }
 
-    let commandChannel = client.channels.get('415633143861739541'), chosenValue;
+    let commandChannel = client.channels.get('415633143861739541');
 
     if (!args[0]) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Commande erronée")
-            .setDescription("Merci de saisir la clé à utiliser. Utilisation : ``Strad redeem <clé>``.")
+            .setDescription("Merci de saisir l'empreinte de la clé à vérifier. Utilisation : ``Strad check <empreinte>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
         // commandChannel.send(errorEmbed);
@@ -37,7 +36,7 @@ exports.run = (client, message, args) => {
         return;
     }
 
-    let keyFace = args[0], todayDate = moment().format('DD/MM/YY');
+    let keyPrint = args[0];
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     con.query(`SELECT * FROM blocks_keys`, {}, keys => {
@@ -87,6 +86,15 @@ exports.run = (client, message, args) => {
                 con.end();
                 return;
             }
+        } else {
+            let errorEmbed = new Discord.RichEmbed()
+                .setAuthor("Récupération impossible")
+                .setDescription("L'empreinte ``" + keyPrint + "`` n'est liée à aucune clé existante. Format : ``XX-XXXX``.")
+                .setColor(mLog.colors.ALERT);
+            message.delete();
+            // commandChannel.send(errorEmbed);
+            sendToTemp(errorEmbed); // TODO À retirer
+            con.end();
         }
 
     });
