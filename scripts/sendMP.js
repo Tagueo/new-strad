@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const mLog = require("../scripts/mLog");
 
 exports.run = (client, messageContent, member) => {
     member.send(messageContent)
