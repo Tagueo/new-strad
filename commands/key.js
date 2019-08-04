@@ -73,7 +73,7 @@ exports.run = (client, message, args) => {
     if (!args[0] || isNaN(args[0])) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Commande erronée")
-            .setDescription("Merci de saisir une valeur en Blocs valide. Utilisation : ``Strad ckey <valeur>``.")
+            .setDescription("Merci de saisir une valeur en Blocs valide. Utilisation : ``Strad key <valeur>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
         // commandChannel.send(errorEmbed);
