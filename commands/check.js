@@ -42,43 +42,14 @@ exports.run = (client, message, args) => {
     con.query(`SELECT * FROM blocks_keys`, {}, keys => {
 
         if (keys[0]) {
-            let key = findKey(keys, keyFace);
+            let key = findKey(keys, keyPrint);
 
             if (key) {
-                if (!key["recipient_id"]) {
-                    con.query(`UPDATE blocks_keys SET recipient_id = "${message.author.id}", redeem_date = "${todayDate}" WHERE key_id = ${key["key_id"]}`, {}, rows => {
-                        con.query(`UPDATE users SET money = money + ${key["key_value"]} WHERE user_id = "${message.author.id}"`, {}, rows => {
-
-                            let successEmbed = new Discord.RichEmbed()
-                                .setAuthor("Récupération réussie")
-                                .setDescription("Youpi ! La clé ``" + keyFace + "`` est valide. Tu viens de recevoir **" + key["key_value"] + "** <:block:547449530610745364> !")
-                                .setColor(mLog.colors.VALID);
-                            message.delete();
-                            // commandChannel.send(successEmbed);
-                            sendToTemp(successEmbed); // TODO À retirer
-
-                            mLog.run(client, "Récupération de clé", message.author + " a utilisé la clé ``" + keyFace + "`` d'une valeur de **" + key["key_value"] + "** <:block:547449530610745364>.",
-                                mLog.colors.NEUTRAL_BLUE);
-
-                            con.end();
-
-                        });
-                    });
-                } else {
-                    let errorEmbed = new Discord.RichEmbed()
-                        .setAuthor("Récupération impossible")
-                        .setDescription("La clé ``" + keyFace + "`` a déjà été utilisée. En cas de litige, contacte un Mentor en message privé.")
-                        .setColor(mLog.colors.ALERT);
-                    message.delete();
-                    // commandChannel.send(errorEmbed);
-                    sendToTemp(errorEmbed); // TODO À retirer
-                    con.end();
-                    return;
-                }
+                // TODO CONTINUER ICI ! (affichage des infos liées à la clé)
             } else {
                 let errorEmbed = new Discord.RichEmbed()
-                    .setAuthor("Récupération impossible")
-                    .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
+                    .setAuthor("Clé introuvable")
+                    .setDescription("L'empreinte ``" + keyPrint + "`` n'est liée à aucune clé existante. Format : ``XX-XXXX``.")
                     .setColor(mLog.colors.ALERT);
                 message.delete();
                 // commandChannel.send(errorEmbed);
@@ -88,7 +59,7 @@ exports.run = (client, message, args) => {
             }
         } else {
             let errorEmbed = new Discord.RichEmbed()
-                .setAuthor("Récupération impossible")
+                .setAuthor("Clé introuvable")
                 .setDescription("L'empreinte ``" + keyPrint + "`` n'est liée à aucune clé existante. Format : ``XX-XXXX``.")
                 .setColor(mLog.colors.ALERT);
             message.delete();
