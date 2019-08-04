@@ -47,7 +47,7 @@ exports.run = (client, message, args) => {
 
             if (key) {
                 if (!key["recipient_id"]) {
-                    con.query(`UPDATE blocks_keys SET recipient_id = "${message.author.id}" WHERE key_id = ${key["key_id"]}, redeem_date = "${todayDate}"`, {}, rows => {
+                    con.query(`UPDATE blocks_keys SET recipient_id = "${message.author.id}", redeem_date = "${todayDate}" WHERE key_id = ${key["key_id"]}`, {}, rows => {
                         con.query(`UPDATE users SET money = money + ${key["key_value"]} WHERE user_id = "${message.author.id}"`, {}, rows => {
 
                             let successEmbed = new Discord.RichEmbed()
