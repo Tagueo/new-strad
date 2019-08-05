@@ -41,6 +41,7 @@ exports.run = (client, message, args) => {
                             let successEmbed = new Discord.RichEmbed()
                                 .setAuthor("Récupération réussie")
                                 .setDescription("Youpi ! La clé ``" + keyFace + "`` est valide. Tu viens de recevoir **" + key["key_value"] + "** <:block:547449530610745364> !")
+                                .setFooter("Strad redeem <clé>")
                                 .setColor(mLog.colors.VALID);
                             message.delete();
                             commandChannel.send(successEmbed);

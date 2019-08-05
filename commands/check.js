@@ -56,6 +56,7 @@ exports.run = (client, message, args) => {
                         .addField("Utilisée par", keyUser + redeemDate)
                         .addField("Validité", validity)
                         .addField("Valeur", value + " " + blockEmoji)
+                        .setFooter("Strad check <empreinte>")
                         .setColor(embedColor);
                     message.delete();
                     commandChannel.send(infoEmbed);
