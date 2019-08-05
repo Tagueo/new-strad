@@ -63,8 +63,8 @@ exports.run = (client, message, args) => {
                         .setDescription("Les informations concernant la clé d'empreinte ``" + keyPrint + "`` sont affichées ci-dessous.")
                         .addField("Créée par", keyOwner + creationDate, true)
                         .addField("Utilisée par", keyUser + redeemDate, true)
-                        .addField("Validité", validity)
-                        .addField("Valeur", "**" + value + "** <:block:547449530610745364>", true)
+                        .addField("Validité", validity, true)
+                        .addField("Valeur", "**" + value + "** <:block:547449530610745364>", false)
                         .setColor(embedColor);
                     message.delete();
                     // commandChannel.send(errorEmbed);
