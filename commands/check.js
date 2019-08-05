@@ -52,7 +52,7 @@ exports.run = (client, message, args) => {
 
                     let embedColor = key["recipient_id"] ? mLog.colors.ALERT : mLog.colors.VALID,
                         keyOwner = client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key["creator_id"]).user,
-                        keyUser = key["recipient_id"] ? client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key["recipient_id"]).user : "Personne",
+                        keyUser = key["recipient_id"] ? client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key["recipient_id"]).user : "-",
                         validity = key["recipient_id"] ? "Utilisée " + usedEmoji : "Valide " + validEmoji,
                         value = key["key_value"],
                         creationDate = ", le " + key["creation_date"],

@@ -9,6 +9,6 @@ exports.run = (client, message, args) => {
         .setColor(mLog.colors.ALERT);
     message.delete();
 
-    client.channels.get('415633143861739541').send()
+    client.channels.get('415633143861739541').send(errorEmbed);
 
 };
