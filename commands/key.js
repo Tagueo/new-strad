@@ -127,7 +127,7 @@ exports.run = (client, message, args) => {
                             + "||```" + keyFace + "```||\nFais bien attention de ne pas la partager à n'importe qui !\n"
                             + "Afin de l'utiliser, le bénéficiaire de la clé devra taper la commande : ``Strad redeem <clé>``. Il recevra ainsi la valeur en Blocs de la clé !")
                         .addField("Empreinte de la clé", "```" + keyPrint + "```"
-                            + "\nNote : l'empreinte n'est pas secrète, elle est directement liée à ta clé. Tu peux partager l'empreinte au destinataire de celle-ci "
+                            + "\nNote : L'empreinte n'est pas secrète, elle est directement liée à ta clé. Tu peux partager l'empreinte au destinataire de celle-ci "
                             + "afin d'attester qu'elle t'appartient, qu'elle est valide et qu'elle a bien la valeur en Blocs annoncée. Cela peut se révéler bien utile dans le cas d'un échange !")
                         .setColor(mLog.colors.NEUTRAL_BLUE);
                     sendMP.run(client, privateSuccessEmbed, message.member);
