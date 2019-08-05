@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db");
-const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
 var moment = require("moment");
 
@@ -14,16 +13,6 @@ exports.run = (client, message, args) => {
         return key;
     }
 
-    if (!message.member.roles.find(r => r.name === "Mentor")) {
-        message.delete();
-        mp.sendWIP(client.channels.get('415633143861739541'));
-        return;
-    } // TODO À retirer après le développement
-
-    function sendToTemp(messageContent) {
-        message.channel.send(messageContent);
-    }
-
     let commandChannel = client.channels.get('415633143861739541');
 
     if (!args[0]) {
@@ -32,8 +21,7 @@ exports.run = (client, message, args) => {
             .setDescription("Merci de saisir la clé à utiliser. Utilisation : ``Strad redeem <clé>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
-        // commandChannel.send(errorEmbed);
-        sendToTemp(errorEmbed); // TODO À retirer
+        commandChannel.send(errorEmbed);
         return;
     }
 
@@ -55,8 +43,7 @@ exports.run = (client, message, args) => {
                                 .setDescription("Youpi ! La clé ``" + keyFace + "`` est valide. Tu viens de recevoir **" + key["key_value"] + "** <:block:547449530610745364> !")
                                 .setColor(mLog.colors.VALID);
                             message.delete();
-                            // commandChannel.send(successEmbed);
-                            sendToTemp(successEmbed); // TODO À retirer
+                            commandChannel.send(successEmbed);
 
                             mLog.run(client, "Récupération de clé", message.author + " a utilisé la clé ``" + keyFace + "`` d'une valeur de **" + key["key_value"] + "** <:block:547449530610745364>.",
                                 mLog.colors.NEUTRAL_BLUE);
@@ -71,8 +58,7 @@ exports.run = (client, message, args) => {
                         .setDescription("La clé ``" + keyFace + "`` a déjà été utilisée. En cas de litige, contacte un Mentor en message privé.")
                         .setColor(mLog.colors.ALERT);
                     message.delete();
-                    // commandChannel.send(errorEmbed);
-                    sendToTemp(errorEmbed); // TODO À retirer
+                    commandChannel.send(errorEmbed);
                     con.end();
                 }
             } else {
@@ -81,8 +67,7 @@ exports.run = (client, message, args) => {
                     .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
                     .setColor(mLog.colors.ALERT);
                 message.delete();
-                // commandChannel.send(errorEmbed);
-                sendToTemp(errorEmbed); // TODO À retirer
+                commandChannel.send(errorEmbed);
                 con.end();
             }
         } else {
@@ -91,8 +76,7 @@ exports.run = (client, message, args) => {
                 .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
                 .setColor(mLog.colors.ALERT);
             message.delete();
-            // commandChannel.send(errorEmbed);
-            sendToTemp(errorEmbed); // TODO À retirer
+            commandChannel.send(errorEmbed);
             con.end();
         }
 

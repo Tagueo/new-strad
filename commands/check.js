@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db");
-const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
 
 exports.run = (client, message, args) => {
@@ -13,16 +12,6 @@ exports.run = (client, message, args) => {
         return key;
     }
 
-    if (!message.member.roles.find(r => r.name === "Mentor")) {
-        message.delete();
-        mp.sendWIP(client.channels.get('415633143861739541'));
-        return;
-    } // TODO À retirer après le développement
-
-    function sendToTemp(messageContent) {
-        message.channel.send(messageContent);
-    }
-
     let commandChannel = client.channels.get('415633143861739541');
 
     if (!args[0]) {
@@ -31,8 +20,7 @@ exports.run = (client, message, args) => {
             .setDescription("Merci de saisir l'empreinte de la clé à vérifier. Utilisation : ``Strad check <empreinte>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
-        // commandChannel.send(errorEmbed);
-        sendToTemp(errorEmbed); // TODO À retirer
+        commandChannel.send(errorEmbed);
         return;
     }
 
@@ -70,8 +58,7 @@ exports.run = (client, message, args) => {
                         .addField("Valeur", value + " " + blockEmoji)
                         .setColor(embedColor);
                     message.delete();
-                    // commandChannel.send(errorEmbed);
-                    sendToTemp(infoEmbed); // TODO À retirer
+                    commandChannel.send(infoEmbed);
                     con.end();
 
                 });
@@ -81,8 +68,7 @@ exports.run = (client, message, args) => {
                     .setDescription("L'empreinte ``" + keyPrint + "`` n'est liée à aucune clé existante. Format : ``XX-XXXX``.")
                     .setColor(mLog.colors.ALERT);
                 message.delete();
-                // commandChannel.send(errorEmbed);
-                sendToTemp(errorEmbed); // TODO À retirer
+                commandChannel.send(errorEmbed);
                 con.end();
             }
         } else {
@@ -91,8 +77,7 @@ exports.run = (client, message, args) => {
                 .setDescription("L'empreinte ``" + keyPrint + "`` n'est liée à aucune clé existante. Format : ``XX-XXXX``.")
                 .setColor(mLog.colors.ALERT);
             message.delete();
-            // commandChannel.send(errorEmbed);
-            sendToTemp(errorEmbed); // TODO À retirer
+            commandChannel.send(errorEmbed);
             con.end();
         }
 

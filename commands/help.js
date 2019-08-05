@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const mLog = require("../scripts/mLog");
 
 exports.run = (client, message) => {
-    var embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
         .setAuthor('Help', client.user.avatarURL)
         .setColor(mLog.colors.NEUTRAL_BLUE)
         .setDescription("Pour m'appeler, utilise le préfixe **Strad** (c'est mon nom !)."
@@ -10,10 +10,10 @@ exports.run = (client, message) => {
         .addField("Général", "``help`` • Affiche cet encart."
             + "\n``rank`` • Affiche ton profil."
             + "\n``top`` • Affiche le classement du serveur.\n``daily`` • Permet de récupérer ta récompense journalière !"
-            + "\n``key <valeur>`` • Crée une clé ayant la valeur en Blocs définie en argument.**[SOON]**"
-            + "\n``redeem <clé>`` • Utilise la clé spécifiée en argument afin que tu puisses sa valeur en Blocs. **[SOON]**"
-            + "\n``check <empreinte>`` • Permet de vérifier l'existence, la validité, la propriété et la valeur d'une clé en spécifiant"
-            + "son empreinte en argument. **[SOON]**")
+            + "\n``key <valeur>`` • Crée une clé ayant la valeur en Blocs définie en argument."
+            + "\n``redeem <clé>`` • Utilise la clé spécifiée en argument afin que tu puisses sa valeur en Blocs."
+            + "\n``check <empreinte>`` • Permet de vérifier l'existence, la validité, la propriété, la valeur et l'apparence d'une clé en spécifiant"
+            + "son empreinte en argument.")
         .addField("Premium", "``nick <pseudonyme>`` • Change de pseudonyme, et ce, seulement sur Stradivarius !"
             + "\n``say <message>`` • Fais parler Strad avec le message de ton choix !")
         .addField("Boutique", "``shop`` • Ouvre la boutique du serveur.\n``buy <numéro de l'article>`` "

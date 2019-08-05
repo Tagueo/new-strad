@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db");
-const mp = require("../scripts/msgPresets"); // TODO À retirer
 const mLog = require("../scripts/mLog");
 const sendMP = require("../scripts/sendMP");
 var moment = require("moment");
@@ -57,16 +56,6 @@ exports.run = (client, message, args) => {
         return b;
     }
 
-    if (!message.member.roles.find(r => r.name === "Mentor")) {
-        message.delete();
-        mp.sendWIP(client.channels.get('415633143861739541'));
-        return;
-    } // TODO À retirer après le développement
-
-    function sendToTemp(messageContent) {
-        message.channel.send(messageContent);
-    }
-
     let commandChannel = client.channels.get('415633143861739541'), chosenValue;
     let minAllowedValue = 50, maxAllowedValue = 15000;
 
@@ -76,8 +65,7 @@ exports.run = (client, message, args) => {
             .setDescription("Merci de saisir une valeur en Blocs valide. Utilisation : ``Strad key <valeur>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
-        // commandChannel.send(errorEmbed);
-        sendToTemp(errorEmbed); // TODO À retirer
+        commandChannel.send(errorEmbed);
         return;
     } else
         chosenValue = parseInt(args[0]);
@@ -88,8 +76,7 @@ exports.run = (client, message, args) => {
             .setDescription("Tu dois saisir une valeur en Blocs comprise entre 50 et 15000.")
             .setColor(mLog.colors.ALERT);
         message.delete();
-        // commandChannel.send(errorEmbed);
-        sendToTemp(errorEmbed); // TODO À retirer
+        commandChannel.send(errorEmbed);
         return;
     }
 
@@ -106,8 +93,7 @@ exports.run = (client, message, args) => {
                 .setDescription(`Tu n'as pas assez de Blocs pour créer cette clé. Il te manque **${chosenValue - money}** <:block:547449530610745364> !`)
                 .setColor(mLog.colors.ALERT);
             message.delete();
-            // commandChannel.send(errorEmbed);
-            sendToTemp(errorEmbed); // TODO À retirer
+            commandChannel.send(errorEmbed);
             con.end();
             return;
         }
@@ -132,8 +118,7 @@ exports.run = (client, message, args) => {
                         .setDescription("Ta clé a correctement été débloquée. Tu viens de la recevoir en message privé !")
                         .setColor(mLog.colors.VALID);
                     message.delete();
-                    // commandChannel.send(publicSuccessEmbed);
-                    sendToTemp(publicSuccessEmbed); // TODO À retirer
+                    commandChannel.send(publicSuccessEmbed);
 
                     let privateSuccessEmbed = new Discord.RichEmbed()
                         .setAuthor("Création de clé")
