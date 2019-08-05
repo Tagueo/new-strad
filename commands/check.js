@@ -45,7 +45,33 @@ exports.run = (client, message, args) => {
             let key = findKey(keys, keyPrint);
 
             if (key) {
-                // TODO CONTINUER ICI ! (affichage des infos liées à la clé)
+                con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`, {}, user => {
+
+                    let validEmoji = client.emojis.get("607877884413214720"),
+                        usedEmoji = client.emojis.get("607877912955322406");
+
+                    let embedColor = key["recipient_id"] ? mLog.colors.ALERT : mLog.colors.VALID,
+                        keyOwner = client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key["creator_id"]).user,
+                        keyUser = key["recipient_id"] ? client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key["recipient_id"]).user : "Personne",
+                        validity = key["recipient_id"] ? "Utilisée " + usedEmoji : "Valide " + validEmoji,
+                        value = key["key_value"],
+                        creationDate = ", le " + key["creation_date"],
+                        redeemDate = key["recipient_id"] ? ", le " + key["redeem_date"] : "";
+
+                    let infoEmbed = new Discord.RichEmbed()
+                        .setAuthor("Clé d'empreinte " + keyPrint)
+                        .setDescription("Les informations concernant la clé d'empreinte ``" + keyPrint + "`` sont affichées ci-dessous.")
+                        .addField("Créée par", keyOwner + creationDate, true)
+                        .addField("Utilisée par", keyUser, redeemDate, true)
+                        .addField("Validité", validity, true)
+                        .addField("Valeur", "**" + value + "** <:block:547449530610745364>")
+                        .setColor(embedColor);
+                    message.delete();
+                    // commandChannel.send(errorEmbed);
+                    sendToTemp(infoEmbed); // TODO À retirer
+                    con.end();
+
+                });
             } else {
                 let errorEmbed = new Discord.RichEmbed()
                     .setAuthor("Clé introuvable")
@@ -55,7 +81,6 @@ exports.run = (client, message, args) => {
                 // commandChannel.send(errorEmbed);
                 sendToTemp(errorEmbed); // TODO À retirer
                 con.end();
-                return;
             }
         } else {
             let errorEmbed = new Discord.RichEmbed()

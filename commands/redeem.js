@@ -74,7 +74,6 @@ exports.run = (client, message, args) => {
                     // commandChannel.send(errorEmbed);
                     sendToTemp(errorEmbed); // TODO À retirer
                     con.end();
-                    return;
                 }
             } else {
                 let errorEmbed = new Discord.RichEmbed()
@@ -85,7 +84,6 @@ exports.run = (client, message, args) => {
                 // commandChannel.send(errorEmbed);
                 sendToTemp(errorEmbed); // TODO À retirer
                 con.end();
-                return;
             }
         } else {
             let errorEmbed = new Discord.RichEmbed()
