@@ -58,7 +58,7 @@ exports.run = (client, message, args) => {
                         value = key["key_value"],
                         creationDate = ", le " + key["creation_date"],
                         redeemDate = key["recipient_id"] ? ", le " + key["redeem_date"] : "",
-                        keySimFace = key["key_face"].slice(0, 2) + "``XX-XXXX-XXXX``" + key["key_face"].slice(-1);
+                        keySimFace = "**" + key["key_face"].slice(0, 2) + "**??-????-????**" + key["key_face"].slice(-1) + "**";
 
                     let infoEmbed = new Discord.RichEmbed()
                         .setAuthor("Clé d'empreinte " + keyPrint)
