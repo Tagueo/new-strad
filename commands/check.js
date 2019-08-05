@@ -57,11 +57,13 @@ exports.run = (client, message, args) => {
                         validity = key["recipient_id"] ? "Utilisée " + usedEmoji : "Valide " + validEmoji,
                         value = key["key_value"],
                         creationDate = ", le " + key["creation_date"],
-                        redeemDate = key["recipient_id"] ? ", le " + key["redeem_date"] : "";
+                        redeemDate = key["recipient_id"] ? ", le " + key["redeem_date"] : "",
+                        keySimFace = key["key_face"].slice(0, 2) + "``XX-XXXX-XXXX``" + key["key_face"].slice(-1);
 
                     let infoEmbed = new Discord.RichEmbed()
                         .setAuthor("Clé d'empreinte " + keyPrint)
                         .setDescription("Les informations concernant la clé d'empreinte ``" + keyPrint + "`` sont affichées ci-dessous.")
+                        .addField("Apparence de la clé", keySimFace)
                         .addField("Créée par", keyOwner + creationDate)
                         .addField("Utilisée par", keyUser + redeemDate)
                         .addField("Validité", validity)
