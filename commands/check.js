@@ -48,7 +48,8 @@ exports.run = (client, message, args) => {
                 con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`, {}, user => {
 
                     let validEmoji = client.emojis.get("607877884413214720"),
-                        usedEmoji = client.emojis.get("607877912955322406");
+                        usedEmoji = client.emojis.get("607877912955322406"),
+                        blockEmoji = client.emojis.get("547449530610745364");
 
                     let embedColor = key["recipient_id"] ? mLog.colors.ALERT : mLog.colors.VALID,
                         keyOwner = client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key["creator_id"]).user,
@@ -64,7 +65,7 @@ exports.run = (client, message, args) => {
                         .addField("Créée par", keyOwner + creationDate)
                         .addField("Utilisée par", keyUser + redeemDate)
                         .addField("Validité", validity)
-                        .addField("Valeur", "**" + value + "** <:block:547449530610745364>")
+                        .addField("Valeur", value + " " + blockEmoji)
                         .setColor(embedColor);
                     message.delete();
                     // commandChannel.send(errorEmbed);
