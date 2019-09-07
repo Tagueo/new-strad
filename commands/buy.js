@@ -21,6 +21,8 @@ exports.run = async (client, message, args) => {
     let money = await con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`),
         item = await con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`);
 
+    console.log(money);
+
     if (!item) {
         const errorEmbed = new Discord.RichEmbed()
             .setAuthor("Achat impossible")
