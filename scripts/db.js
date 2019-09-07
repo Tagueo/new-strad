@@ -18,9 +18,11 @@ exports.Connection = class Connection {
     query(sql) {
         this.core.query(sql, function (err, rows) {
             if (err) throw err;
-            return new Promise(function (resolve, reject) {
+            return new Promise((resolve, reject) => {
                 // resolve(rows);
-                resolve("C'est censé fonctionner !");
+                setTimeout(() => {
+                    resolve("C'est censé fonctionner !");
+                }, 2000);
             });
         });
     }
