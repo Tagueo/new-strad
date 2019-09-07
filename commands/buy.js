@@ -18,8 +18,8 @@ exports.run = async (client, message, args) => {
         chosenId = parseInt(args[0]);
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
-    let money = await con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`),
-        item = await con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`);
+    let money = await con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`);
+    let item = await con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`);
 
     console.log(money);
 

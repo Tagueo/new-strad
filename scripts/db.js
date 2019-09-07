@@ -15,7 +15,7 @@ exports.Connection = class Connection {
         });
     }
 
-    query(sql) {
+    async query(sql) {
         this.core.query(sql, function (err, rows) {
             if (err) throw err;
             return new Promise((resolve, reject) => {
