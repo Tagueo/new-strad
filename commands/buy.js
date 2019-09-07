@@ -18,10 +18,9 @@ exports.run = async (client, message, args) => {
         chosenId = parseInt(args[0]);
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
-    let money = await con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`);
-    let item = await con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`);
-
-    console.log(money);
+    let res1 = await con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`);
+    let res2 = await con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`);
+    money = res1[0].money, item = res2[0];
 
     if (!item) {
         const errorEmbed = new Discord.RichEmbed()
