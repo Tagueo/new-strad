@@ -2,16 +2,16 @@ const Discord = require("discord.js");
 
 exports.run = async (client, message, args) => {
 
-  var quantity = 10; // Quantité de membres affichés dans le top 15
+  let quantity = 10; // Quantité de membres affichés dans le top 15
 
   // DB connection
 
-  var gb = {
+  let gb = {
     results: undefined
   };
-  var mysql = require("mysql");
+  let mysql = require("mysql");
   
-    var con = mysql.createConnection({
+    let con = mysql.createConnection({
       host: "localhost",
       user: client.config.mysqlUser,
       password: client.config.mysqlPass,
@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
       gb.results = rows;
 
       const creaEmoji = "<:crea:547482886824001539>";
-      var otherLeaders = "";
+      let otherLeaders = "";
     
       const embedTop = new Discord.RichEmbed()
         .setAuthor(`Stradivarius - Classement (Créas)`);
