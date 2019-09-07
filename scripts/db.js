@@ -18,8 +18,8 @@ exports.Connection = class Connection {
     async query(sql) {
         return await new Promise((resolve, reject) => {
             this.core.query(sql, function (err, rows) {
-                if (err) console.log(err);
-                resolve("C'est censé fonctionner !");
+                if (err) reject(err);
+                resolve(rows);
             });
         });
     }
