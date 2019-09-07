@@ -16,13 +16,10 @@ exports.Connection = class Connection {
     }
 
     async query(sql) {
-        this.core.query(sql, function (err, rows) {
-            if (err) throw err;
-            return new Promise((resolve, reject) => {
-                // resolve(rows);
-                setTimeout(() => {
-                    resolve("C'est censé fonctionner !");
-                }, 2000);
+        return await new Promise((resolve, reject) => {
+            this.core.query(sql, function (err, rows) {
+                if (err) reject(err);
+                resolve("C'est censé fonctionner !");
             });
         });
     }
