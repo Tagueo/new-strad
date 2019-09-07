@@ -94,7 +94,7 @@ module.exports = (client, message) => {
     }
 
     // Run the command
-    if (client.config.mtnMode != "true") {
+    if (client.config.mtnMode != "true" || message.member.roles.find(r => r.name === "Mentor")) {
         cmd.run(client, message, args);
         console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`);
     } else {

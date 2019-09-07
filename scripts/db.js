@@ -1,4 +1,4 @@
-var mysql = require("mysql");
+let mysql = require("mysql");
 
 exports.Connection = class Connection {
 
@@ -15,13 +15,10 @@ exports.Connection = class Connection {
         });
     }
 
-    query(sql, datagate={}, callback) {
+    query(sql) {
         this.core.query(sql, function (err, rows) {
             if (err) throw err;
-            if (datagate !== {})
-                callback(rows, datagate);
-            else
-                callback(rows);
+            return new Promise(resolve => resolve(rows), reject => reject(null));
         });
     }
 

@@ -24,4 +24,4 @@ exports._Item = class Item {
     constructor(rawData) {
         // TODO À continuer plus tard
     }
-}
+};
