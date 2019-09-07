@@ -18,80 +18,87 @@ exports.run = async (client, message, args) => {
         chosenId = parseInt(args[0]);
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
-    let money = await con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`),
-        item = await con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`);
 
-    if (!item) {
-        const errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Achat impossible")
-            .setDescription("Cet article est introuvable.")
-            .setColor(mLog.colors.ALERT);
-        message.delete();
-        commandChannel.send(errorEmbed);
-        con.end();
-        return;
-    }
+    con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`, {}, rows => {
+        let money = rows[0]["money"];
+        con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`, {"money": money}, (rows, dg) => {
+            let item = rows[0];
 
-    let priceAfterDiscount = Math.round(item.price - item.price * (item.discount / 100));
+            if (!item) {
+                let errorEmbed = new Discord.RichEmbed()
+                    .setAuthor("Achat impossible")
+                    .setDescription("Cet article est introuvable.")
+                    .setColor(mLog.colors.ALERT);
+                message.delete();
+                commandChannel.send(errorEmbed);
+                con.end();
+                return;
+            }
 
-    if (item.is_buyable === 0) {
-        const errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Achat impossible")
-            .setDescription("Cet article n'est pas à vendre.")
-            .setColor(mLog.colors.ALERT);
-        message.delete();
-        commandChannel.send(errorEmbed);
-        con.end();
-        return;
-    } else if ((item.quantity > -1) && (item.quantity < item.buy_amount)) {
-        const errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Achat impossible")
-            .setDescription(`Il ne reste plus assez de stocks pour acheter **${item.buy_amount} x ${item.item_name}**.`)
-            .setColor(mLog.colors.ALERT);
-        message.delete();
-        commandChannel.send(errorEmbed);
-        con.end();
-        return;
-    } else if (money < priceAfterDiscount) {
-        const errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Achat impossible")
-            .setDescription(`Tu n'as pas assez d'argent pour acheter **${item.buy_amount}`
-                + ` x ${item.item_name}**. Il te manque encore ${priceAfterDiscount - money} <:block:547449530610745364> !`)
-            .setColor(mLog.colors.ALERT);
-        message.delete();
-        commandChannel.send(errorEmbed);
-        con.end();
-        return;
-    }
+            let priceAfterDiscount = Math.round(item["price"] - item["price"] * (item["discount"] / 100));
 
-    // Prélèvement de l'argent sur le compte de l'utilisateur
-    con.query(`UPDATE users SET money = ${money - priceAfterDiscount} WHERE user_id = "${message.member.id}"`);
+            if (item["is_buyable"] === 0) {
+                let errorEmbed = new Discord.RichEmbed()
+                    .setAuthor("Achat impossible")
+                    .setDescription("Cet article n'est pas à vendre.")
+                    .setColor(mLog.colors.ALERT);
+                message.delete();
+                commandChannel.send(errorEmbed);
+                con.end();
+                return;
+            } else if ((item["quantity"] > -1) && (item["quantity"] < item["buy_amount"])) {
+                let errorEmbed = new Discord.RichEmbed()
+                    .setAuthor("Achat impossible")
+                    .setDescription(`Il ne reste plus assez de stocks pour acheter **${item["buy_amount"]} x ${item["item_name"]}**.`)
+                    .setColor(mLog.colors.ALERT);
+                message.delete();
+                commandChannel.send(errorEmbed);
+                con.end();
+                return;
+            } else if (dg["money"] < priceAfterDiscount) {
+                let errorEmbed = new Discord.RichEmbed()
+                    .setAuthor("Achat impossible")
+                    .setDescription(`Tu n'as pas assez d'argent pour acheter **${item["buy_amount"]}`
+                        + ` x ${item["item_name"]}**. Il te manque encore ${priceAfterDiscount - dg["money"]} <:block:547449530610745364> !`)
+                    .setColor(mLog.colors.ALERT);
+                message.delete();
+                commandChannel.send(errorEmbed);
+                con.end();
+                return;
+            }
 
-    let items = await con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${item.item_id}`),
-        sql;
+            con.query(`UPDATE users SET money = ${dg["money"] - priceAfterDiscount} WHERE user_id = "${message.member.id}"`,
+                {"item": item}, (rows, dg) => {
+                con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${dg["item"]["item_id"]}`,
+                    {"item": dg["item"]}, (rows, dg) => {
+                    let sql, item = dg["item"];
+                    if (rows[0])
+                        sql = `UPDATE has_items SET amount = amount + ${item["buy_amount"]} WHERE user_id = "${message.member.id}" AND item_id = ${item["item_id"]}`;
+                    else
+                        sql = `INSERT INTO has_items (user_id, item_id, amount) VALUES ("${message.member.id}", ${item["item_id"]}, ${item["buy_amount"]})`;
+                    con.query(sql, {"item": item}, (rows, dg) => {
+                        let item = dg["item"];
+                        let successEmbed = new Discord.RichEmbed()
+                            .setAuthor("Achat réussi")
+                            .setDescription(`Tu as acheté **${item["buy_amount"]} x ${item["item_name"]}** pour **${priceAfterDiscount}** <:block:547449530610745364> !`)
+                            .setFooter("Tape \"Strad rank\" pour accéder à ton inventaire")
+                            .setColor(mLog.colors.VALID);
+                        message.delete();
+                        commandChannel.send(successEmbed);
 
-    if (items[0])
-        sql = `UPDATE has_items SET amount = amount + ${item.buy_amount.} WHERE user_id = "${message.member.id}" AND item_id = ${item.item_id}`;
-    else
-        sql = `INSERT INTO has_items (user_id, item_id, amount) VALUES ("${message.member.id}", ${item.item_id}, ${item.buy_amount})`;
+                        mLog.run(client, "Strad buy", `${message.author} a acheté **${item["buy_amount"]} x ${item["item_name"]}** pour **${priceAfterDiscount}** <:block:547449530610745364>.`,
+                            mLog.colors.NEUTRAL_BLUE);
 
-    con.query(sql);
-
-    const successEmbed = new Discord.RichEmbed()
-        .setAuthor("Achat réussi")
-        .setDescription(`Tu as acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364> !`)
-        .setFooter("Tape \"Strad rank\" pour accéder à ton inventaire")
-        .setColor(mLog.colors.VALID);
-    message.delete();
-    commandChannel.send(successEmbed);
-
-    mLog.run(client, "Strad buy", `${message.author} a acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364>.`,
-        mLog.colors.NEUTRAL_BLUE);
-
-    if (item.quantity !== -1) {
-        await con.query(`UPDATE items SET quantity = quantity - ${item.buy_amount} WHERE item_id = ${item.item_id}`);
-    }
-
-    con.end();
+                        if (item["quantity"] !== -1) {
+                            con.query(`UPDATE items SET quantity = quantity - ${item["buy_amount"]} WHERE item_id = ${item["item_id"]}`, {}, rows => {
+                                con.end();
+                            })
+                        } else
+                            con.end();
+                    })
+                });
+            });
+        });
+    });
 
 };
