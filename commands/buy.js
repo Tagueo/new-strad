@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const db = require("../scripts/db");
 const mLog = require("../scripts/mLog");
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
     let commandChannel = client.channels.get('415633143861739541'), chosenId;
 

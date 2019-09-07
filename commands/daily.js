@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 var moment = require("moment");
 const mLog = require("../scripts/mLog");
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
   moment.locale("fr");
 

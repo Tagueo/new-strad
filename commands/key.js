@@ -4,7 +4,7 @@ const mLog = require("../scripts/mLog");
 const sendMP = require("../scripts/sendMP");
 var moment = require("moment");
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
     function _randomChar() {
         let possibleChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",

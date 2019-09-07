@@ -9,7 +9,7 @@ let os = require('os')
 let cpuStat = require("cpu-stat")
 const ms = require("ms")
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
   cpuStat.usagePercent(function(err, percent, seconds) {
     if (err) {

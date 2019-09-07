@@ -3,7 +3,7 @@ const db = require("../scripts/db");
 const mLog = require("../scripts/mLog");
 var moment = require("moment");
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
     function findKey(rows, keyFace) {
         let key = null;

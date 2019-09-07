@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const mLog = require("../scripts/mLog");
 
-exports.run = (client, message) => {
+exports.run = async (client, message) => {
     let embed = new Discord.RichEmbed()
         .setAuthor('Help', client.user.avatarURL)
         .setColor(mLog.colors.NEUTRAL_BLUE)

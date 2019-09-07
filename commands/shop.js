@@ -25,7 +25,7 @@ function addItem(client, embed, item) {
             + `**Prix :** ${priceText}\n**Numéro d'article :** ${item.id}` + notSaleableText);
 }
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad"),
         sql = "SELECT item_id AS id, item_name AS name, item_emoji AS emoji, description, price, is_buyable AS buyable,"

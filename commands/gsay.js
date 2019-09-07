@@ -1,6 +1,6 @@
 const sendMP = require("../scripts/sendMP");
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
   if (message.member.roles.find(x => x.name === "Mentor")) {
 

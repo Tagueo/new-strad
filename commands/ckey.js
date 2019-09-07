@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const mLog = require("../scripts/mLog");
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
     let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Commande obsolète")

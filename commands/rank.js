@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db.js");
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
     try {
 

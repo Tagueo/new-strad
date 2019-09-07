@@ -1,6 +1,6 @@
 const Discord = require("discord.js")
 
-exports.run = (client, message) => {
+exports.run = async (client, message) => {
     var embed = new Discord.RichEmbed()
         .setAuthor('Dépôt de Strad', client.user.avatarURL)
         .setColor("#21b1ff")
