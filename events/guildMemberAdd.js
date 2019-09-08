@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const welcome = require('../scripts/welcome.js');
 const db = require("../scripts/db");
 
-module.exports = (client, member) => {
+module.exports = async (client, member) => {
     // Récupération du salon de modération
     const logs = client.channels.get(client.config.logsChannel);
 
@@ -14,51 +14,16 @@ module.exports = (client, member) => {
         const apprenti = member.guild.roles.find(x => x.name === "Apprenti(e)");
         member.addRole(apprenti).catch(console.error);
 
-        let con = new db.Connection("localhost", ),
+        let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad"),
             embed = new Discord.RichEmbed()
                 .setColor("#21b1ff")
                 .setTitle("Nouveau Membre")
                 .setDescription(`**<@${member.user.id}>** vient de rejoindre le serveur !`);
 
+        let user = (await con.query(`SELECT * FROM users WHERE user_id = "${member.user.id}"`))[0];
 
-        try {
-            // DB connection
-            var gb = {results: undefined};
-            var mysql = require("mysql");
-
-            var con = mysql.createConnection({
-                host: "localhost",
-                user: client.config.mysqlUser,
-                password: client.config.mysqlPass,
-                database: "strad"
-            });
-
-            con.connect((err) => {
-                if (err) console.log(err);
-            });
-
-            con.query(`SELECT * FROM users WHERE user_id = "${member.user.id}"`, function (err, rows, fields) {
-
-                if (err) {
-                    console.log(err);
-                }
-
-                gb.results = rows[0];
-                if (!gb.results) {
-                    con.query(`INSERT INTO users (user_id, usertag) VALUES ("${member.user.id}", "${member.user.tag}")`, function (err, rows, fields) {
-                        if (err) {
-                            console.log("Membre déjà présent dans la base de données.");
-                        }
-                        con.end();
-                    })
-                } else {
-                    con.end();
-                }
-
-            });
-
-        } catch (err) {
-            console.log(err);
+        if (!user) {
+            await con.query(`INSERT INTO users (user_id, usertag) VALUES ("${member.user.id}", "${member.user.tag}")`);
         }
 
         welcome.run(client, member);
@@ -66,5 +31,6 @@ module.exports = (client, member) => {
         logs.send(embed);
         console.log(member.user.username + " a rejoint le serveur !");
 
+        con.end();
     }
 };
