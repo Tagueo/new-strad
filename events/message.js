@@ -9,7 +9,7 @@ const isFeedbackable = require(appRoot + '/scripts/isFeedbackable');
 const mLog = require('../scripts/mLog');
 const sendMP = require('../scripts/sendMP');
 
-module.exports = (client, message) => {
+module.exports = async (client, message) => {
 
     if (message.channel.type !== "text") return;
 

@@ -8,10 +8,10 @@ var appRoot = process.cwd();
 
 const logger = require(appRoot + '/scripts/logger.js');
 
-module.exports = (client, guild, user) => {
+module.exports = async (client, guild, user) => {
   const logs = client.channels.get(client.config.logsChannel)
 
-  if (guild.id = '412369732679893004') {
+  if (guild.id === '412369732679893004') { // TODO Nettoyer le code
 
     var embed = new Discord.RichEmbed()
       .setColor("#21b1ff")

@@ -1,18 +1,14 @@
-const Discord = require('discord.js');
-const moment = require('moment');
-
-const reactedRecently = new Set();
-
-var appRoot = process.cwd();
-
-const logger = require(appRoot + '/scripts/logger.js');
-const isFeedbackable = require(appRoot + '/scripts/isFeedbackable.js');
-const sendMP = require('../scripts/sendMP');
-
-const up_emote = "like:568493894270976012";
-const down_emote = "dislike:568493872968368149";
+const Discord = require("discord.js");
+const moment = require("moment");
+const db = require("../scripts/db");
+const logger = require("../scripts/logger.js");
+const isFeedbackable = require("../scripts/isFeedbackable.js");
+const sendMP = require("../scripts/sendMP");
 
 module.exports = async (client, messageReaction, user) => {
+    const up_emote = "like:568493894270976012";
+    const down_emote = "dislike:568493872968368149";
+    const reactedRecently = new Set();
 
     if (messageReaction.message.channel.type !== "text") return;
 
@@ -24,12 +20,10 @@ module.exports = async (client, messageReaction, user) => {
         return;
     }
 
-    let msg = messageReaction.message.content.toUpperCase(); // Récupération du contenu du message (en majuscules)
-
     if (messageReaction.message.id === "570618282177069076") { // Distributeur de rôles
-        var emojiName = messageReaction.emoji.name;
-        var stradivarius = client.guilds.find(g => g.id === "412369732679893004");
-        var member = stradivarius.members.find(m => m.id === user.id);
+        let emojiName = messageReaction.emoji.name;
+        let stradivarius = client.guilds.find(g => g.id === "412369732679893004");
+        let member = stradivarius.members.find(m => m.id === user.id);
 
         switch (emojiName) {
             case "📝":
@@ -64,10 +58,10 @@ module.exports = async (client, messageReaction, user) => {
                 member.addRole(stradivarius.roles.find(r => r.name === "------------ Notifications ------------"));
             }
         }
-        var emojiName = messageReaction.emoji.name;
-        var stradivarius = client.guilds.find(g => g.id === "412369732679893004");
-        var member = stradivarius.members.find(m => m.id === user.id);
-        var rolePrefix = "Notif's - ";
+        let emojiName = messageReaction.emoji.name;
+        let stradivarius = client.guilds.find(g => g.id === "412369732679893004");
+        let member = stradivarius.members.find(m => m.id === user.id);
+        let rolePrefix = "Notif's - ";
 
         switch (emojiName) {
             case "🔔":
@@ -109,22 +103,10 @@ module.exports = async (client, messageReaction, user) => {
                 return;
             }
 
-            var vote_type = messageReaction.emoji.identifier == up_emote ? "UV" : "DV";
-            var gb = {
-                results: undefined
-            };
-            var mysql = require("mysql");
+            let vote_type = messageReaction.emoji.identifier === up_emote ? "UV" : "DV",
+                con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-            var con = mysql.createConnection({
-                host: "localhost",
-                user: client.config.mysqlUser,
-                password: client.config.mysqlPass,
-                database: "strad"
-            });
 
-            con.connect((err) => {
-                if (err) console.log(err);
-            });
 
             con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}"`, function (err, rows, fields) {
 

@@ -1,6 +1,6 @@
 const mLog = require("../scripts/mLog");
 
-module.exports = (client, member) => {
+module.exports = async (client, member) => {
     const welcomeCategId = "443782424653070346";
 
     if (member.guild.id = '412369732679893004') {

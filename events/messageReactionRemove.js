@@ -1,4 +1,4 @@
-module.exports = (client, messageReaction, user) => {
+module.exports = async (client, messageReaction, user) => {
 
     if (messageReaction.message.channel.type !== "text") return;
 
