@@ -1,58 +1,32 @@
 const Discord = require("discord.js");
+const db = require("../scripts/db");
+const mLog = require("../scripts/mLog");
 
 exports.run = async (client, message, args) => {
 
-  let quantity = 10; // Quantité de membres affichés dans le top 15
+    let quantity = 10, // Quantité de membres affichés dans le top 10
+        con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-  // DB connection
+    let users = await con.query(`SELECT * FROM users ORDER BY creas_amount DESC LIMIT ${quantity}`),
+        otherLeaders = "";
+    const creaEmoji = "<:crea:547482886824001539>",
+        topEmbed = new Discord.RichEmbed()
+            .setAuthor(`Stradivarius - Classement (Créas)`);
 
-  let gb = {
-    results: undefined
-  };
-  let mysql = require("mysql");
-  
-    let con = mysql.createConnection({
-      host: "localhost",
-      user: client.config.mysqlUser,
-      password: client.config.mysqlPass,
-      database: "strad"
-    });
+    for (i = 0; i < 2; i++) { // Podium
+        topEmbed.addField(`${i + 1}. ${users[i].usertag}`, `**${users[i].creas_amount}** ${creaEmoji}`, true);
+    }
+    for (i = 2; i < quantity; i++) { // Reste du classement
+        otherLeaders += `\`\`${i + 1}. ${users[i].creas_amount}\`\` - ${users[i].usertag}\n`;
+    }
 
-    con.connect((err) => {
-        if (err) console.log(err);
-    });
+    topEmbed.addField(`Top ${quantity}`, otherLeaders, false);
+    topEmbed.setFooter("Strad top");
+    topEmbed.setColor(mLog.colors.SDVR);
 
-    con.query(`SELECT * FROM users ORDER BY creas_amount DESC LIMIT ${quantity}`, function(err, rows, fields) {
-
-      if (err) {
-          console.log(err);
-      }
-      
-      gb.results = rows;
-
-      const creaEmoji = "<:crea:547482886824001539>";
-      let otherLeaders = "";
-    
-      const embedTop = new Discord.RichEmbed()
-        .setAuthor(`Stradivarius - Classement (Créas)`);
-
-      for (i=0;i<2;i++) {
-        embedTop.addField(`${i + 1}. ${gb.results[i].usertag}`, `**${gb.results[i].creas_amount}** ${creaEmoji}`, true);
-      }
-      for (i=2;i<quantity;i++) {
-        otherLeaders += `\`\`${i + 1}. ${gb.results[i].creas_amount}\`\` - ${gb.results[i].usertag}\n`;
-      }
-      embedTop.addField(`Top ${quantity}`, otherLeaders, false);
-      embedTop.setFooter("Strad top");
-      embedTop.setColor(0xff6b3e);
-    
-      client.channels.get('415633143861739541').send(embedTop);
-      message.delete();
-
-    });
+    client.channels.get('415633143861739541').send(topEmbed);
+    message.delete();
 
     con.end();
-
-  // DB connection
 
 };
