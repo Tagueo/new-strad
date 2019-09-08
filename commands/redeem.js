@@ -42,6 +42,7 @@ exports.run = async (client, message, args) => {
             message.delete();
             commandChannel.send(errorEmbed);
             con.end();
+            return;
         }
 
         if (!key.recipient_id) {

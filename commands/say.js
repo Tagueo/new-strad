@@ -16,29 +16,30 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let msg = args.join(" "), itemId = 2,
+    let msg = args.join(" "),
+        itemId = 2,
         con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-    con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`, {}, rows => {
-        if (!rows[0] || rows[0]["amount"] < 1) {
-            let errorEmbed = new Discord.RichEmbed()
-                .setAuthor("Boutique")
-                .setDescription("Pour avoir accès à ça, fais ``Strad shop`` !")
-                .setColor(mLog.colors.SHOP);
-            message.delete();
-            commandChannel.send(errorEmbed); // TODO À retirer
-            con.end();
-            return;
-        }
+    let sayItem = (await con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`))[0];
 
+    if (!sayItem || sayItem.amount < 1) {
+        let errorEmbed = new Discord.RichEmbed()
+            .setAuthor("Boutique")
+            .setDescription("Pour avoir accès à ça, fais ``Strad shop`` !")
+            .setColor(mLog.colors.SHOP);
         message.delete();
-        message.channel.send(msg);
+        commandChannel.send(errorEmbed);
+        con.end();
+        return;
+    }
 
-        mLog.run(client, "Strad say", `${message.author} a envoyé un message via Strad : "${msg}"`, mLog.colors.NEUTRAL_BLUE);
+    message.delete();
+    message.channel.send(msg); // Envoi du message personnalisé
 
-        con.query(`UPDATE has_items SET amount = amount - 1 WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`, {}, rows => {
-            con.end();
-        });
-    });
+    mLog.run(client, "Strad say", `${message.author} a envoyé un message via Strad : "${msg}"`, mLog.colors.NEUTRAL_BLUE);
+
+    await con.query(`UPDATE has_items SET amount = amount - 1 WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`);
+
+    con.end();
 
 };
