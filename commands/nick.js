@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
 
     let userItems = await con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`);
 
-    if (!rows[0] || rows[0].amount < 1) {
+    if (!userItems[0] || userItems[0].amount < 1) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Boutique")
             .setDescription("Pour avoir accès à ça, fais ``Strad shop`` !")
