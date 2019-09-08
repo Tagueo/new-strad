@@ -27,51 +27,38 @@ exports.run = async (client, message, args) => {
     let keyPrint = args[0];
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-    con.query(`SELECT * FROM blocks_keys`, {}, keys => {
+    let keys = await con.query(`SELECT * FROM blocks_keys`);
 
-        if (keys[0]) {
-            let key = findKey(keys, keyPrint);
+    if (keys[0]) {
+        let key = findKey(keys, keyPrint);
 
-            if (key) {
-                con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`, {}, user => {
+        if (key) {
+            let validEmoji = client.emojis.get("607877884413214720"),
+                usedEmoji = client.emojis.get("607877912955322406"),
+                blockEmoji = client.emojis.get("547449530610745364");
 
-                    let validEmoji = client.emojis.get("607877884413214720"),
-                        usedEmoji = client.emojis.get("607877912955322406"),
-                        blockEmoji = client.emojis.get("547449530610745364");
+            let embedColor = key.recipient_id ? mLog.colors.ALERT : mLog.colors.VALID,
+                keyOwner = client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key.creator_id).user,
+                keyUser = key.recipient_id ? client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key.recipient_id).user : "-",
+                validity = key.recipient_id ? "Utilisée " + usedEmoji : "Valide " + validEmoji,
+                value = key.key_value,
+                creationDate = ", le " + key.creation_date,
+                redeemDate = key.recipient_id ? ", le " + key.redeem_date : "",
+                keySimFace = "**" + key.key_face.slice(0, 1) + "**???-????-???**" + key.key_face.slice(-1) + "**";
 
-                    let embedColor = key["recipient_id"] ? mLog.colors.ALERT : mLog.colors.VALID,
-                        keyOwner = client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key["creator_id"]).user,
-                        keyUser = key["recipient_id"] ? client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key["recipient_id"]).user : "-",
-                        validity = key["recipient_id"] ? "Utilisée " + usedEmoji : "Valide " + validEmoji,
-                        value = key["key_value"],
-                        creationDate = ", le " + key["creation_date"],
-                        redeemDate = key["recipient_id"] ? ", le " + key["redeem_date"] : "",
-                        keySimFace = "**" + key["key_face"].slice(0, 2) + "**??-????-????**" + key["key_face"].slice(-1) + "**";
-
-                    let infoEmbed = new Discord.RichEmbed()
-                        .setAuthor("Clé d'empreinte " + keyPrint)
-                        .setDescription("Les informations concernant la clé d'empreinte ``" + keyPrint + "`` sont affichées ci-dessous.")
-                        .addField("Apparence de la clé", keySimFace)
-                        .addField("Créée par", keyOwner + creationDate)
-                        .addField("Utilisée par", keyUser + redeemDate)
-                        .addField("Validité", validity)
-                        .addField("Valeur", value + " " + blockEmoji)
-                        .setFooter("Strad check <empreinte>")
-                        .setColor(embedColor);
-                    message.delete();
-                    commandChannel.send(infoEmbed);
-                    con.end();
-
-                });
-            } else {
-                let errorEmbed = new Discord.RichEmbed()
-                    .setAuthor("Clé introuvable")
-                    .setDescription("L'empreinte ``" + keyPrint + "`` n'est liée à aucune clé existante. Format : ``XX-XXXX``.")
-                    .setColor(mLog.colors.ALERT);
-                message.delete();
-                commandChannel.send(errorEmbed);
-                con.end();
-            }
+            let infoEmbed = new Discord.RichEmbed()
+                .setAuthor("Clé d'empreinte " + keyPrint)
+                .setDescription("Les informations concernant la clé d'empreinte ``" + keyPrint + "`` sont affichées ci-dessous.")
+                .addField("Apparence de la clé", keySimFace)
+                .addField("Créée par", keyOwner + creationDate)
+                .addField("Utilisée par", keyUser + redeemDate)
+                .addField("Validité", validity)
+                .addField("Valeur", value + " " + blockEmoji)
+                .setFooter("Strad check <empreinte>")
+                .setColor(embedColor);
+            message.delete();
+            commandChannel.send(infoEmbed);
+            con.end();
         } else {
             let errorEmbed = new Discord.RichEmbed()
                 .setAuthor("Clé introuvable")
@@ -81,7 +68,14 @@ exports.run = async (client, message, args) => {
             commandChannel.send(errorEmbed);
             con.end();
         }
-
-    });
-
+    } else {
+        let errorEmbed = new Discord.RichEmbed()
+            .setAuthor("Clé introuvable")
+            .setDescription("L'empreinte ``" + keyPrint + "`` n'est liée à aucune clé existante. Format : ``XX-XXXX``.")
+            .setColor(mLog.colors.ALERT);
+        message.delete();
+        commandChannel.send(errorEmbed);
+        con.end();
+    }
+    
 };

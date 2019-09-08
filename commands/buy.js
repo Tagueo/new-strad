@@ -66,7 +66,7 @@ exports.run = async (client, message, args) => {
     }
 
     // Prélèvement de l'argent sur le compte de l'utilisateur
-    con.query(`UPDATE users SET money = ${money - priceAfterDiscount} WHERE user_id = "${message.member.id}"`);
+    await con.query(`UPDATE users SET money = ${money - priceAfterDiscount} WHERE user_id = "${message.member.id}"`);
 
     let items = await con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${item.item_id}`),
         sql;
@@ -76,7 +76,7 @@ exports.run = async (client, message, args) => {
     else
         sql = `INSERT INTO has_items (user_id, item_id, amount) VALUES ("${message.member.id}", ${item.item_id}, ${item.buy_amount})`;
 
-    con.query(sql);
+    await con.query(sql);
 
     const successEmbed = new Discord.RichEmbed()
         .setAuthor("Achat réussi")
