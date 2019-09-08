@@ -1,10 +1,8 @@
-const Discord = require('discord.js');
-
 const chalk = require('chalk');
 const moment = require('moment');
 const fs = require('fs');
 
-var appRoot = process.cwd();
+let appRoot = process.cwd();
 
 const logger = require(appRoot + '/scripts/logger');
 const isFeedbackable = require(appRoot + '/scripts/isFeedbackable');
@@ -19,7 +17,7 @@ module.exports = (client, message) => {
     logger.run(message);
 
     // Gestion des ressources postées
-    var msg = message.content.toUpperCase();
+    let msg = message.content.toUpperCase();
 
     // Suppression des messages envoyés par les sanctionnés
     if ((message.member.roles.find(r => r.name === "Sanctionné(e)"))) {
@@ -83,7 +81,7 @@ module.exports = (client, message) => {
 
     // Standard argument/command name definition.
     const args = message.content.slice(botPrefix.length).trim().split(/ +/g);
-    var command = args.shift().toLowerCase();
+    let command = args.shift().toLowerCase();
 
 
     // Grabs the command data from the client.commands Enmap
