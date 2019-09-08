@@ -106,27 +106,13 @@ module.exports = async (client, messageReaction, user) => {
             let vote_type = messageReaction.emoji.identifier === up_emote ? "UV" : "DV",
                 con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
+            let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}"`);
+            if (res1[0])
+                return;
 
-
-            con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}"`, function (err, rows, fields) {
-
-                if (err) {
-                    console.log(err);
-                }
-
-                if (rows.length > 0) {
-                    return;
-                }
-
-            });
-
-            con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date) VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}", "${user.id}", "${vote_type}", "${moment().format('DD/MM/YY')}")`, function (err, rows, fields) {
-
-                if (err) {
-                    console.log(err);
-                }
-
-            });
+            await con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date)
+                            VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}",
+                                    "${user.id}", "${vote_type}", "${moment().format('DD/MM/YY')}")`);
 
             con.end();
 
@@ -141,9 +127,9 @@ module.exports = async (client, messageReaction, user) => {
     }
 
     // Rôles
-    var membre = messageReaction.message.guild.roles.find(r => r.id === "443748696170168321");
-    var apprenti = messageReaction.message.guild.roles.find(r => r.id === "412587462892716032");
-    var enattente = messageReaction.message.guild.roles.find(r => r.id === "444134229710864385");
+    let membre = messageReaction.message.guild.roles.find(r => r.id === "443748696170168321"),
+        apprenti = messageReaction.message.guild.roles.find(r => r.id === "412587462892716032"),
+        enattente = messageReaction.message.guild.roles.find(r => r.id === "444134229710864385");
 
     if (messageReaction.message.channel.id === "412557168529899541") {
 
@@ -199,9 +185,9 @@ module.exports = async (client, messageReaction, user) => {
         }
 
         console.log("Report !");
-        var reportedMessage = messageReaction.message.cleanContent;
+        let reportedMessage = messageReaction.message.cleanContent;
         logger.run(`${user.tag} a reporté un message dans le salon #${messageReaction.message.channel.name} du serveur ${messageReaction.message.guild.name}.`);
-        var reportEmbed = new Discord.RichEmbed()
+        let reportEmbed = new Discord.RichEmbed()
             .setColor(0xffac00)
             .setAuthor(`Message signalé`)
             .setDescription(`Un nouveau message a été signalé par ${user}.`)
