@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const welcome = require('../scripts/welcome.js');
 const db = require("../scripts/db");
+const mLog = require("../scripts/mLog");
 
 module.exports = async (client, member) => {
     // Récupération du salon de modération
@@ -16,7 +17,7 @@ module.exports = async (client, member) => {
 
         let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad"),
             embed = new Discord.RichEmbed()
-                .setColor("#21b1ff")
+                .setColor(mLog.colors.NEUTRAL_BLUE)
                 .setTitle("Nouveau Membre")
                 .setDescription(`**<@${member.user.id}>** vient de rejoindre le serveur !`);
 
