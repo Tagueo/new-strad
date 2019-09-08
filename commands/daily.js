@@ -9,7 +9,7 @@ exports.run = async (client, message, args) => {
 
     try {
 
-        let con = db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+        let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
         let user = (await con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`))[0];
 
         if (user.lastdaily !== moment().format("DD/MM/YY")) { // Si l'utilisateur n'a pas encore demandé son daily aujourd'hui, alors...
