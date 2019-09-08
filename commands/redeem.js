@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db");
 const mLog = require("../scripts/mLog");
-var moment = require("moment");
+let moment = require("moment");
 
 exports.run = async (client, message, args) => {
 
@@ -25,53 +25,16 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let keyFace = args[0], todayDate = moment().format('DD/MM/YY');
-    let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+    let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad"),
+        keyFace = args[0],
+        todayDate = moment().format('DD/MM/YY');
 
-    con.query(`SELECT * FROM blocks_keys`, {}, keys => {
+    let keys = await con.query(`SELECT * FROM blocks_keys`);
 
-        if (keys[0]) {
-            let key = findKey(keys, keyFace);
+    if (keys[0]) {
+        let key = findKey(keys, keyFace);
 
-            if (key) {
-                if (!key["recipient_id"]) {
-                    con.query(`UPDATE blocks_keys SET recipient_id = "${message.author.id}", redeem_date = "${todayDate}" WHERE key_id = ${key["key_id"]}`, {}, rows => {
-                        con.query(`UPDATE users SET money = money + ${key["key_value"]} WHERE user_id = "${message.author.id}"`, {}, rows => {
-
-                            let successEmbed = new Discord.RichEmbed()
-                                .setAuthor("Récupération réussie")
-                                .setDescription("Youpi ! La clé ``" + keyFace + "`` est valide. Tu viens de recevoir **" + key["key_value"] + "** <:block:547449530610745364> !")
-                                .setFooter("Strad redeem <clé>")
-                                .setColor(mLog.colors.VALID);
-                            message.delete();
-                            commandChannel.send(successEmbed);
-
-                            mLog.run(client, "Récupération de clé", message.author + " a utilisé la clé ``" + keyFace + "`` d'une valeur de **" + key["key_value"] + "** <:block:547449530610745364>.",
-                                mLog.colors.NEUTRAL_BLUE);
-
-                            con.end();
-
-                        });
-                    });
-                } else {
-                    let errorEmbed = new Discord.RichEmbed()
-                        .setAuthor("Récupération impossible")
-                        .setDescription("La clé ``" + keyFace + "`` a déjà été utilisée. En cas de litige, contacte un Mentor en message privé.")
-                        .setColor(mLog.colors.ALERT);
-                    message.delete();
-                    commandChannel.send(errorEmbed);
-                    con.end();
-                }
-            } else {
-                let errorEmbed = new Discord.RichEmbed()
-                    .setAuthor("Récupération impossible")
-                    .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
-                    .setColor(mLog.colors.ALERT);
-                message.delete();
-                commandChannel.send(errorEmbed);
-                con.end();
-            }
-        } else {
+        if (!key) {
             let errorEmbed = new Discord.RichEmbed()
                 .setAuthor("Récupération impossible")
                 .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
@@ -81,6 +44,39 @@ exports.run = async (client, message, args) => {
             con.end();
         }
 
-    });
+        if (!key.recipient_id) {
+            await con.query(`UPDATE blocks_keys SET recipient_id = "${message.author.id}", redeem_date = "${todayDate}" WHERE key_id = ${key.key_id}`);
+            await con.query(`UPDATE users SET money = money + ${key["key_value"]} WHERE user_id = "${message.author.id}"`);
+
+            let successEmbed = new Discord.RichEmbed()
+                .setAuthor("Récupération réussie")
+                .setDescription("Youpi ! Tu viens de recevoir **" + key["key_value"] + "** <:block:547449530610745364> !")
+                .setFooter("Strad redeem <clé>")
+                .setColor(mLog.colors.VALID);
+            message.delete();
+            commandChannel.send(successEmbed);
+
+            mLog.run(client, "Récupération de clé", message.author + " a utilisé la clé ``" + keyFace + "`` d'une valeur de **" + key["key_value"] + "** <:block:547449530610745364>.",
+                mLog.colors.NEUTRAL_BLUE);
+
+            con.end();
+        } else {
+            let errorEmbed = new Discord.RichEmbed()
+                .setAuthor("Récupération impossible")
+                .setDescription("La clé ``" + keyFace + "`` a déjà été utilisée. En cas de litige, contacte un Mentor en message privé.")
+                .setColor(mLog.colors.ALERT);
+            message.delete();
+            commandChannel.send(errorEmbed);
+            con.end();
+        }
+    } else {
+        let errorEmbed = new Discord.RichEmbed()
+            .setAuthor("Récupération impossible")
+            .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
+            .setColor(mLog.colors.ALERT);
+        message.delete();
+        commandChannel.send(errorEmbed);
+        con.end();
+    }
 
 };
