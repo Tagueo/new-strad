@@ -7,9 +7,9 @@ module.exports = async (client, messageReaction, user) => {
     }
 
     if (messageReaction.message.id === "570618282177069076") { // Distributeur de rôles
-        var emojiName = messageReaction.emoji.name;
-        var stradivarius = client.guilds.find(g => g.id === "412369732679893004");
-        var member = stradivarius.members.find(m => m.id === user.id);
+        let emojiName = messageReaction.emoji.name;
+        let stradivarius = client.guilds.find(g => g.id === "412369732679893004");
+        let member = stradivarius.members.find(m => m.id === user.id);
 
         switch (emojiName) {
             case "📝":
@@ -43,10 +43,10 @@ module.exports = async (client, messageReaction, user) => {
                 member.removeRole(stradivarius.roles.find(r => r.name === "------------ Notifications ------------"));
             }
         }
-        var emojiName = messageReaction.emoji.name;
-        var stradivarius = client.guilds.find(g => g.id === "412369732679893004");
-        var member = stradivarius.members.find(m => m.id === user.id);
-        var rolePrefix = "Notif's - ";
+        let emojiName = messageReaction.emoji.name;
+        let stradivarius = client.guilds.find(g => g.id === "412369732679893004");
+        let member = stradivarius.members.find(m => m.id === user.id);
+        let rolePrefix = "Notif's - ";
 
         switch (emojiName) {
             case "🔔":
