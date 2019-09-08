@@ -41,7 +41,8 @@ exports.run = async (client, message, args) => {
         }
     }
 
-    inventory = inventory ? inventory.join(" • ") : "Ton inventaire est vide. Fais ``Strad shop`` pour acheter des items !";
+    inventory = inventory.join(" • ");
+    if (inventory === "") inventory = "Ton inventaire est vide. Fais ``Strad shop`` pour acheter des items !";
 
     const rankEmbed = new Discord.RichEmbed()
         .setAuthor(message.author.tag, message.author.avatarURL)
