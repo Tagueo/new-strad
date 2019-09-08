@@ -35,9 +35,9 @@ exports.run = async (client, message, args) => {
     }
 
     if (userItems[0]) {
-        for (let i = 0; i < rows.length; i++) {
-            let emoji = client.emojis.get(rows[i].emoji);
-            inventory[i] = `${emoji} x ${rows[i].amount}`;
+        for (let i = 0; i < userItems.length; i++) {
+            let emoji = client.emojis.get(userItems[i].emoji);
+            inventory[i] = `${emoji} x ${userItems[i].amount}`;
         }
     }
 
