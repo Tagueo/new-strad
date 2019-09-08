@@ -32,36 +32,37 @@ exports.run = async (client, message, args) => {
         + " is_saleable AS saleable, quantity, buy_amount, discount, script_name, type FROM items WHERE is_buyable = 1 ORDER BY id ASC",
         commandChannel = client.channels.get('415633143861739541');
 
-    con.query(sql, {}, (rows) => {
-        let shopEmbed = new Discord.RichEmbed()
+    let items = await con.query(sql),
+        shopEmbed = new Discord.RichEmbed()
             .setAuthor("Boutique")
             .setThumbnail("https://cdn.discordapp.com/attachments/543888518167003136/602227009468235791/SDVR_item.png")
             .addField("Aide", "Acheter un article : ``Strad buy"
                 + " <numéro de l'article>``.\nExemple : ``Strad buy 1`` (pour acheter un changement de pseudonyme).");
-        rows.forEach(row => {
-            let item = {
-                id: row["id"],
-                name: row["name"],
-                emoji: row["emoji"],
-                description: row["description"],
-                price: row["price"],
-                buyable: row["buyable"],
-                saleable: row["saleable"],
-                quantity: row["quantity"],
-                buy_amount: row["buy_amount"],
-                discount: row["discount"],
-                script_name: row["script_name"],
-                type: row["type"]
-            };
-            if (item.buyable === 1) addItem(client, shopEmbed, item);
-        });
-        shopEmbed.setFooter("Strad shop")
-            .setColor(mLog.colors.SHOP);
 
-        message.delete();
-        commandChannel.send(shopEmbed);
-
-        con.end();
+    items.forEach(item => {
+        item = {
+            id: item.id,
+            name: item.name,
+            emoji: item.emoji,
+            description: item.description,
+            price: item.price,
+            buyable: item.buyable,
+            saleable: item.saleable,
+            quantity: item.quantity,
+            buy_amount: item.buy_amount,
+            discount: item.discount,
+            script_name: item.script_name,
+            type: item.type
+        };
+        if (item.buyable === 1) addItem(client, shopEmbed, item);
     });
+
+    shopEmbed.setFooter("Strad shop")
+        .setColor(mLog.colors.SHOP);
+
+    message.delete();
+    commandChannel.send(shopEmbed);
+
+    con.end();
 
 };
