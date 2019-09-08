@@ -77,5 +77,5 @@ exports.run = async (client, message, args) => {
         commandChannel.send(errorEmbed);
         con.end();
     }
-    
+
 };

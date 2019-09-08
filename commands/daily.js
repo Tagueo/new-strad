@@ -1,113 +1,65 @@
 const Discord = require("discord.js");
-var moment = require("moment");
+let moment = require("moment");
 const mLog = require("../scripts/mLog");
+const db = require("../scripts/db");
 
 exports.run = async (client, message, args) => {
 
-  moment.locale("fr");
+    moment.locale("fr");
 
-  try {
-    // DB connection
-    var gb = {embed: undefined, uv: undefined, dv: undefined, finalReward: 50, finalCreaReward: 0};
-    var mysql = require("mysql");
+    try {
 
-    var con = mysql.createConnection({
-      host: "localhost",
-      user: client.config.mysqlUser,
-      password: client.config.mysqlPass,
-      database: "strad"
-    });
+        let con = db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+        let user = (await con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`))[0];
 
-    con.connect((err) => {
-      if (err) console.log(err);
-    });
+        if (user.lastdaily !== moment().format("DD/MM/YY")) { // Si l'utilisateur n'a pas encore demandé son daily aujourd'hui, alors...
+            let upvotes = await con.query(`SELECT * FROM rewards WHERE rewarded_id = "${message.author.id}" AND type = "UV"`),
+                downvotes = await con.query(`SELECT * FROM rewards WHERE rewarded_id = "${message.author.id}" AND type = "DV"`),
+                finalBlockReward = 50,
+                finalCreaReward = 0;
 
-    con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
+            upvotes = upvotes ? upvotes.length : 0;
+            downvotes = downvotes ? downvotes.length : 0;
 
-      if (err) {
+            finalBlockReward += upvotes * 5;
+            finalCreaReward += upvotes - downvotes;
+
+            if (finalCreaReward < 0) finalCreaReward = 0;
+
+            await con.query(`DELETE FROM rewards WHERE rewarded_id = "${message.author.id}"`); // Suppression des votes
+            await con.query(`UPDATE users SET money = money + ${finalBlockReward}, creas_amount = creas_amount
+                + ${finalCreaReward}, usertag = "${message.member.displayName}"
+                WHERE user_id = "${message.author.id}"`); // Ajout des Blocs et des Créas
+            await con.query(`UPDATE users SET lastdaily = "${moment().format('DD/MM/YY')}"
+                WHERE user_id = "${message.author.id}"`); // Mise à jour de la date du dernier daily
+
+            let successEmbed = new Discord.RichEmbed()
+                .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
+                .setColor(mLog.colors.VALID)
+                .addField(`Blocs`, `+ **${finalBlockReward}** <:block:547449530610745364>`, true)
+                .addField(`Créas`, `+ **${finalCreaReward}** <:crea:547482886824001539>`, true)
+                .setDescription(`Voici ta récompense journalière ! Pour accéder à ton compte, fais \`\`Strad rank\`\`.\n**${upvotes} <:like:568493894270976012> / ${downvotes} <:dislike:568493872968368149>**`)
+                .setFooter("Strad daily");
+
+            client.channels.get('415633143861739541').send(successEmbed);
+            message.delete();
+
+            con.end();
+        } else {
+            let errorEmbed = new Discord.RichEmbed()
+                .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
+                .setColor(mLog.colors.ALERT)
+                .setDescription(`Tu as déjà obtenu ta récompense aujourd'hui.\nRécupère-la ${moment().endOf("day").fromNow()} !`)
+                .setFooter("Strad daily");
+
+            client.channels.get('415633143861739541').send(errorEmbed);
+            message.delete();
+
+            con.end();
+        }
+
+    } catch (err) {
         console.log(err);
-      }
-
-      if (rows[0].lastdaily !== moment().format("DD/MM/YY")) { // Si l'utilisateur n'a pas encore demandé son daily aujourd'hui, alors...
-
-        con.query(`SELECT * FROM rewards WHERE rewarded_id = "${message.author.id}" AND type = "UV"`, function (err, rows, fields) { // Récupération des UVs
-          if (err) {
-            console.log(err);
-          }
-
-          if (rows) {
-            gb.uv = rows.length;
-          } else {
-            gb.uv = 0;
-          }
-
-          con.query(`SELECT * FROM rewards WHERE rewarded_id = "${message.author.id}" AND type = "DV"`, function (err, rows, fields) { // Récupération des DVs
-            if (err) {
-              console.log(err);
-            }
-          
-            if (rows) {
-              gb.dv = rows.length;
-            } else {
-              gb.dv = 0;
-            }
-
-            gb.finalReward += gb.uv * 5;
-            gb.finalCreaReward += gb.uv - gb.dv;
-            if (gb.finalCreaReward < 0) gb.finalCreaReward = 0;
-
-            con.query(`DELETE FROM rewards WHERE rewarded_id = "${message.author.id}"`, function (err, rows, fields) { // Suppression des votes
-              if (err) {
-                console.log(err);
-              }
-            });
-
-            con.query(`UPDATE users SET money = money + ${gb.finalReward}, creas_amount = creas_amount + ${gb.finalCreaReward}, usertag = "${message.member.displayName}" WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
-              if (err) {
-                console.log(err);
-              }
-
-              con.query(`UPDATE users SET lastdaily = "${moment().format('DD/MM/YY')}" WHERE user_id = "${message.author.id}"`, function (err, rows, fields) {
-                if (err) {
-                  console.log(err);
-                }
-
-                gb.embed = new Discord.RichEmbed()
-                  .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
-                  .setColor(mLog.colors.VALID)
-                  .addField(`Blocs`, `+ **${gb.finalReward}** <:block:547449530610745364>`, true)
-                  .addField(`Créas`, `+ **${gb.finalCreaReward}** <:crea:547482886824001539>`, true)
-                  .setDescription(`Voici ta récompense journalière ! Pour accéder à ton compte, fais \`\`Strad rank\`\`.\n**${gb.uv} <:like:568493894270976012> / ${gb.dv} <:dislike:568493872968368149>**`)
-                  .setFooter("Strad daily");
-
-                client.channels.get('415633143861739541').send(gb.embed);
-                message.delete();
-
-                con.end();
-              });
-            });
-          });
-        });
-
-      } else {
-
-        gb.embed = new Discord.RichEmbed()
-          .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
-          .setColor(mLog.colors.ALERT)
-          .setDescription(`Tu as déjà obtenu ta récompense aujourd'hui.\nRécupère-la ${moment().endOf("day").fromNow()} !`)
-          .setFooter("Strad daily");
-
-        client.channels.get('415633143861739541').send(gb.embed);
-        message.delete();
-        
-        con.end();
-
-      }
-
-    });
-
-  } catch (err) {
-    console.log(err);
-  }
+    }
 
 };
