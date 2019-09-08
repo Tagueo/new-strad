@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 const {version} = require("discord.js");
 const moment = require("moment");
 const mLog = require("../scripts/mLog");
+const m = require("moment-duration-format");
+const ms = require("ms");
 let os = require('os');
 let cpuStat = require("cpu-stat");
 
@@ -11,7 +13,7 @@ exports.run = async (client, message, args) => {
     if (err) {
       return console.log(err);
     }
-    const duration = moment().duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+    const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     const embedStats = new Discord.RichEmbed()
       .setAuthor('Stats', client.user.avatarURL)
       .setColor(mLog.colors.NEUTRAL_BLUE)
