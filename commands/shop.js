@@ -20,9 +20,10 @@ function addItem(client, embed, item) {
         discountText = ` • ${discountEmoji}`;
         priceText = `~~${item.price}~~ ${priceAfterDiscount} <:block:547449530610745364> (-${item.discount} %)`;
     }
+    if (item.quantity === -1) item.quantity = "∞";
     embed
         .addField(`${item.emoji} ${item.buy_amount} x ${item.name}${discountText}`, "**Description :** " + item.description + "\n"
-            + `**Prix :** ${priceText}\n**Numéro d'article :** ${item.id}` + notSaleableText);
+            + `**Prix :** ${priceText}\n**Stock :** ${item.quantity}\n**Numéro d'article :** ${item.id}` + notSaleableText);
 }
 
 exports.run = async (client, message, args) => {
