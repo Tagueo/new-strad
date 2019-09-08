@@ -1,22 +1,10 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-
-const chalk = require('chalk');
-const moment = require('moment');
-
-const welcomeCategId = "443782424653070346";
+const mLog = require("../scripts/mLog");
 
 module.exports = (client, member) => {
-  const logs = client.channels.get(client.config.logsChannel)
+    const welcomeCategId = "443782424653070346";
 
-  if (member.guild.id = '412369732679893004') {
-
-    var embed = new Discord.RichEmbed()
-      .setColor("#f44242")
-      .setTitle("Ancien Membre")
-      .setDescription(`**${member.user.tag}** vient de quitter le serveur :/`)
-
-    member.guild.channels.find(c => c.id === welcomeCategId).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES")
-    logs.send(embed)
-  }
+    if (member.guild.id = '412369732679893004') {
+        member.guild.channels.find(c => c.id === welcomeCategId).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES");
+        mLog.run(client, "Ancien membre", `**${member.user.tag}** vient de quitter le serveur.`, mLog.colors.ALERT);
+    }
 };
