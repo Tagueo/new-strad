@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const {version} = require("discord.js");
 const moment = require("moment");
+const mLog = require("../scripts/mLog");
 let os = require('os');
 let cpuStat = require("cpu-stat");
 
@@ -13,7 +14,7 @@ exports.run = async (client, message, args) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     const embedStats = new Discord.RichEmbed()
       .setAuthor('Stats', client.user.avatarURL)
-      .setColor("#21b1ff")
+      .setColor(mLog.colors.NEUTRAL_BLUE)
       .addField("Temps de disponibilité", `\`${duration}\``, true)
       .addField("Version de Discord.js", `\`v${version}\``, true)
       .addField("Version de NodeJS", `\`${process.version}\``, true)
