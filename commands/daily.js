@@ -6,7 +6,7 @@ const db = require("../scripts/db");
 exports.run = async (client, message, args) => {
 
     moment.locale("fr");
-    
+
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
     let user = (await con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`))[0];
 

@@ -16,10 +16,6 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    function sendToTemp(messageContent) {
-        message.channel.send(messageContent);
-    }
-
     if (!args[0]) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Aide")
@@ -35,28 +31,28 @@ exports.run = async (client, message, args) => {
             .setDescription("Ton pseudonyme est revenu à la normale !")
             .setColor(mLog.colors.NEUTRAL_BLUE);
         message.delete();
-        commandChannel.send(errorEmbed);
+        commandChannel.send(successEmbed);
         return;
     }
 
-    var newNickname = args.join(" "), itemId = 1, username = message.author.username,
+    let newNickname = args.join(" "), itemId = 1, username = message.author.username,
         con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-    con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`, {}, rows => {
-        if (!rows[0] || rows[0]["amount"] < 1) {
-            let errorEmbed = new Discord.RichEmbed()
-                .setAuthor("Boutique")
-                .setDescription("Pour avoir accès à ça, fais ``Strad shop`` !")
-                .setColor(mLog.colors.SHOP);
-            message.delete();
-            commandChannel.send(errorEmbed);
-            con.end();
-            return;
-        }
+    let userItems = await con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`);
 
-        try {
-            message.member.setNickname(newNickname);
-        } catch (e) {
+    if (!rows[0] || rows[0].amount < 1) {
+        let errorEmbed = new Discord.RichEmbed()
+            .setAuthor("Boutique")
+            .setDescription("Pour avoir accès à ça, fais ``Strad shop`` !")
+            .setColor(mLog.colors.SHOP);
+        message.delete();
+        commandChannel.send(errorEmbed);
+        con.end();
+        return;
+    }
+
+    message.member.setNickname(newNickname)
+        .catch((e) => {
             let errorEmbed = new Discord.RichEmbed()
                 .setAuthor("Changement de pseudonyme")
                 .setDescription("Je ne peux pas te mettre ce pseudonyme, désolé !")
@@ -65,19 +61,18 @@ exports.run = async (client, message, args) => {
             commandChannel.send(errorEmbed);
             con.end();
             return;
-        }
-
-        con.query(`UPDATE has_items SET amount = amount - 1 WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`, {}, rows => {
-            let successEmbed = new Discord.RichEmbed()
-                .setAuthor("Changement de pseudonyme")
-                .setDescription(`Génial, ta nouvelle identité est prête !`)
-                .setColor(mLog.colors.VALID);
-            message.delete();
-            commandChannel.send(successEmbed);
-
-            mLog.run(client, "Changement de pseudonyme", `${username} a changé son pseudo en "${newNickname}"`, mLog.colors.NEUTRAL_BLUE);
-            con.end();
         });
-    });
+
+    await con.query(`UPDATE has_items SET amount = amount - 1 WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`);
+
+    let successEmbed = new Discord.RichEmbed()
+        .setAuthor("Changement de pseudonyme")
+        .setDescription(`Génial, ta nouvelle identité est prête !`)
+        .setColor(mLog.colors.VALID);
+    message.delete();
+    commandChannel.send(successEmbed);
+
+    mLog.run(client, "Changement de pseudonyme", `${username} a changé son pseudo en "${newNickname}"`, mLog.colors.NEUTRAL_BLUE);
+    con.end();
 
 };
