@@ -77,12 +77,17 @@ exports.run = async (client, message, args) => {
     await message.channel.send(promptEmbed);
 
     const filter = m => message.author.id === m.author.id;
+    let confirm = true;
 
     let messages = await message.channel.awaitMessages(filter, {
         time: 10000,
         maxMatches: 1,
         errors: ["time"]
     })
+        .then(messages => {
+            if (messages.first().cleanContent().toLowerCase() !== "oui")
+                confirm = false;
+        })
         .catch(() => {
             const timeoutEmbed = new Discord.RichEmbed()
                 .setAuthor("Achat annulé")
@@ -93,15 +98,13 @@ exports.run = async (client, message, args) => {
             return;
         });
 
-    const confirmation = messages.first().cleanContent().toLowerCase();
-
-    if (confirmation !== "oui") {
-        const timeoutEmbed = new Discord.RichEmbed()
+    if (!confirm) {
+        const cancelEmbed = new Discord.RichEmbed()
             .setAuthor("Achat annulé")
             .setDescription(`La transaction a été annulée.`)
             .setColor(mLog.colors.ALERT);
         message.delete();
-        message.channel.send(timeoutEmbed);
+        message.channel.send(cancelEmbed);
         con.end();
         return;
     }
