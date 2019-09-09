@@ -100,7 +100,7 @@ exports.run = async (client, message, args) => {
 
     console.log(messages);
 
-    if (!confirm) {
+    if (!messages.first().cleanContent().toLowerCase() !== "oui") {
         const cancelEmbed = new Discord.RichEmbed()
             .setAuthor("Achat annulé")
             .setDescription(`La transaction a été annulée.`)
