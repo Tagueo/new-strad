@@ -99,13 +99,13 @@ exports.run = async (client, message, args) => {
 
     console.log(messages);
 
-    if (!messages.first().content.toLowerCase() !== "oui") {
+    if (messages.first().content.toLowerCase() !== "oui") {
         const cancelEmbed = new Discord.RichEmbed()
             .setAuthor("Achat annulé")
             .setDescription(`La transaction a été annulée.`)
             .setColor(mLog.colors.ALERT);
         message.channel.send(cancelEmbed);
-        message.delete();
+        messages.first().delete();
         con.end();
         return;
     }
