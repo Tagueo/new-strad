@@ -103,6 +103,7 @@ exports.run = async (client, message, args) => {
             message.channel.send(cancelEmbed);
             messages.first().delete();
             con.end();
+            return;
         }
         // Prélèvement de l'argent sur le compte de l'utilisateur
         await con.query(`UPDATE users SET money = ${money - priceAfterDiscount} WHERE user_id = "${message.member.id}"`);
