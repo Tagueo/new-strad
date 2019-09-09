@@ -77,7 +77,6 @@ exports.run = async (client, message, args) => {
     await message.channel.send(promptEmbed);
 
     const filter = m => message.author.id === m.author.id;
-    let confirm = true;
 
     let messages = await message.channel.awaitMessages(filter, {
         time: 10000,
@@ -100,7 +99,7 @@ exports.run = async (client, message, args) => {
 
     console.log(messages);
 
-    if (!messages.first().cleanContent().toLowerCase() !== "oui") {
+    if (!messages.first().content.toLowerCase() !== "oui") {
         const cancelEmbed = new Discord.RichEmbed()
             .setAuthor("Achat annulé")
             .setDescription(`La transaction a été annulée.`)
