@@ -70,7 +70,8 @@ exports.run = async (client, message, args) => {
     // Demande de confirmation
     const promptEmbed = new Discord.RichEmbed()
         .setAuthor("Confirmation d'achat")
-        .setDescription(`${message.member}, acheter **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364> ?\nEnvoie "Oui" ou "Non"`)
+        .setDescription(`${message.member}, acheter **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364> ?`)
+        .setFooter("Envoie \"Oui\" ou \"Non\"")
         .setColor(mLog.colors.SHOP);
     message.delete();
 
@@ -101,37 +102,36 @@ exports.run = async (client, message, args) => {
         message.channel.send(cancelEmbed);
         messages.first().delete();
         con.end();
-        return;
+    } else if (messages) {
+        // Prélèvement de l'argent sur le compte de l'utilisateur
+        await con.query(`UPDATE users SET money = ${money - priceAfterDiscount} WHERE user_id = "${message.member.id}"`);
+
+        let items = await con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${item.item_id}`),
+            sql;
+
+        if (items[0])
+            sql = `UPDATE has_items SET amount = amount + ${item.buy_amount} WHERE user_id = "${message.member.id}" AND item_id = ${item.item_id}`;
+        else
+            sql = `INSERT INTO has_items (user_id, item_id, amount) VALUES ("${message.member.id}", ${item.item_id}, ${item.buy_amount})`;
+
+        await con.query(sql);
+
+        const successEmbed = new Discord.RichEmbed()
+            .setAuthor("Achat réussi")
+            .setDescription(`Tu as acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364> !`)
+            .setFooter("Tape \"Strad rank\" pour accéder à ton inventaire")
+            .setColor(mLog.colors.VALID);
+        messages.first().delete();
+        commandChannel.send(successEmbed);
+
+        mLog.run(client, "Strad buy", `${message.author} a acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364>.`,
+            mLog.colors.NEUTRAL_BLUE);
+
+        if (item.quantity !== -1) {
+            await con.query(`UPDATE items SET quantity = quantity - ${item.buy_amount} WHERE item_id = ${item.item_id}`);
+        }
+
+        con.end();
     }
-
-    // Prélèvement de l'argent sur le compte de l'utilisateur
-    await con.query(`UPDATE users SET money = ${money - priceAfterDiscount} WHERE user_id = "${message.member.id}"`);
-
-    let items = await con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${item.item_id}`),
-        sql;
-
-    if (items[0])
-        sql = `UPDATE has_items SET amount = amount + ${item.buy_amount} WHERE user_id = "${message.member.id}" AND item_id = ${item.item_id}`;
-    else
-        sql = `INSERT INTO has_items (user_id, item_id, amount) VALUES ("${message.member.id}", ${item.item_id}, ${item.buy_amount})`;
-
-    await con.query(sql);
-
-    const successEmbed = new Discord.RichEmbed()
-        .setAuthor("Achat réussi")
-        .setDescription(`Tu as acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364> !`)
-        .setFooter("Tape \"Strad rank\" pour accéder à ton inventaire")
-        .setColor(mLog.colors.VALID);
-    messages.first().delete();
-    commandChannel.send(successEmbed);
-
-    mLog.run(client, "Strad buy", `${message.author} a acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364>.`,
-        mLog.colors.NEUTRAL_BLUE);
-
-    if (item.quantity !== -1) {
-        await con.query(`UPDATE items SET quantity = quantity - ${item.buy_amount} WHERE item_id = ${item.item_id}`);
-    }
-
-    con.end();
 
 };
