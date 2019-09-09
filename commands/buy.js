@@ -19,7 +19,9 @@ exports.run = async (client, message, args) => {
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
     let res1 = await con.query(`SELECT money FROM users WHERE user_id = "${message.member.id}"`);
-    let res2 = await con.query(`SELECT * FROM items WHERE item_id = ${chosenId}`);
+    let res2 = await con.query(`SELECT *
+                                FROM items
+    WHERE item_id = ${chosenId}`);
     money = res1[0].money, item = res2[0];
 
     if (!item) {
@@ -61,6 +63,45 @@ exports.run = async (client, message, args) => {
             .setColor(mLog.colors.ALERT);
         message.delete();
         commandChannel.send(errorEmbed);
+        con.end();
+        return;
+    }
+
+    // Demande de confirmation
+    const promptEmbed = new Discord.RichEmbed()
+        .setAuthor("Confirmation d'achat")
+        .setDescription(`${message.member}, acheter **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364> ?\nEnvoie "Oui" ou "Non"`)
+        .setColor(mLog.colors.SHOP);
+    message.delete();
+
+    await message.channel.send(promptEmbed);
+
+    const filter = m => message.author.id === m.author.id;
+
+    let messages = await message.channel.awaitMessages(filter, {
+        time: 10000,
+        maxMatches: 1,
+        errors: ["time"]
+    })
+        .catch(() => {
+            const timeoutEmbed = new Discord.RichEmbed()
+                .setAuthor("Achat annulé")
+                .setDescription(`La transaction a été annulée.`)
+                .setColor(mLog.colors.ALERT);
+            message.channel.send(timeoutEmbed);
+            con.end();
+            return;
+        });
+
+    const confirmation = messages.first().cleanContent().toLowerCase();
+
+    if (confirmation !== "oui") {
+        const timeoutEmbed = new Discord.RichEmbed()
+            .setAuthor("Achat annulé")
+            .setDescription(`La transaction a été annulée.`)
+            .setColor(mLog.colors.ALERT);
+        message.delete();
+        message.channel.send(timeoutEmbed);
         con.end();
         return;
     }

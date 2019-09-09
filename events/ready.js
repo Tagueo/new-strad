@@ -9,7 +9,7 @@ module.exports = async (client) => {
         type: 'STREAMING',
         url: 'https://www.twitch.tv/delphistudio'
     })
-        .then(presence => console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(client.user.tag)}] Activity set`))
+        .then(presence => console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(client.user.tag)}] Prêt à fonctionner !`))
         .catch(console.error);
 
     // Distributeur de rôles
