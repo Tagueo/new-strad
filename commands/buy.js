@@ -103,12 +103,10 @@ exports.run = async (client, message, args) => {
             .setDescription(`La transaction a été annulée.`)
             .setColor(mLog.colors.ALERT);
         message.channel.send(cancelEmbed);
-        // messages.first().delete();
+        messages.first().delete();
         con.end();
         return;
     }
-
-    // messages.first().delete();
 
     // Prélèvement de l'argent sur le compte de l'utilisateur
     await con.query(`UPDATE users SET money = ${money - priceAfterDiscount} WHERE user_id = "${message.member.id}"`);
@@ -128,7 +126,7 @@ exports.run = async (client, message, args) => {
         .setDescription(`Tu as acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364> !`)
         .setFooter("Tape \"Strad rank\" pour accéder à ton inventaire")
         .setColor(mLog.colors.VALID);
-    message.delete();
+    messages.first().delete();
     commandChannel.send(successEmbed);
 
     mLog.run(client, "Strad buy", `${message.author} a acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364>.`,
