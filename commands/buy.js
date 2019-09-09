@@ -94,15 +94,16 @@ exports.run = async (client, message, args) => {
             return;
         });
 
-    if (messages.first().content.toLowerCase() !== "oui") {
-        const cancelEmbed = new Discord.RichEmbed()
-            .setAuthor("Achat annulé")
-            .setDescription(`La transaction a été annulée.`)
-            .setColor(mLog.colors.ALERT);
-        message.channel.send(cancelEmbed);
-        messages.first().delete();
-        con.end();
-    } else if (messages) {
+    if (messages) {
+        if (messages && messages.first().content.toLowerCase() !== "oui") {
+            const cancelEmbed = new Discord.RichEmbed()
+                .setAuthor("Achat annulé")
+                .setDescription(`La transaction a été annulée.`)
+                .setColor(mLog.colors.ALERT);
+            message.channel.send(cancelEmbed);
+            messages.first().delete();
+            con.end();
+        }
         // Prélèvement de l'argent sur le compte de l'utilisateur
         await con.query(`UPDATE users SET money = ${money - priceAfterDiscount} WHERE user_id = "${message.member.id}"`);
 
