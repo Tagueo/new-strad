@@ -82,20 +82,16 @@ exports.run = async (client, message, args) => {
         time: 10000,
         maxMatches: 1,
         errors: ["time"]
-    });
-        // .then(messages => {
-        //     if (messages.first().cleanContent().toLowerCase() !== "oui")
-        //         confirm = false;
-        // })
-        // .catch(() => {
-        //     const timeoutEmbed = new Discord.RichEmbed()
-        //         .setAuthor("Achat annulé")
-        //         .setDescription(`La transaction a été annulée.`)
-        //         .setColor(mLog.colors.ALERT);
-        //     message.channel.send(timeoutEmbed);
-        //     con.end();
-        //     return;
-        // });
+    })
+        .catch(() => {
+            const timeoutEmbed = new Discord.RichEmbed()
+                .setAuthor("Achat annulé")
+                .setDescription(`La transaction a été annulée.`)
+                .setColor(mLog.colors.ALERT);
+            message.channel.send(timeoutEmbed);
+            con.end();
+            return;
+        });
 
     if (messages.first().content.toLowerCase() !== "oui") {
         const cancelEmbed = new Discord.RichEmbed()
