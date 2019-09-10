@@ -24,7 +24,7 @@ exports.run = async (client, message) => {
                                     ORDER BY has_items.item_id ASC`),
         inventory = [],
         rank = 0,
-        user = rows[0];
+        concernedUser = rows[0];
     const stradEmoji = "<:block:547449530610745364>";
     const creaEmoji = "<:crea:547482886824001539>";
 
@@ -48,10 +48,10 @@ exports.run = async (client, message) => {
     const rankEmbed = new Discord.RichEmbed()
         .setAuthor(message.author.tag, message.author.avatarURL)
         .setThumbnail(message.author.avatarURL)
-        .addField("Valeur du compte", `${user.money} ${stradEmoji}`, true)
-        .addField("Nombre de Créas", `${user.creas_amount} ${creaEmoji}`, true)
+        .addField("Valeur du compte", `${concernedUser.money} ${stradEmoji}`, true)
+        .addField("Nombre de Créas", `${concernedUser.creas_amount} ${creaEmoji}`, true)
         .addField("Rang", `#${rank}`, true)
-        .addField("Titre artistique", user.rank, true)
+        .addField("Titre artistique", concernedUser.rank, true)
         .addField("Inventaire", inventory)
         .setFooter("Strad rank")
         .setColor(message.member.displayColor);
