@@ -43,13 +43,14 @@ exports.run = async (client, member) => {
 
     }
 
+    Canvas.registerFont("assets/welcome/welcome_font.ttf", {
+        family: "Red Hat Display"
+    });
+
     const canvas = Canvas.createCanvas(600, 270);
     const ctx = canvas.getContext("2d");
-    ctx.save();
 
-    // // Fill background
-    // ctx.fillStyle = "#35393e";
-    // ctx.fillRect(0, 0, 600, 270);
+    ctx.save();
 
     const asset1 = await Canvas.loadImage("assets/welcome/asset1.png");
     ctx.drawImage(asset1, 42, 47, 516, 215);
@@ -63,14 +64,14 @@ exports.run = async (client, member) => {
 
     ctx.restore();
 
-    ctx.font = "22px sans-serif bold";
+    ctx.font = "19px Red Hat Display";
     ctx.fillStyle = "#36393f";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
     ctx.fillText("BIENVENUE SUR STRADIVARIUS", canvas.width/2, 182);
 
-    ctx.font = "41px sans-serif bold";
+    ctx.font = "35px Red Hat Display";
     ctx.fillText("SuperDelphi#8000", canvas.width/2, 215);
 
     // const asset2 = await Canvas.loadImage("assets/welcome/asset1.png");
