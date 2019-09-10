@@ -13,7 +13,6 @@ exports.Connection = class Connection {
         this.core.connect((err) => {
             if (err) throw err;
         });
-        resolve(true);
     }
 
     async query(sql) {
