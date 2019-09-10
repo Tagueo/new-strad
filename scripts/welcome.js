@@ -63,8 +63,15 @@ exports.run = async (client, member) => {
 
     ctx.restore();
 
-    const asset2 = await Canvas.loadImage("assets/welcome/asset1.png");
-    ctx.drawImage(asset1, 42, 133, 516, 129);
+    ctx.font = "60px sans-serif";
+    ctx.fillStyle = "#36393f";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillText("BIENVENUE SUR STRADIVARIUS", canvas.width/2, 142);
+
+    // const asset2 = await Canvas.loadImage("assets/welcome/asset1.png");
+    // ctx.drawImage(asset1, 42, 133, 516, 129);
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), `welcome.png`);
 
