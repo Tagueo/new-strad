@@ -7,7 +7,7 @@ exports.run = async (client, message, args) => {
     let rows = await con.query(`SELECT *
                                 FROM users
                                 WHERE user_id = ${message.author.id}`);
-
+    console.log(rows);
     if (!rows) {
         con.end();
         return;
