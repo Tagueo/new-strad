@@ -14,7 +14,6 @@ exports.run = async (client, message) => {
 
     let users = await con.query(`SELECT *
                                  FROM users
-                                 WHERE creas_amount <> 0
                                  ORDER BY creas_amount DESC`),
         userItems = await con.query(`SELECT has_items.item_id AS id, item_emoji AS emoji, has_items.amount AS amount
                                     FROM has_items INNER JOIN items ON items.item_id = has_items.item_id
