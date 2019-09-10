@@ -45,13 +45,14 @@ exports.run = async (client, member) => {
 
     const canvas = Canvas.createCanvas(600, 270);
     const ctx = canvas.getContext("2d");
+    ctx.save();
 
     // // Fill background
     // ctx.fillStyle = "#35393e";
     // ctx.fillRect(0, 0, 600, 270);
 
     const asset1 = await Canvas.loadImage("assets/welcome/asset1.png");
-    ctx.drawImage(asset1, 42, 133, 516, 129);
+    ctx.drawImage(asset1, 42, 47, 516, 215);
 
     roundRect(ctx, 232, 13, 136, 136, 10, "#ffffff", false);
 
@@ -59,6 +60,11 @@ exports.run = async (client, member) => {
 
     const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
     ctx.drawImage(avatar, 232, 13, 136, 136);
+
+    ctx.restore();
+
+    const asset2 = await Canvas.loadImage("assets/welcome/asset1.png");
+    ctx.drawImage(asset1, 42, 133, 516, 129);
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), `welcome.png`);
 
