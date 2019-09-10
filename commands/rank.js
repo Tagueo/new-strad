@@ -4,6 +4,11 @@ const db = require("../scripts/db.js");
 exports.run = async (client, message) => {
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+
+    setTimeout(() => {
+        console.log("This is a test");
+    }, 5000);
+
     let rows = await con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`);
     console.log(rows);
     if (!rows) {
