@@ -76,7 +76,7 @@ exports.run = async (client, member) => {
     ctx.font = "35px Red Hat Display";
     ctx.fillText("SuperDelphi#8000", canvas.width/2, 215);
 
-    ctx.drawImage(asset2, 182, 125, 516, 215);
+    ctx.drawImage(asset2, 182, 125, 436, 145);
 
     // const asset2 = await Canvas.loadImage("assets/welcome/asset1.png");
     // ctx.drawImage(asset1, 42, 133, 516, 129);
