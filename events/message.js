@@ -76,7 +76,7 @@ module.exports = async (client, message) => {
 
     // Ignores messages not starting with the prefix
     if (!message.content.toLowerCase().startsWith(botPrefix.toLowerCase())) {
-        return;
+        return;S
     }
 
     // Standard argument/command name definition.
