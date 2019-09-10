@@ -10,9 +10,7 @@ exports.run = async (client, member) => {
         + `> https://discord.gg/4MmJwgj`;
     sendMP.run(client, welcomeMessage, member);
 
-    // TODO Tests
-
-    const tempChannel = member.guild.channels.find(c => c.id === "413678978990080010");
+    const globalChannel = member.guild.channels.find(c => c.id === "412369732679893008");
 
     function roundRect(ctx, x, y, width, height, radius=5, fill, stroke=true) {
         if (typeof radius === 'number') {
@@ -77,9 +75,6 @@ exports.run = async (client, member) => {
     ctx.fillText("SuperDelphi#8000", canvas.width/2, 215);
 
     ctx.drawImage(asset2, 82, 125, 436, 145);
-
-    // const asset2 = await Canvas.loadImage("assets/welcome/asset1.png");
-    // ctx.drawImage(asset1, 42, 133, 516, 129);
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), `welcome.png`);
 
