@@ -5,9 +5,7 @@ exports.run = async (client, message) => {
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-    let rows = await con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`).then((w) => {
-        console.log(w);
-    });
+    let rows = await con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`);
 
     if (!rows) {
         con.end();
@@ -28,7 +26,7 @@ exports.run = async (client, message) => {
     const stradEmoji = "<:block:547449530610745364>";
     const creaEmoji = "<:crea:547482886824001539>";
 
-    for (i = 0; i < rows.length; i++) {
+    for (i = 0; i < users.length; i++) {
         if (message.author.id == users[i].user_id) {
             rank = i + 1;
             break;
