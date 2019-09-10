@@ -72,7 +72,7 @@ exports.run = async (client, member) => {
     ctx.fillText("BIENVENUE SUR STRADIVARIUS", canvas.width/2, 182);
 
     ctx.font = "35px Red Hat Display";
-    ctx.fillText(`${member}`, canvas.width/2, 215);
+    ctx.fillText(`${member.user.tag}`, canvas.width/2, 215);
 
     ctx.drawImage(asset2, 82, 125, 436, 145);
 
