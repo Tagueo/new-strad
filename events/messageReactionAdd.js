@@ -118,9 +118,9 @@ module.exports = async (client, messageReaction, user) => {
 
         } else if (messageReaction.emoji.name === "✨") {
             if (user.id === messageReaction.message.author.id && !isFeedbackable.checkFeedActivation(messageReaction.message)) {
-                messageReaction.message.react(client.emojis.get("568493894270976012"));
-                await messageReaction.message.react(client.emojis.get("568493872968368149"));
                 await messageReaction.remove(client.user);
+                await messageReaction.message.react(client.emojis.get("568493894270976012"));
+                await messageReaction.message.react(client.emojis.get("568493872968368149"));
             }
             messageReaction.remove(user);
         }
