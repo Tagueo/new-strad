@@ -64,7 +64,7 @@ exports.run = async (client, member) => {
 
     ctx.restore();
 
-    ctx.font = "19px Red Hat Display";
+    ctx.font = "22px Red Hat Display";
     ctx.fillStyle = "#36393f";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
