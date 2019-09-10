@@ -63,12 +63,15 @@ exports.run = async (client, member) => {
 
     ctx.restore();
 
-    ctx.font = "60px sans-serif";
+    ctx.font = "22px sans-serif";
     ctx.fillStyle = "#36393f";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
     ctx.fillText("BIENVENUE SUR STRADIVARIUS", canvas.width/2, 142);
+
+    ctx.font = "41px sans-serif";
+    ctx.fillText("SuperDelphi#8000", canvas.width/2, 175);
 
     // const asset2 = await Canvas.loadImage("assets/welcome/asset1.png");
     // ctx.drawImage(asset1, 42, 133, 516, 129);
