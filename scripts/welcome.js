@@ -55,7 +55,7 @@ exports.run = async (client, member) => {
     ctx.clip();
 
     const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
-    ctx.drawImage(avatar, 232, 13, 368, 149);
+    ctx.drawImage(avatar, 232, 13, 136, 136);
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), `welcome.png`);
 
