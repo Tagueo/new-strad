@@ -17,9 +17,9 @@ exports.run = (client, member) => {
     const canvas = Canvas.createCanvas(600, 270);
     const ctx = canvas.getContext("2d");
 
-    // Fill background
-    ctx.fillStyle = "#35393e";
-    ctx.fillRect(0, 0, 600, 270);
+    // // Fill background
+    // ctx.fillStyle = "#35393e";
+    // ctx.fillRect(0, 0, 600, 270);
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), `welcome.png`);
 
