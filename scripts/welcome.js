@@ -2,7 +2,7 @@ const sendMP = require("../scripts/sendMP");
 const Canvas = require("canvas");
 const Discord = require("discord.js");
 
-exports.run = (client, member) => {
+exports.run = async (client, member) => {
 
     let welcomeMessage = `Bienvenue, toi :wink: Tu penses qu'on pourra devenir amis ?\n`
         + `Au fait, je viens de t'ajouter le rôle d'**Apprenti**, le temps que tu te présentes dans le salon #présentation :smile:\n`
