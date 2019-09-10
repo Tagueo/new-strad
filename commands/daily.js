@@ -3,7 +3,7 @@ let moment = require("moment");
 const mLog = require("../scripts/mLog");
 const db = require("../scripts/db");
 
-exports.run = async (client, message, args) => {
+exports.run = async (client, message) => {
 
     moment.locale("fr");
 
