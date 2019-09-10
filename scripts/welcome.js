@@ -78,6 +78,6 @@ exports.run = async (client, member) => {
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), `welcome.png`);
 
-    tempChannel.send("", attachment);
+    globalChannel.send("", attachment);
 
 };
