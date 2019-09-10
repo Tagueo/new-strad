@@ -50,7 +50,7 @@ exports.run = async (client, member) => {
     // ctx.fillStyle = "#35393e";
     // ctx.fillRect(0, 0, 600, 270);
 
-    const asset1 = await Canvas.loadImage("../assets/welcome/asset1.png");
+    const asset1 = await Canvas.loadImage("assets/welcome/asset1.png");
     ctx.drawImage(asset1, 42, 133, 516, 129);
 
     roundRect(ctx, 232, 13, 136, 136, 10, "#ffffff", false);
