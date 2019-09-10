@@ -1,13 +1,11 @@
 const Discord = require("discord.js");
 const db = require("../scripts/db.js");
 
-exports.run = async (client, message, args) => {
+exports.run = async (client, message) => {
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
-    let rows = await con.query(`SELECT *
-                                FROM users
-                                WHERE user_id = ${message.author.id}`);
-    console.log(rows);
+    let rows = await con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`);
+
     if (!rows) {
         con.end();
         return;
