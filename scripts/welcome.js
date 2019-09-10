@@ -52,14 +52,16 @@ exports.run = async (client, member) => {
 
     ctx.save();
 
+    const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
     const asset1 = await Canvas.loadImage("assets/welcome/asset1.png");
+    const asset2 = await Canvas.loadImage("assets/welcome/asset2.png");
+
     ctx.drawImage(asset1, 42, 47, 516, 215);
 
     roundRect(ctx, 232, 13, 136, 136, 10, "#ffffff", false);
 
     ctx.clip();
 
-    const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
     ctx.drawImage(avatar, 232, 13, 136, 136);
 
     ctx.restore();
@@ -73,6 +75,8 @@ exports.run = async (client, member) => {
 
     ctx.font = "35px Red Hat Display";
     ctx.fillText("SuperDelphi#8000", canvas.width/2, 215);
+
+    ctx.drawImage(asset2, 182, 125, 516, 215);
 
     // const asset2 = await Canvas.loadImage("assets/welcome/asset1.png");
     // ctx.drawImage(asset1, 42, 133, 516, 129);
