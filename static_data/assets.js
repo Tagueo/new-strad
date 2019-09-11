@@ -1,8 +1,0 @@
-exports.emojis = {
-    BLOCK: "<:block:547449530610745364>",
-    UPVOTE: "<like:568493894270976012>",
-    DOWNVOTE: "<dislike:568493872968368149>",
-    REPORT: "<report:418441210475053056>",
-    ENABLE_VOTES: "✨",
-    ACCEPT_MEMBER: ""
-};
