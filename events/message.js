@@ -92,7 +92,7 @@ module.exports = async (client, message) => {
     }
 
     // Run the command
-    if (client.config.mtnMode != "true" || message.member.roles.find(r => r.name === "Mentor")) {
+    if ((client.config.mtnMode != "true" || message.member.roles.find(r => r.name === "Mentor")) && !message.member.roles.find(r => r.name === "Sanctionné(e)")) {
         cmd.run(client, message, args);
         console.log(`[${chalk.cyan(moment(Date.now()).format('h:mm:ss'))}] [${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`);
     } else {
