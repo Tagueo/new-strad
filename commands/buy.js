@@ -5,6 +5,7 @@ const mLog = require("../scripts/mLog");
 exports.run = async (client, message, args) => {
 
     let commandChannel = client.channels.get('415633143861739541'), chosenId;
+    const blockEmoji = client.assets.emojis.BLOCK;
 
     if (!args[0] || isNaN(args[0])) {
         let errorEmbed = new Discord.RichEmbed()
@@ -59,7 +60,7 @@ exports.run = async (client, message, args) => {
         const errorEmbed = new Discord.RichEmbed()
             .setAuthor("Achat impossible")
             .setDescription(`Tu n'as pas assez d'argent pour acheter **${item.buy_amount}`
-                + ` x ${item.item_name}**. Il te manque encore ${priceAfterDiscount - money} <:block:547449530610745364> !`)
+                + ` x ${item.item_name}**. Il te manque encore ${priceAfterDiscount - money} ${blockEmoji} !`)
             .setColor(mLog.colors.ALERT);
         message.delete();
         commandChannel.send(errorEmbed);
@@ -70,7 +71,7 @@ exports.run = async (client, message, args) => {
     // Demande de confirmation
     const promptEmbed = new Discord.RichEmbed()
         .setAuthor("Confirmation d'achat")
-        .setDescription(`${message.member}, acheter **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364> ?`)
+        .setDescription(`${message.member}, acheter **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** ${blockEmoji} ?`)
         .setFooter("Envoie \"Oui\" ou \"Non\"")
         .setColor(mLog.colors.SHOP);
     message.delete();
@@ -120,13 +121,13 @@ exports.run = async (client, message, args) => {
 
         const successEmbed = new Discord.RichEmbed()
             .setAuthor("Achat réussi")
-            .setDescription(`Tu as acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364> !`)
+            .setDescription(`Tu as acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** ${blockEmoji} !`)
             .setFooter("Tape \"Strad rank\" pour accéder à ton inventaire")
             .setColor(mLog.colors.VALID);
         messages.first().delete();
         commandChannel.send(successEmbed);
 
-        mLog.run(client, "Strad buy", `${message.author} a acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** <:block:547449530610745364>.`,
+        mLog.run(client, "Strad buy", `${message.author} a acheté **${item.buy_amount} x ${item.item_name}** pour **${priceAfterDiscount}** ${blockEmoji}.`,
             mLog.colors.NEUTRAL_BLUE);
 
         if (item.quantity !== -1) {

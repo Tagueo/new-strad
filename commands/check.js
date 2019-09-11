@@ -4,6 +4,10 @@ const mLog = require("../scripts/mLog");
 
 exports.run = async (client, message, args) => {
 
+    const blockEmoji = client.assets.emojis.BLOCK,
+        validEmoji = client.assets.emojis.KEY_VALID,
+        usedEmoji = client.assets.emojis.KEY_USED;
+
     function findKey(rows, keyPrint) {
         let key = null;
         for (let i=0;i<rows.length;i++) {
@@ -33,10 +37,6 @@ exports.run = async (client, message, args) => {
         let key = findKey(keys, keyPrint);
 
         if (key) {
-            let validEmoji = client.emojis.get("607877884413214720"),
-                usedEmoji = client.emojis.get("607877912955322406"),
-                blockEmoji = client.emojis.get("547449530610745364");
-
             let embedColor = key.recipient_id ? mLog.colors.ALERT : mLog.colors.VALID,
                 keyOwner = client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key.creator_id).user,
                 keyUser = key.recipient_id ? client.guilds.find(g => g.id == "412369732679893004").members.find(m => m.id == key.recipient_id).user : "-",

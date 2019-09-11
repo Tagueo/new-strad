@@ -6,6 +6,8 @@ let moment = require("moment");
 
 exports.run = async (client, message, args) => {
 
+    const blockEmoji = client.assets.emojis.BLOCK;
+
     function _randomChar() {
         let possibleChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
             "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9"], randomNumber;
@@ -89,7 +91,7 @@ exports.run = async (client, message, args) => {
     if (chosenValue > money) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Création de clé impossible")
-            .setDescription(`Tu n'as pas assez de Blocs pour créer cette clé. Il te manque **${chosenValue - money}** <:block:547449530610745364> !`)
+            .setDescription(`Tu n'as pas assez de Blocs pour créer cette clé. Il te manque **${chosenValue - money}** ${blockEmoji} !`)
             .setColor(mLog.colors.ALERT);
         message.delete();
         commandChannel.send(errorEmbed);
@@ -121,7 +123,7 @@ exports.run = async (client, message, args) => {
 
     let privateSuccessEmbed = new Discord.RichEmbed()
         .setAuthor("Création de clé")
-        .setDescription("Voici ta clé d'une valeur de **" + chosenValue + "** <:block:547449530610745364> (clique pour l'afficher) :\n"
+        .setDescription("Voici ta clé d'une valeur de **" + chosenValue + "**" + blockEmoji + " (clique pour l'afficher) :\n"
             + "||```" + keyFace + "```||\nFais bien attention de ne pas la partager à n'importe qui !\n"
             + "Afin de l'utiliser, le bénéficiaire de la clé devra taper la commande : ``Strad redeem <clé>``. Il recevra ainsi la valeur en Blocs de la clé !")
         .addField("Empreinte de la clé", "```" + keyPrint + "```"
@@ -130,7 +132,7 @@ exports.run = async (client, message, args) => {
         .setColor(mLog.colors.NEUTRAL_BLUE);
     sendMP.run(client, privateSuccessEmbed, message.member);
 
-    mLog.run(client, "Création de clé", message.author + " a créé une clé d'empreinte ``" + keyPrint + "`` et d'une valeur de **" + chosenValue + "** <:block:547449530610745364>.",
+    mLog.run(client, "Création de clé", message.author + " a créé une clé d'empreinte ``" + keyPrint + "`` et d'une valeur de **" + chosenValue + "** " + blockEmoji + ".",
         mLog.colors.NEUTRAL_BLUE);
 
     con.end();

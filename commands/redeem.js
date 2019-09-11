@@ -5,6 +5,8 @@ let moment = require("moment");
 
 exports.run = async (client, message, args) => {
 
+    const blockEmoji = client.assets.emojis.BLOCK;
+
     function findKey(rows, keyFace) {
         let key = null;
         for (let i=0;i<rows.length;i++) {
@@ -51,13 +53,13 @@ exports.run = async (client, message, args) => {
 
             let successEmbed = new Discord.RichEmbed()
                 .setAuthor("Récupération réussie")
-                .setDescription("Youpi ! Tu viens de recevoir **" + key["key_value"] + "** <:block:547449530610745364> !")
+                .setDescription("Youpi ! Tu viens de recevoir **" + key["key_value"] + "** " + blockEmoji + " !")
                 .setFooter("Strad redeem <clé>")
                 .setColor(mLog.colors.VALID);
             message.delete();
             commandChannel.send(successEmbed);
 
-            mLog.run(client, "Récupération de clé", message.author + " a utilisé la clé ``" + keyFace + "`` d'une valeur de **" + key["key_value"] + "** <:block:547449530610745364>.",
+            mLog.run(client, "Récupération de clé", message.author + " a utilisé la clé ``" + keyFace + "`` d'une valeur de **" + key["key_value"] + "** " + blockEmoji + ".",
                 mLog.colors.NEUTRAL_BLUE);
 
             con.end();

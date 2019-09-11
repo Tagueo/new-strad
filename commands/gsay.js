@@ -2,16 +2,18 @@ const sendMP = require("../scripts/sendMP");
 
 exports.run = async (client, message, args) => {
 
+    const trueEmoji = client.assets.emojis.CHECK_TRUE;
+
   if (message.member.roles.find(x => x.name === "Mentor")) {
 
     if (!args[0]) {
-        var channel = message.guild.channels.get(message.channel.id);
+        const channel = message.guild.channels.get(message.channel.id);
     } else {
-        var channel = message.guild.channels.get(args[0]) || message.guild.channels.find("name", args[0]);
+        const channel = message.guild.channels.get(args[0]) || message.guild.channels.find("name", args[0]);
         if (!channel) {
-            var tempChannel = args[0];
+            let tempChannel = args[0];
             tempChannel = tempChannel.slice(2, -1);
-            var channel = message.guild.channels.get(tempChannel);
+            const channel = message.guild.channels.get(tempChannel);
         }
         if (!channel) {
             message.channel.send('Channel invalide\nUsage : gsay <channel> <message>');
@@ -21,7 +23,7 @@ exports.run = async (client, message, args) => {
     if (channel && args[1]) {
         args.splice(0, 1);
         channel.send(args.join(' '));
-        sendMP.run(client, '<:true:413685423202893826> Envoyé !', message.member);
+        sendMP.run(client, `${trueEmoji} Envoyé !`, message.member);
     }
 
   } else {

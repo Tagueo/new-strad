@@ -7,6 +7,11 @@ exports.run = async (client, message) => {
 
     moment.locale("fr");
 
+    const creaEmoji = client.assets.emojis.CREA,
+        blockEmoji = client.assets.emojis.BLOCK,
+        uvEmoji = client.assets.emojis.UPVOTE,
+        dvEmoji = client.assets.emojis.DOWNVOTE;
+
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
     let user = (await con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`))[0];
 
@@ -34,9 +39,9 @@ exports.run = async (client, message) => {
         let successEmbed = new Discord.RichEmbed()
             .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
             .setColor(mLog.colors.VALID)
-            .addField(`Blocs`, `+ **${finalBlockReward}** <:block:547449530610745364>`, true)
-            .addField(`Créas`, `+ **${finalCreaReward}** <:crea:547482886824001539>`, true)
-            .setDescription(`Voici ta récompense journalière ! Pour accéder à ton compte, fais \`\`Strad rank\`\`.\n**${upvotes} <:like:568493894270976012> / ${downvotes} <:dislike:568493872968368149>**`)
+            .addField(`Blocs`, `+ **${finalBlockReward}** ${blockEmoji}`, true)
+            .addField(`Créas`, `+ **${finalCreaReward}** ${creaEmoji}`, true)
+            .setDescription(`Voici ta récompense journalière ! Pour accéder à ton compte, fais \`\`Strad rank\`\`.\n**${upvotes} ${uvEmoji} / ${downvotes} ${dvEmoji}**`)
             .setFooter("Strad daily");
 
         client.channels.get('415633143861739541').send(successEmbed);

@@ -2,31 +2,34 @@ const Discord = require("discord.js");
 const db = require("../scripts/db");
 const mLog = require("../scripts/mLog");
 
-function addItem(client, embed, item) {
-    if (item.discount > 100)
-        item.discount = 100;
-    else if (item.discount < 0)
-        item.discount = 0;
+exports.run = async (client, message) => {
 
-    let notSaleableText, discountText = "", priceText = `${item.price} <:block:547449530610745364>`, discountEmoji = client.emojis.get("603356048107241483");
-    let priceAfterDiscount = Math.round(item.price - item.price * (item.discount / 100));
+    const blockEmoji = client.assets.emojis.BLOCK,
+        discountEmoji = client.assets.emojis.DISCOUNT;
 
-    if (item.saleable === 1)
-        notSaleableText = "";
-    else
-        notSaleableText = "\nCet item ne peut pas être vendu.";
-    item.emoji = client.emojis.get(item.emoji);
-    if (item.discount > 0) {
-        discountText = ` • ${discountEmoji}`;
-        priceText = `~~${item.price}~~ ${priceAfterDiscount} <:block:547449530610745364> (-${item.discount} %)`;
+    function addItem(client, embed, item) {
+        if (item.discount > 100)
+            item.discount = 100;
+        else if (item.discount < 0)
+            item.discount = 0;
+
+        let notSaleableText, discountText = "", priceText = `${item.price} ${blockEmoji}`;
+        let priceAfterDiscount = Math.round(item.price - item.price * (item.discount / 100));
+
+        if (item.saleable === 1)
+            notSaleableText = "";
+        else
+            notSaleableText = "\nCet item ne peut pas être vendu.";
+        item.emoji = client.emojis.get(item.emoji);
+        if (item.discount > 0) {
+            discountText = ` • ${discountEmoji}`;
+            priceText = `~~${item.price}~~ ${priceAfterDiscount} ${blockEmoji} (-${item.discount} %)`;
+        }
+        if (item.quantity === -1) item.quantity = "∞";
+        embed
+            .addField(`${item.emoji} ${item.buy_amount} x ${item.name}${discountText}`, "**Description :** " + item.description + "\n"
+                + `**Prix :** ${priceText}\n**Stock :** ${item.quantity}\n**Numéro d'article :** ${item.id}` + notSaleableText);
     }
-    if (item.quantity === -1) item.quantity = "∞";
-    embed
-        .addField(`${item.emoji} ${item.buy_amount} x ${item.name}${discountText}`, "**Description :** " + item.description + "\n"
-            + `**Prix :** ${priceText}\n**Stock :** ${item.quantity}\n**Numéro d'article :** ${item.id}` + notSaleableText);
-}
-
-exports.run = async (client, message, args) => {
 
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad"),
         sql = "SELECT item_id AS id, item_name AS name, item_emoji AS emoji, description, price, is_buyable AS buyable,"

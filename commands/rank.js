@@ -3,6 +3,9 @@ const db = require("../scripts/db.js");
 
 exports.run = async (client, message) => {
 
+    const blockEmoji = client.assets.emojis.BLOCK;
+    const creaEmoji = client.assets.emojis.CREA;
+
     let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     let rows = await con.query(`SELECT * FROM users WHERE user_id = "${message.author.id}"`);
@@ -22,8 +25,6 @@ exports.run = async (client, message) => {
         inventory = [],
         rank = 0,
         user = rows[0];
-    const stradEmoji = "<:block:547449530610745364>";
-    const creaEmoji = "<:crea:547482886824001539>";
 
     for (i = 0; i < users.length; i++) {
         if (message.author.id == users[i].user_id) {
@@ -45,7 +46,7 @@ exports.run = async (client, message) => {
     const rankEmbed = new Discord.RichEmbed()
         .setAuthor(message.author.tag, message.author.avatarURL)
         .setThumbnail(message.author.avatarURL)
-        .addField("Valeur du compte", `${user.money} ${stradEmoji}`, true)
+        .addField("Valeur du compte", `${user.money} ${blockEmoji}`, true)
         .addField("Nombre de Créas", `${user.creas_amount} ${creaEmoji}`, true)
         .addField("Rang", `#${rank}`, true)
         .addField("Titre artistique", user.rank, true)

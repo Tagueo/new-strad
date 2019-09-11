@@ -2,14 +2,14 @@ const Discord = require("discord.js");
 const db = require("../scripts/db");
 const mLog = require("../scripts/mLog");
 
-exports.run = async (client, message, args) => {
+exports.run = async (client, message) => {
 
     let quantity = 10, // Quantité de membres affichés dans le top 10
         con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
     let users = await con.query(`SELECT * FROM users ORDER BY creas_amount DESC LIMIT ${quantity}`),
         otherLeaders = "";
-    const creaEmoji = "<:crea:547482886824001539>",
+    const creaEmoji = client.assets.emojis.CREA,
         topEmbed = new Discord.RichEmbed()
             .setAuthor(`Stradivarius - Classement (Créas)`);
 

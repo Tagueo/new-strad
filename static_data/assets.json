@@ -1,10 +1,15 @@
 {
     "emojis": {
         "BLOCK": "<:block:547449530610745364>",
+        "CREA": "<:crea:547482886824001539>",
         "UPVOTE": "<like:568493894270976012>",
         "DOWNVOTE": "<dislike:568493872968368149>",
         "REPORT": "<report:418441210475053056>",
         "ENABLE_VOTES": "✨",
-        "ACCEPT_MEMBER": "<:true:413685423202893826>"
+        "CHECK_TRUE": "<:true:413685423202893826>",
+        "CHECK_FALSE": "<:false:413686965796339722>",
+        "KEY_VALID": "<:valid:607877884413214720>",
+        "KEY_USED": "<:used:607877912955322406>",
+        "DISCOUNT": "<:discount:603356048107241483>"
     }
 }
