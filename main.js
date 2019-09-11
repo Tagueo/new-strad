@@ -5,7 +5,8 @@ const chalk = require('chalk');
 let moment = require('moment');
 
 const client = new Discord.Client();
-client.config = require("./config.json");
+client.config = require("config");
+client.assets = require("static_data/assets");
 
 console.log(chalk.cyan('Starting...'));
 
