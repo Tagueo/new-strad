@@ -6,8 +6,8 @@ const isFeedbackable = require("../scripts/isFeedbackable.js");
 const sendMP = require("../scripts/sendMP");
 
 module.exports = async (client, messageReaction, user) => {
-    const uvEmoji = client.assets.emojis.UPVOTE,
-        dvEmoji = client.assets.emojis.DOWNVOTE,
+    const uvEmoji = client.assets.emojiIds.UPVOTE,
+        dvEmoji = client.assets.emojiIds.DOWNVOTE,
         enableVotesEmoji = client.assets.emojis.ENABLE_VOTES;
     const reactedRecently = new Set();
 
