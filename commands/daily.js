@@ -39,7 +39,7 @@ exports.run = async (client, message) => {
         let successEmbed = new Discord.RichEmbed()
             .setAuthor("Récompense quotidienne (" + message.member.displayName + ")", message.author.avatarURL)
             .setColor(mLog.colors.VALID)
-            .addField("", `Voici ta récompense journalière ! Pour accéder à ton compte, fais \"Strad rank\".\n**${upvotes}** ${uvEmoji} / **${downvotes}** ${dvEmoji}`)
+            .addField(`Résumé`, `Voici ta récompense journalière ! Pour accéder à ton compte, fais \"Strad rank\".\n**${upvotes}** ${uvEmoji} / **${downvotes}** ${dvEmoji}`)
             .addField(`Blocs`, `+ **${finalBlockReward}** ${blockEmoji}`, true)
             .addField(`Créas`, `+ **${finalCreaReward}** ${creaEmoji}`, true)
             .setFooter("Strad daily");
