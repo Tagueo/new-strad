@@ -26,6 +26,9 @@ Pour faire marcher ce bot en local c'est très simple :
   npm install ms
   npm install os
   npm install mysql
+  sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+  npm install canvas
+  npm install node-schedule
   ```
 
 - Remplissez le fichier de config avec le token et les ids des channels
