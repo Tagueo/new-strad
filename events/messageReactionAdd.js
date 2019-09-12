@@ -6,8 +6,9 @@ const isFeedbackable = require("../scripts/isFeedbackable.js");
 const sendMP = require("../scripts/sendMP");
 
 module.exports = async (client, messageReaction, user) => {
-    const up_emote = "like:568493894270976012";
-    const down_emote = "dislike:568493872968368149";
+    const uvEmoji = client.assets.emojis.UPVOTE,
+        dvEmoji = client.assets.emojis.DOWNVOTE,
+        enableVotesEmoji = client.assets.emojis.ENABLE_VOTES;
     const reactedRecently = new Set();
 
     if (messageReaction.message.channel.type !== "text") return;
@@ -93,17 +94,17 @@ module.exports = async (client, messageReaction, user) => {
         || messageReaction.message.channel.id === "412622999267704834" || messageReaction.message.channel.id === "416227695429550100"
         || messageReaction.message.channel.id === "425739003623374848" || messageReaction.message.channel.id === "438794104621629441"
         || messageReaction.message.channel.id === "442374005177974825") { // Si la réaction provient d'un salon "créatif"...
-        if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.name === "✨") {
+        if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.name === enableVotesEmoji) {
             messageReaction.remove(user);
             return;
-        } else if (messageReaction.emoji.identifier === up_emote || messageReaction.emoji.identifier === down_emote) {
+        } else if (messageReaction.emoji.identifier === uvEmoji || messageReaction.emoji.identifier === dvEmoji) {
 
-            if (messageReaction.message.author.id === user.id || !isFeedbackable.checkFeedActivation(messageReaction.message)) {
+            if (messageReaction.message.author.id === user.id || !isFeedbackable.checkFeedActivation(client, messageReaction.message)) {
                 messageReaction.remove(user);
                 return;
             }
 
-            let vote_type = messageReaction.emoji.identifier === up_emote ? "UV" : "DV",
+            let vote_type = messageReaction.emoji.identifier === uvEmoji ? "UV" : "DV",
                 con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
             let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}"`);
@@ -116,11 +117,11 @@ module.exports = async (client, messageReaction, user) => {
 
             con.end();
 
-        } else if (messageReaction.emoji.name === "✨") {
-            if (user.id === messageReaction.message.author.id && !isFeedbackable.checkFeedActivation(messageReaction.message)) {
+        } else if (messageReaction.emoji.name === enableVotesEmoji) {
+            if (user.id === messageReaction.message.author.id && !isFeedbackable.checkFeedActivation(client, messageReaction.message)) {
                 await messageReaction.remove(client.user);
-                await messageReaction.message.react(client.emojis.get("568493894270976012"));
-                await messageReaction.message.react(client.emojis.get("568493872968368149"));
+                await messageReaction.message.react(client.emojis.get(client.assets.emojiIds.UPVOTE));
+                await messageReaction.message.react(client.emojis.get(client.assets.emojiIds.DOWNVOTE));
             }
             messageReaction.remove(user);
         }
@@ -133,7 +134,7 @@ module.exports = async (client, messageReaction, user) => {
 
     if (messageReaction.message.channel.id === "412557168529899541") {
 
-        if (messageReaction.emoji.name === "true") {
+        if (messageReaction.emoji.id === client.assets.emojiIds.CHECK_TRUE) {
 
             // Le membre est un apprenti/en attente : on lui ajoute le rôle membre
             messageReaction.message.member.addRole(membre);
@@ -145,7 +146,7 @@ module.exports = async (client, messageReaction, user) => {
     }
 
     // Si la réaction correspond à la réaction de report, ce bloc s'exécute.
-    if (messageReaction.emoji.identifier === "report:418441210475053056") {
+    if (messageReaction.emoji.id === client.assets.emojiIds.REPORT) {
 
         if (messageReaction.message.member.user.bot) {
             messageReaction.remove(user);
@@ -165,7 +166,7 @@ module.exports = async (client, messageReaction, user) => {
             return;
             // Si la réaction se trouve sur un message d'un membre du Staff, alors le script s'arrête.
         }
-        if (messageReaction.message.reactions.find(r => r.emoji.name === "report").users.array().length > 1) {
+        if (messageReaction.message.reactions.find(r => r.emoji.id === client.assets.emojiIds.REPORT).users.array().length > 1) {
             sendMP.run(client, `Ce message a déjà été signalé, merci pour ta contribution !`, user);
             return;
             // Si le message a déjà été reporté, alors le script s'arrête MAIS ON NE RETIRE PAS LA RÉACTION DE L'UTILISATEUR.
@@ -193,7 +194,7 @@ module.exports = async (client, messageReaction, user) => {
             .setDescription(`Un nouveau message a été signalé par ${user}.`)
             .addField(`Contenu`, `"${reportedMessage}"`, true)
             .addField(`Localisation`, messageReaction.message.channel, true)
-            .addField(`Lien direct`, messageReaction.message.url, true)
+            .addField(`Lien direct`, messageReaction.message.url, true);
 
         messageReaction.message.member.guild.channels.find(c => c.id === client.config.logsChannel).send(reportEmbed);
     }

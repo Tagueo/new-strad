@@ -6,11 +6,11 @@ exports.check = function (message) { // Vérifie si le message est éligible aux
 
 };
 
-exports.checkFeedActivation = function (message) { // Vérifie si l'éligibilité aux feedbacks a été activée
+exports.checkFeedActivation = function (client, message) { // Vérifie si l'éligibilité aux feedbacks a été activée
     let messageReactions = message.reactions;
     let bl = false;
     messageReactions.forEach((r) => {
-        if (r.emoji.name == "like") {
+        if (r.emoji.id === client.assets.emojiIds.CHECK_TRUE) {
             if (r.users.exists("id", "412910522833436672")) {
                 bl = true;
             }
