@@ -97,14 +97,14 @@ module.exports = async (client, messageReaction, user) => {
         if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.name === enableVotesEmoji) {
             messageReaction.remove(user);
             return;
-        } else if (messageReaction.emoji.identifier === uvEmoji || messageReaction.emoji.identifier === dvEmoji) {
+        } else if (messageReaction.emoji.id === uvEmoji || messageReaction.emoji.id === dvEmoji) {
 
             if (messageReaction.message.author.id === user.id || !isFeedbackable.checkFeedActivation(client, messageReaction.message)) {
                 messageReaction.remove(user);
                 return;
             }
 
-            let vote_type = messageReaction.emoji.identifier === uvEmoji ? "UV" : "DV",
+            let vote_type = messageReaction.emoji.id === uvEmoji ? "UV" : "DV",
                 con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
             let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}"`);
