@@ -113,15 +113,15 @@ module.exports = async (client, messageReaction, user) => {
                 fileExtension;
 
             if (attachment.filename.includes(".")) {
-                fileExtension = attachment.filename.split(".")[1];
+                fileExtension = attachment.filename.split(".")[1].toUpperCase();
             } else {
                 fileExtension = "?";
             }
             
 
-            if (["JPG", "PNG"].includes(fileExtension.toUpperCase())) {
+            if (["JPG", "PNG"].includes(fileExtension)) {
                 try {
-                    dimensions = attachment.width + "x" + attachment.height + "px";
+                    dimensions = attachment.width + "x" + attachment.height + " px";
                 } catch (error) {
                     dimensions = "?";
                 }
