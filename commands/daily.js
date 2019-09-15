@@ -47,8 +47,8 @@ exports.run = async (client, message) => {
             .setColor(mLog.colors.VALID)
             .addField(`Blocs`, `+ **${finalBlockReward}** ${blockEmoji}`, true)
             .addField(`Créas`, `+ **${finalCreaReward}** ${creaEmoji}`, true)
-            .setDescription(`Voici ta récompense journalière ! Pour accéder à ton compte,"
-                + "fais \"Strad rank\".\n**${upvotes}** ${uvEmoji} • **${downvotes}** ${dvEmoji} • **${downloads}** ${downloadEmoji}`)
+            .setDescription(`Voici ta récompense journalière ! Pour accéder à ton compte,`
+                + `fais \"Strad rank\".\n**${upvotes}** ${uvEmoji} • **${downvotes}** ${dvEmoji} • **${downloads}** ${downloadEmoji}`)
             .setFooter("Strad daily");
 
         client.channels.get('415633143861739541').send(successEmbed);
