@@ -100,7 +100,8 @@ module.exports = async (client, messageReaction, user) => {
         || messageReaction.message.channel.id === "425739003623374848"
         || messageReaction.message.channel.id === "438794104621629441"
         || messageReaction.message.channel.id === "442374005177974825") { // Si la réaction provient d'un salon "créatif"...
-        if (isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === downloadEmoji) {
+
+        if (isFeedbackable.checkFeedActivation(client, messageReaction.message) && messageReaction.emoji.id === downloadEmoji) {
             if (messageReaction.message.author.id === user.id) {
                 messageReaction.remove(user);
                 return;
@@ -128,17 +129,13 @@ module.exports = async (client, messageReaction, user) => {
 
             let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-            if (!isFeedbackable.checkFeedActivation(client, messageReaction.message)) {
-                description = `Le créateur n'a pas activé le feedback, il ne recevra pas de Blocs supplémentaires sur sa prochaine récompense.`;
-            } else {
-                description = `En téléchargeant la création de ${user.username}, tu as ajouté **2** ${blockEmoji} sur sa prochaine récompense !`;
+            description = `En téléchargeant la création de ${user.username}, tu as ajouté **2** ${blockEmoji} sur sa prochaine récompense !`;
                 
-                let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}" AND type = "DL"`);
-                if (!res1[0]) {
-                    await con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date)
-                        VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}",
-                        "${user.id}", "DL", "${moment().format('DD/MM/YY')}")`);
-                }
+            let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}" AND type = "DL"`);
+            if (!res1[0]) {
+                await con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date)`
+                    + `VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}",`
+                    + `"${user.id}", "DL", "${moment().format('DD/MM/YY')}")`);
             }
 
             let downloadEmbed = new Discord.RichEmbed()
