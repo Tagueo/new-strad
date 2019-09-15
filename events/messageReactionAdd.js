@@ -93,17 +93,13 @@ module.exports = async (client, messageReaction, user) => {
         }
     }
 
-    let creativeChannels = [
-        "412622887317405707",
-        "412622912043089920",
-        "412622999267704834",
-        "416227695429550100",
-        "425739003623374848",
-        "438794104621629441",
-        "442374005177974825"
-    ];
-
-    if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
+    if (messageReaction.message.channel.id === "412622887317405707"
+        || messageReaction.message.channel.id === "412622912043089920"
+        || messageReaction.message.channel.id === "412622999267704834"
+        || messageReaction.message.channel.id === "416227695429550100"
+        || messageReaction.message.channel.id === "425739003623374848"
+        || messageReaction.message.channel.id === "438794104621629441"
+        || messageReaction.message.channel.id === "442374005177974825") { // Si la réaction provient d'un salon "créatif"...
         if (isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === downloadEmoji) {
             let attachment = messageReaction.message.attachments.first(),
                 dimensions,
