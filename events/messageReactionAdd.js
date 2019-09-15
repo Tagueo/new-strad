@@ -14,6 +14,8 @@ module.exports = async (client, messageReaction, user) => {
         downloadEmoji = client.assets.emojiIds.DOWNLOAD;
     const reactedRecently = new Set();
 
+    let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+
     if (messageReaction.message.channel.type !== "text") return;
 
     if (client.config.mtnMode === "true") {
@@ -150,8 +152,7 @@ module.exports = async (client, messageReaction, user) => {
                 return;
             }
 
-            let vote_type = messageReaction.emoji.id === uvEmoji ? "UV" : "DV",
-                con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
+            let vote_type = messageReaction.emoji.id === uvEmoji ? "UV" : "DV";
 
             let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}" AND type IN ("UV", "DV")`);
             if (res1[0])
