@@ -8,7 +8,7 @@ const mLog = require("../scripts/mLog");
 
 module.exports = async (client, messageReaction, user) => {
     const uvEmoji = client.assets.emojiIds.UPVOTE,
-        blockEmoji = client.assets.emoji.BLOCK,
+        blockEmoji = client.assets.emojis.BLOCK,
         dvEmoji = client.assets.emojiIds.DOWNVOTE,
         enableVotesEmoji = client.assets.emojiIds.ENABLE_VOTES,
         downloadEmoji = client.assets.emojiIds.DOWNLOAD;
