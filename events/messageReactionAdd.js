@@ -174,6 +174,7 @@ module.exports = async (client, messageReaction, user) => {
                 await messageReaction.remove(client.user);
                 await messageReaction.message.react(client.emojis.get(client.assets.emojiIds.UPVOTE));
                 await messageReaction.message.react(client.emojis.get(client.assets.emojiIds.DOWNVOTE));
+                await messageReaction.message.react(client.emojis.get(client.assets.emojiIds.DOWNLOAD));
             }
             messageReaction.remove(user);
         }

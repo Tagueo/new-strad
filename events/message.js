@@ -50,7 +50,6 @@ module.exports = async (client, message) => {
         // Conditions d'éligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
         if (isFeedbackable.check(message)) {
             message.react("✨");
-            message.react(client.emojis.get(client.assets.emojiIds.DOWNLOAD));
             message.channel.send(`(Clique sur ✨ si tu souhaites recevoir un feedback)`)
                 .then((m) => {
                     m.delete(3500);
