@@ -4,11 +4,14 @@ const db = require("../scripts/db");
 const logger = require("../scripts/logger.js");
 const isFeedbackable = require("../scripts/isFeedbackable.js");
 const sendMP = require("../scripts/sendMP");
+const mLog = require("../scripts/mLog");
 
 module.exports = async (client, messageReaction, user) => {
     const uvEmoji = client.assets.emojiIds.UPVOTE,
+        blockEmoji = client.assets.emoji.BLOCK,
         dvEmoji = client.assets.emojiIds.DOWNVOTE,
-        enableVotesEmoji = client.assets.emojiIds.ENABLE_VOTES;
+        enableVotesEmoji = client.assets.emojiIds.ENABLE_VOTES,
+        downloadEmoji = client.assets.emojiIds.DOWNLOAD;
     const reactedRecently = new Set();
 
     if (messageReaction.message.channel.type !== "text") return;
@@ -90,11 +93,46 @@ module.exports = async (client, messageReaction, user) => {
         }
     }
 
-    if (messageReaction.message.channel.id === "412622887317405707" || messageReaction.message.channel.id === "412622912043089920"
-        || messageReaction.message.channel.id === "412622999267704834" || messageReaction.message.channel.id === "416227695429550100"
-        || messageReaction.message.channel.id === "425739003623374848" || messageReaction.message.channel.id === "438794104621629441"
-        || messageReaction.message.channel.id === "442374005177974825") { // Si la réaction provient d'un salon "créatif"...
-        if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === enableVotesEmoji) {
+    let creativeChannels = [
+        "412622887317405707",
+        "412622912043089920",
+        "412622999267704834",
+        "416227695429550100",
+        "425739003623374848",
+        "438794104621629441",
+        "442374005177974825"
+    ];
+
+    if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
+        if (isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === downloadEmoji) {
+            let attachment = messageReaction.message.attachments.first(),
+                dimensions;
+            let fileExtension = attachment.filename.split(".")[1];
+
+            if (["JPG", "PNG"].includes(fileExtension.toUpperCase())) {
+                try {
+                    dimensions = attachment.width + "x" + attachment.height + "px";
+                } catch (error) {
+                    dimensions = "?";
+                }
+            }
+
+            let downloadEmbed = new Discord.RichEmbed()
+                .setColor(mLog.colors.DOWNLOAD)
+                .setAuthor(`Téléchargement de ${attachment.filename}`)
+                .setDescription(`En téléchargeant la création de ${user.username}, tu as ajouté **2** ${blockEmoji} sur sa prochaine récompense !\nDimensions : ${dimensions} / Type : ${fileExtension}`)
+                .addField(`Lien de téléchargement`, attachment.proxyURL);
+
+            let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}" AND type = "DL"`);
+            if (!res1[0]) {
+                await con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date)
+                    VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}",
+                    "${user.id}", "DL", "${moment().format('DD/MM/YY')}")`);
+            }
+
+            user.sendMessage(downloadEmbed);
+
+        } else if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === enableVotesEmoji) {
             messageReaction.remove(user);
             return;
         } else if ((messageReaction.emoji.id === uvEmoji) || (messageReaction.emoji.id === dvEmoji)) {
@@ -107,7 +145,7 @@ module.exports = async (client, messageReaction, user) => {
             let vote_type = messageReaction.emoji.id === uvEmoji ? "UV" : "DV",
                 con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-            let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}"`);
+            let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}" AND type IN ("UV", "DV")`);
             if (res1[0])
                 return;
 
@@ -189,7 +227,7 @@ module.exports = async (client, messageReaction, user) => {
         let reportedMessage = messageReaction.message.cleanContent;
         logger.run(`${user.tag} a reporté un message dans le salon #${messageReaction.message.channel.name} du serveur ${messageReaction.message.guild.name}.`);
         let reportEmbed = new Discord.RichEmbed()
-            .setColor(0xffac00)
+            .setColor(mLog.colors.WARNING)
             .setAuthor(`Message signalé`)
             .setDescription(`Un nouveau message a été signalé par ${user}.`)
             .addField(`Contenu`, `"${reportedMessage}"`, true)

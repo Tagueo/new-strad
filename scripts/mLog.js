@@ -20,5 +20,6 @@ exports.colors = {
     "ALERT": 0xf44242,
 
     "SHOP": 0x00f33f,
-    "SDVR": 0xff6b3e
+    "SDVR": 0xff6b3e,
+    "DOWNLOAD": 0x00eaa1
 };
