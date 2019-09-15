@@ -109,8 +109,9 @@ module.exports = async (client, messageReaction, user) => {
             }
 
             let attachment = messageReaction.message.attachments.first(),
-                dimensions,
-                fileExtension;
+                dimensions = "?",
+                fileExtension = "",
+                description = "";
 
             if (attachment.filename.includes(".")) {
                 fileExtension = attachment.filename.split(".")[1].toUpperCase();
@@ -119,7 +120,7 @@ module.exports = async (client, messageReaction, user) => {
             }
             
 
-            if (["JPG", "PNG"].includes(fileExtension)) {
+            if (["JPG", "JPEG", "PNG"].includes(fileExtension)) {
                 try {
                     dimensions = attachment.width + "x" + attachment.height + " px";
                 } catch (error) {
@@ -127,20 +128,26 @@ module.exports = async (client, messageReaction, user) => {
                 }
             }
 
+            if (!isFeedbackable.checkFeedActivation(client, messageReaction.message)) {
+                description = `Le créateur n'a pas activé le feedback, il ne recevra pas de Blocs supplémentaires sur sa prochaine récompense.`;
+            } else {
+                description = `En téléchargeant la création de ${user.username}, tu as ajouté **2** ${blockEmoji} sur sa prochaine récompense !`;
+                
+                let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}" AND type = "DL"`);
+                if (!res1[0]) {
+                    await con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date)
+                        VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}",
+                        "${user.id}", "DL", "${moment().format('DD/MM/YY')}")`);
+                }
+            }
+
             let downloadEmbed = new Discord.RichEmbed()
                 .setColor(mLog.colors.DOWNLOAD)
                 .setAuthor(`Téléchargement de ${attachment.filename}`)
-                .setDescription(`En téléchargeant la création de ${user.username}, tu as ajouté **2** ${blockEmoji} sur sa prochaine récompense !\nDimensions : ${dimensions} / Type : ${fileExtension}`)
+                .setDescription(description + `\nDimensions : ${dimensions} / Type : ${fileExtension}`)
                 .addField(`Lien de téléchargement`, attachment.proxyURL);
 
-            let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}" AND type = "DL"`);
-            if (!res1[0]) {
-                await con.query(`INSERT INTO rewards (message_id, rewarded_id, rewarder_id, type, submit_date)
-                    VALUES ("${messageReaction.message.id}", "${messageReaction.message.author.id}",
-                    "${user.id}", "DL", "${moment().format('DD/MM/YY')}")`);
-            }
-
-            user.sendMessage(downloadEmbed);
+            user.send(downloadEmbed);
 
         } else if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.name === enableVotesEmoji) {
             messageReaction.remove(user);
