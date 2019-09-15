@@ -50,9 +50,9 @@ module.exports = async (client, message) => {
         // Conditions d'éligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
         if (isFeedbackable.check(message)) {
             message.react("✨");
-            message.channel.send(`**Si tu souhaites activer les votes, clique sur ✨ ! :wink:\n(Attention : il doit s'agir d'une création qui t'appartient !)**`)
+            message.channel.send(`(Clique sur ✨ si tu souhaites recevoir un feedback)`)
                 .then((m) => {
-                    m.delete(10000);
+                    m.delete(3500);
                 });
         } else if (message.channel.id === "568677435793604649" && message.attachments.size === 0) {
             sendMP.run(client, "Hey, tu ne peux poster qu'un montage de tes créations, dans le salon #before-after ! :smile:"
