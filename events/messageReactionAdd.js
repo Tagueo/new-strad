@@ -106,8 +106,15 @@ module.exports = async (client, messageReaction, user) => {
     if (creativeChannels.includes(messageReaction.message.channel.id)) { // Si la réaction provient d'un salon "créatif"...
         if (isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === downloadEmoji) {
             let attachment = messageReaction.message.attachments.first(),
-                dimensions;
-            let fileExtension = attachment.filename.split(".")[1];
+                dimensions,
+                fileExtension;
+
+            if (fileExtension.includes(".")) {
+                fileExtension = attachment.filename.split(".")[1];
+            } else {
+                fileExtension = "?";
+            }
+            
 
             if (["JPG", "PNG"].includes(fileExtension.toUpperCase())) {
                 try {
