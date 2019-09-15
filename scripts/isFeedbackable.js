@@ -10,7 +10,7 @@ exports.checkFeedActivation = function (client, message) { // Vérifie si l'éli
     let messageReactions = message.reactions;
     let bl = false;
     messageReactions.forEach((r) => {
-        if (r.emoji.id === client.assets.emojiIds.CHECK_TRUE) {
+        if (r.emoji.id === client.assets.emojiIds.UPVOTE) {
             if (r.users.exists("id", client.user.id)) {
                 bl = true;
             }
