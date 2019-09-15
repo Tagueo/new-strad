@@ -105,12 +105,12 @@ module.exports = async (client, messageReaction, user) => {
                 messageReaction.remove(user);
                 return;
             }
-            
+
             let attachment = messageReaction.message.attachments.first(),
                 dimensions,
                 fileExtension;
 
-            if (fileExtension.includes(".")) {
+            if (attachment.filename.includes(".")) {
                 fileExtension = attachment.filename.split(".")[1];
             } else {
                 fileExtension = "?";
