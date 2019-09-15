@@ -10,7 +10,7 @@ module.exports = async (client, messageReaction, user) => {
     const uvEmoji = client.assets.emojiIds.UPVOTE,
         blockEmoji = client.assets.emojis.BLOCK,
         dvEmoji = client.assets.emojiIds.DOWNVOTE,
-        enableVotesEmoji = client.assets.emojiIds.ENABLE_VOTES,
+        enableVotesEmoji = client.assets.emojis.ENABLE_VOTES,
         downloadEmoji = client.assets.emojiIds.DOWNLOAD;
     const reactedRecently = new Set();
 
@@ -142,7 +142,7 @@ module.exports = async (client, messageReaction, user) => {
 
             user.sendMessage(downloadEmbed);
 
-        } else if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === enableVotesEmoji) {
+        } else if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.name === enableVotesEmoji) {
             messageReaction.remove(user);
             return;
         } else if ((messageReaction.emoji.id === uvEmoji) || (messageReaction.emoji.id === dvEmoji)) {
