@@ -100,7 +100,12 @@ module.exports = async (client, messageReaction, user) => {
         || messageReaction.message.channel.id === "425739003623374848"
         || messageReaction.message.channel.id === "438794104621629441"
         || messageReaction.message.channel.id === "442374005177974825") { // Si la réaction provient d'un salon "créatif"...
-        if (isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === downloadEmoji && !(messageReaction.message.author.id === user.id)) {
+        if (isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === downloadEmoji) {
+            if (messageReaction.message.author.id === user.id) {
+                messageReaction.remove(user);
+                return;
+            }
+            
             let attachment = messageReaction.message.attachments.first(),
                 dimensions,
                 fileExtension;
