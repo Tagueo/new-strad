@@ -8,7 +8,7 @@ const sendMP = require("../scripts/sendMP");
 module.exports = async (client, messageReaction, user) => {
     const uvEmoji = client.assets.emojiIds.UPVOTE,
         dvEmoji = client.assets.emojiIds.DOWNVOTE,
-        enableVotesEmoji = client.assets.emojis.ENABLE_VOTES;
+        enableVotesEmoji = client.assets.emojiIds.ENABLE_VOTES;
     const reactedRecently = new Set();
 
     if (messageReaction.message.channel.type !== "text") return;
@@ -94,12 +94,12 @@ module.exports = async (client, messageReaction, user) => {
         || messageReaction.message.channel.id === "412622999267704834" || messageReaction.message.channel.id === "416227695429550100"
         || messageReaction.message.channel.id === "425739003623374848" || messageReaction.message.channel.id === "438794104621629441"
         || messageReaction.message.channel.id === "442374005177974825") { // Si la réaction provient d'un salon "créatif"...
-        if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.name === enableVotesEmoji) {
+        if (!isFeedbackable.check(messageReaction.message) && messageReaction.emoji.id === enableVotesEmoji) {
             messageReaction.remove(user);
             return;
-        } else if (messageReaction.emoji.id === uvEmoji || messageReaction.emoji.id === dvEmoji) {
+        } else if ((messageReaction.emoji.id === uvEmoji) || (messageReaction.emoji.id === dvEmoji)) {
 
-            if (messageReaction.message.author.id === user.id || !isFeedbackable.checkFeedActivation(client, messageReaction.message)) {
+            if ((messageReaction.message.author.id === user.id) || !isFeedbackable.checkFeedActivation(client, messageReaction.message)) {
                 messageReaction.remove(user);
                 return;
             }

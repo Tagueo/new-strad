@@ -11,7 +11,7 @@ exports.checkFeedActivation = function (client, message) { // Vérifie si l'éli
     let bl = false;
     messageReactions.forEach((r) => {
         if (r.emoji.id === client.assets.emojiIds.CHECK_TRUE) {
-            if (r.users.exists("id", "412910522833436672")) {
+            if (r.users.exists("id", client.user.id)) {
                 bl = true;
             }
         }
