@@ -90,7 +90,6 @@ exports.run = async (client, message, args) => {
     .setAuthor("Réduction au silence")
     .setDescription(mutedMember + " est réduit au silence pour une durée de " + muteDuration + " minute(s).\n Raison : \"" + reason + "\"")
     .setColor(mLog.colors.ALERT);
-    message.delete();
     message.channel.send(successEmbed)
         .then(m => {
             message.delete(3500);
