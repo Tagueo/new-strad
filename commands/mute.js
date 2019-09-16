@@ -25,7 +25,7 @@ exports.run = async (client, message, args) => {
     }
     try {
         mutedMember = message.mentions.members.first();
-        args = args.slice(0, 1);
+        args = args.slice(1);
     } catch (e) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Échec de la commande")
@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
     }
     try {
         muteDuration = parseInt(args[0]);
-        args = args.slice(0, 1);
+        args = args.slice(1);
     } catch (e) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Commande erronée")
@@ -79,7 +79,6 @@ exports.run = async (client, message, args) => {
         return;
     }
     await mutedMember.addRole(muteRole, reason + " •" + muteDuration + " minute(s)");
-    message.delete();
     mLog.run(client, "Réduction au silence", mutedMember + " a été réduit au silence pour une durée de " + muteDuration + " minute(s).\n Raison : \"" + reason + "\"", mLog.colors.ALERT);
 
     setTimeout(() => {
@@ -94,4 +93,5 @@ exports.run = async (client, message, args) => {
         .then(m => {
             message.delete(3500);
         });
+    message.delete();
 };
