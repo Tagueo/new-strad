@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                message.delete(3500);
+                m.delete(3500);
             });
         return;
     }
@@ -34,7 +34,7 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                message.delete(3500);
+                m.delete(3500);
             });
         return;
     }
@@ -49,7 +49,7 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                message.delete(3500);
+                m.delete(3500);
             });
         return;
     }
@@ -61,7 +61,7 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                message.delete(3500);
+                m.delete(3500);
             });
         return;
     }
@@ -74,7 +74,7 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                message.delete(3500);
+                m.delete(3500);
             });
         return;
     }
@@ -92,7 +92,7 @@ exports.run = async (client, message, args) => {
             .setColor(mLog.colors.ALERT);
         message.channel.send(successEmbed)
             .then(m => {
-                message.delete(3500);
+                m.delete(3500);
             });
         message.delete();
     } catch (e) {
