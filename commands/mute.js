@@ -78,20 +78,25 @@ exports.run = async (client, message, args) => {
             });
         return;
     }
-    await mutedMember.addRole(muteRole, reason + " •" + muteDuration + " minute(s)");
-    mLog.run(client, "Réduction au silence", mutedMember + " a été réduit au silence pour une durée de " + muteDuration + " minute(s).\n Raison : \"" + reason + "\"", mLog.colors.ALERT);
+    try {
+        await mutedMember.addRole(muteRole, reason + " •" + muteDuration + " minute(s)");
+        mLog.run(client, "Réduction au silence", mutedMember + " a été réduit au silence pour une durée de " + muteDuration + " minute(s).\n Raison : \"" + reason + "\"", mLog.colors.ALERT);
 
-    setTimeout(() => {
-        mutedMember.removeRole(muteRole, "Fin de la réduction au silence de " + mutedMember + ".");
-    }, muteDuration * 60000);
+        setTimeout(() => {
+            mutedMember.removeRole(muteRole, "Fin de la réduction au silence de " + mutedMember + ".");
+        }, muteDuration * 60000);
 
-    let successEmbed = new Discord.RichEmbed()
-    .setAuthor("Réduction au silence")
-    .setDescription(mutedMember + " est réduit au silence pour une durée de " + muteDuration + " minute(s).\n Raison : \"" + reason + "\"")
-    .setColor(mLog.colors.ALERT);
-    message.channel.send(successEmbed)
-        .then(m => {
-            message.delete(3500);
-        });
-    message.delete();
+        let successEmbed = new Discord.RichEmbed()
+            .setAuthor("Réduction au silence")
+            .setDescription(mutedMember + " est réduit au silence pour une durée de " + muteDuration + " minute(s).\n Raison : \"" + reason + "\"")
+            .setColor(mLog.colors.ALERT);
+        message.channel.send(successEmbed)
+            .then(m => {
+                message.delete(3500);
+            });
+        message.delete();
+    } catch (e) {
+        message.delete();
+        console.log(e);
+    }
 };
