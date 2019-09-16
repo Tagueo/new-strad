@@ -129,7 +129,7 @@ module.exports = async (client, messageReaction, user) => {
 
             let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
 
-            description = `En téléchargeant la création de ${user.username}, tu as ajouté **2** ${blockEmoji} sur sa prochaine récompense !`;
+            description = `En téléchargeant la création de ${messageReaction.message.member.displayName}, tu as ajouté **2** ${blockEmoji} sur sa prochaine récompense !`;
                 
             let res1 = await con.query(`SELECT * FROM rewards WHERE rewarder_id = "${user.id}" AND message_id = "${messageReaction.message.id}" AND type = "DL"`);
             if (!res1[0]) {
