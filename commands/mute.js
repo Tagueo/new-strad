@@ -23,10 +23,10 @@ exports.run = async (client, message, args) => {
             });
         return;
     }
-    try {
-        mutedMember = message.mentions.members.first();
-        args = args.slice(1);
-    } catch (e) {
+    mutedMember = message.mentions.members.first();
+    args = args.slice(1);
+
+    if (!mutedMember) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Échec de la commande")
         .setDescription("Le membre concerné est introuvable. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
