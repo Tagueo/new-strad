@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                m.delete(3500);
+                m.delete(5000);
             });
         return;
     }
@@ -34,14 +34,13 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                m.delete(3500);
+                m.delete(5000);
             });
         return;
     }
-    try {
-        muteDuration = parseInt(args[0]);
-        args = args.slice(1);
-    } catch (e) {
+    muteDuration = parseInt(args[0]);
+    args = args.slice(1);
+    if (isNaN(muteDuration))
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Commande erronée")
         .setDescription("La durée spécifiée en argument est invalide. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
@@ -49,7 +48,7 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                m.delete(3500);
+                m.delete(5000);
             });
         return;
     }
@@ -61,7 +60,7 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                m.delete(3500);
+                m.delete(5000);
             });
         return;
     }
@@ -74,7 +73,7 @@ exports.run = async (client, message, args) => {
         message.delete();
         message.channel.send(errorEmbed)
             .then(m => {
-                m.delete(3500);
+                m.delete(5000);
             });
         return;
     }
@@ -92,7 +91,7 @@ exports.run = async (client, message, args) => {
             .setColor(mLog.colors.ALERT);
         message.channel.send(successEmbed)
             .then(m => {
-                m.delete(3500);
+                m.delete(5000);
             });
         message.delete();
     } catch (e) {
