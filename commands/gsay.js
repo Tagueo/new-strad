@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
 
     if (channel && args[1]) {
         args.splice(0, 1);
-        channel.send(args.join(' '));
+        channel.send(args.join(" "));
         sendMP.run(client, `${trueEmoji} Envoyé !`, message.member);
     }
 
