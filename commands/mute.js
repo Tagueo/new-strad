@@ -17,7 +17,10 @@ exports.run = async (client, message, args) => {
             .setDescription("Le nombre d'arguments est insuffisant. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
-        commandChannel.send(errorEmbed);
+        message.channel.send(errorEmbed)
+            .then(m => {
+                message.delete(3500);
+            });
         return;
     }
     try {
@@ -29,7 +32,10 @@ exports.run = async (client, message, args) => {
         .setDescription("Le membre concerné est introuvable. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
-        commandChannel.send(errorEmbed);
+        message.channel.send(errorEmbed)
+            .then(m => {
+                message.delete(3500);
+            });
         return;
     }
     try {
@@ -41,7 +47,10 @@ exports.run = async (client, message, args) => {
         .setDescription("La durée spécifiée en argument est invalide. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
-        commandChannel.send(errorEmbed);
+        message.channel.send(errorEmbed)
+            .then(m => {
+                message.delete(3500);
+            });
         return;
     }
     if ((muteDuration < 1) || (muteDuration > 180)) {
@@ -50,7 +59,10 @@ exports.run = async (client, message, args) => {
         .setDescription("La durée doit être comprise entre 1 et 180 minutes (3 heures). Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
-        commandChannel.send(errorEmbed);
+        message.channel.send(errorEmbed)
+            .then(m => {
+                message.delete(3500);
+            });
         return;
     }
     reason = args.join(" ");
@@ -60,13 +72,27 @@ exports.run = async (client, message, args) => {
         .setDescription("La raison doit contenir au moins 5 caractères. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
-        commandChannel.send(errorEmbed);
+        message.channel.send(errorEmbed)
+            .then(m => {
+                message.delete(3500);
+            });
         return;
     }
     await mutedMember.addRole(muteRole, reason + " •" + muteDuration + " minute(s)");
     message.delete();
     mLog.run(client, "Réduction au silence", mutedMember + " a été réduit au silence pour une durée de " + muteDuration + " minute(s).\n Raison : \"" + reason + "\"", mLog.colors.ALERT);
+
     setTimeout(() => {
         mutedMember.removeRole(muteRole, "Fin de la réduction au silence de " + mutedMember + ".");
-    }, muteDuration * 60000);s
+    }, muteDuration * 60000);
+
+    let successEmbed = new Discord.RichEmbed()
+    .setAuthor("Réduction au silence")
+    .setDescription(mutedMember + " est réduit au silence pour une durée de " + muteDuration + " minute(s).\n Raison : \"" + reason + "\"")
+    .setColor(mLog.colors.ALERT);
+    message.delete();
+    message.channel.send(successEmbed)
+        .then(m => {
+            message.delete(3500);
+        });
 };
