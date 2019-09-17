@@ -21,5 +21,7 @@ exports.colors = {
 
     "SHOP": 0x00f33f,
     "SDVR": 0xff6b3e,
-    "DOWNLOAD": 0x00eaa1
+    "DOWNLOAD": 0x00eaa1,
+
+    "MODERATOR": 0xffdb00
 };

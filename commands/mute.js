@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
     if (args.length < 2) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Commande erronée")
-            .setDescription("Le nombre d'arguments est insuffisant. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
+            .setDescription("Le nombre d'arguments est insuffisant. Utilisation : ``Strad mute <@membre> <durée en minutes> <raison>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
         message.channel.send(errorEmbed)
@@ -29,7 +29,7 @@ exports.run = async (client, message, args) => {
     if (!mutedMember) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Échec de la commande")
-        .setDescription("Le membre concerné est introuvable. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
+        .setDescription("Le membre concerné est introuvable. Utilisation : ``Strad mute <@membre> <durée en minutes> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
         message.channel.send(errorEmbed)
@@ -43,7 +43,7 @@ exports.run = async (client, message, args) => {
     if (isNaN(muteDuration)) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Commande erronée")
-        .setDescription("La durée spécifiée en argument est invalide. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
+        .setDescription("La durée spécifiée en argument est invalide. Utilisation : ``Strad mute <@membre> <durée en minutes> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
         message.channel.send(errorEmbed)
@@ -55,7 +55,7 @@ exports.run = async (client, message, args) => {
     if ((muteDuration < 1) || (muteDuration > 180)) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Durée non conforme")
-        .setDescription("La durée doit être comprise entre 1 et 180 minutes (3 heures). Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
+        .setDescription("La durée doit être comprise entre 1 et 180 minutes (3 heures). Utilisation : ``Strad mute <@membre> <durée en minutes> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
         message.channel.send(errorEmbed)
@@ -68,7 +68,7 @@ exports.run = async (client, message, args) => {
     if (reason.length < 10) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Raison insuffisante")
-        .setDescription("La raison doit contenir au moins 5 caractères. Utilisation : ``Strad mute <membre> <durée en minutes> <raison>``.")
+        .setDescription("La raison doit contenir au moins 5 caractères. Utilisation : ``Strad mute <@membre> <durée en minutes> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
         message.channel.send(errorEmbed)

@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
     if (args.length < 1) {
         let errorEmbed = new Discord.RichEmbed()
             .setAuthor("Commande erronée")
-            .setDescription("Le nombre d'arguments est insuffisant. Utilisation : ``Strad kick <membre> <raison>``.")
+            .setDescription("Le nombre d'arguments est insuffisant. Utilisation : ``Strad kick <@membre> <raison>``.")
             .setColor(mLog.colors.ALERT);
         message.delete();
         message.channel.send(errorEmbed)
@@ -27,7 +27,7 @@ exports.run = async (client, message, args) => {
     if (!kickedMember) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Échec de la commande")
-        .setDescription("Le membre concerné est introuvable. Utilisation : ``Strad kick <membre> <raison>``.")
+        .setDescription("Le membre concerné est introuvable. Utilisation : ``Strad kick <@membre> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
         message.channel.send(errorEmbed)
@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
     if (reason.length < 10) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Raison insuffisante")
-        .setDescription("La raison doit contenir au moins 5 caractères. Utilisation : ``Strad kick <membre> <raison>``.")
+        .setDescription("La raison doit contenir au moins 5 caractères. Utilisation : ``Strad kick <@membre> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
         message.channel.send(errorEmbed)
