@@ -24,7 +24,7 @@ exports.run = async (client, message) => {
 
     if (message.member.roles.find(r => r.name === "Modérateur")) {
         let privateEmbed = new Discord.RichEmbed()
-            .setAuthor("Help")
+            .setAuthor("Help (suite)")
             .setColor(mLog.colors.MODERATOR)
             .setDescription("Les commandes affichées ci-dessous sont réservées aux Modérateurs (et au-dessus).")
             .addField("Commandes"
