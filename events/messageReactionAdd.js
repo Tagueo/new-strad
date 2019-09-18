@@ -194,6 +194,8 @@ module.exports = async (client, messageReaction, user) => {
             messageReaction.message.member.removeRole(apprenti);
             messageReaction.message.member.removeRole(enattente);
 
+            messageReaction.message.member.send("Hey, ta présentation vient d'être acceptée ! Va voir sur Stradivarius :wink:");
+
         }
 
     }
