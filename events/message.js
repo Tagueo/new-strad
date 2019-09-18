@@ -62,6 +62,11 @@ module.exports = async (client, message) => {
         }
     }
 
+    if (message.channel.id === "412557168529899541" && message.member.roles.find(r => r.name === "Apprenti(e)")) {
+        message.member.addRole(message.guild.roles.find(r => r.name === "En attente..."));
+        message.member.send("Merci de t'être présenté ! Nous t'avons mis en attente. Tu auras très bientôt ta place parmi nous ! <:sdvr_heart:623611615404621874>");
+    }
+
     const ANSWERS = JSON.parse(fs.readFileSync(appRoot + "/static_data/answers.json", "utf8"));
 
     let botPrefix = client.config.prefix;
