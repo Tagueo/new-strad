@@ -5,6 +5,7 @@ const logger = require("../scripts/logger.js");
 const isFeedbackable = require("../scripts/isFeedbackable.js");
 const sendMP = require("../scripts/sendMP");
 const mLog = require("../scripts/mLog");
+const welcome = require("../scripts/welcome");
 
 module.exports = async (client, messageReaction, user) => {
     const uvEmoji = client.assets.emojiIds.UPVOTE,
@@ -195,6 +196,7 @@ module.exports = async (client, messageReaction, user) => {
             messageReaction.message.member.removeRole(enattente);
 
             messageReaction.message.member.send("Hey, ta présentation vient d'être acceptée ! Va voir sur Stradivarius :wink:");
+            welcome.run(client, messageReaction.message.member);
 
         }
 

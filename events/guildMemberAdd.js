@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const welcome = require('../scripts/welcome.js');
 const db = require("../scripts/db");
 const mLog = require("../scripts/mLog");
+const sendMP = require("../scripts/sendMP");
 
 module.exports = async (client, member) => {
     // Récupération du salon de modération
@@ -27,7 +28,12 @@ module.exports = async (client, member) => {
             await con.query(`INSERT INTO users (user_id, usertag) VALUES ("${member.user.id}", "${member.user.tag}")`);
         }
 
-        welcome.run(client, member);
+        let welcomeMessage = `Bienvenue, toi :wink: Tu penses qu'on pourra devenir amis ?\n`
+            + `Au fait, je viens de t'ajouter le rôle d'**Apprenti**, le temps que tu te présentes dans le salon #présentation :smile:\n`
+            + `On a tous envie de te connaître ! :violin:\n\n`
+            + `> https://discord.gg/4MmJwgj`;
+        sendMP.run(client, welcomeMessage, member);
+
         member.guild.channels.find(c => c.id === welcomeCategId).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES");
         logs.send(embed);
         console.log(member.user.username + " a rejoint le serveur !");
