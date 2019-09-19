@@ -28,7 +28,7 @@ exports.run = async (client, message) => {
             .setColor(mLog.colors.MODERATOR)
             .setDescription("Les commandes affichées ci-dessous sont réservées aux Modérateurs (et au-dessus).")
             .addField("Commandes"
-                , "``mute <@membre> <durée> <raison>`` • Réduit au silence le membre mentionné et ce, pour la durée spécifiée en argument (en minutes). Nécessite de spécifier une raison."
+                , "``mute <@membre> <durée> <raison>`` • Réduit au silence le membre mentionné et ce, pour la durée spécifiée en argument (entre 1 et 360 minutes - soit 6 heures). Nécessite de spécifier une raison."
                 + "\n``kick <@membre> <raison>`` • Expulse le membre mentionné. Nécessite de spécifier une raison."
                 + "\n``ban <@membre> <raison>`` • Bannit de manière permanente le membre mentionné. Nécessite de spécifier une raison.");
         message.author.send(privateEmbed);
