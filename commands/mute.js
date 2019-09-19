@@ -52,10 +52,10 @@ exports.run = async (client, message, args) => {
             });
         return;
     }
-    if ((muteDuration < 1) || (muteDuration > 180)) {
+    if ((muteDuration < 1) || (muteDuration > 360)) {
         let errorEmbed = new Discord.RichEmbed()
         .setAuthor("Durée non conforme")
-        .setDescription("La durée doit être comprise entre 1 et 180 minutes (3 heures). Utilisation : ``Strad mute <@membre> <durée en minutes> <raison>``.")
+        .setDescription("La durée doit être comprise entre 1 et 360 minutes (6 heures). Utilisation : ``Strad mute <@membre> <durée en minutes> <raison>``.")
         .setColor(mLog.colors.ALERT);
         message.delete();
         message.channel.send(errorEmbed)
