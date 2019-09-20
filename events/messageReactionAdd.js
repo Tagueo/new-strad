@@ -103,7 +103,7 @@ module.exports = async (client, messageReaction, user) => {
         || messageReaction.message.channel.id === "442374005177974825") { // Si la réaction provient d'un salon "créatif"...
 
         if (isFeedbackable.checkFeedActivation(client, messageReaction.message) && messageReaction.emoji.id === downloadEmoji) {
-            if (messageReaction.message.author.id === user.id) {
+            if (messageReaction.message.author.id === user.id || !messageReaction.message.attachments) {
                 messageReaction.remove(user);
                 return;
             }
@@ -175,7 +175,9 @@ module.exports = async (client, messageReaction, user) => {
                 await messageReaction.remove(client.user);
                 await messageReaction.message.react(client.emojis.get(client.assets.emojiIds.UPVOTE));
                 await messageReaction.message.react(client.emojis.get(client.assets.emojiIds.DOWNVOTE));
-                await messageReaction.message.react(client.emojis.get(client.assets.emojiIds.DOWNLOAD));
+                if (messageReaction.message.attachments) {
+                    await messageReaction.message.react(client.emojis.get(client.assets.emojiIds.DOWNLOAD));
+                }
             }
             messageReaction.remove(user);
         }
