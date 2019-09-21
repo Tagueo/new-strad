@@ -188,9 +188,9 @@ module.exports = async (client, messageReaction, user) => {
         apprenti = messageReaction.message.guild.roles.find(r => r.id === "412587462892716032"),
         enattente = messageReaction.message.guild.roles.find(r => r.id === "444134229710864385");
 
-    if (messageReaction.message.channel.id === "412557168529899541") {
+    if ((messageReaction.message.channel.id === "412557168529899541") & (messageReaction.count === 1)) {
 
-        if (messageReaction.emoji.id === client.assets.emojiIds.CHECK_TRUE) {
+        if ((messageReaction.emoji.id === client.assets.emojiIds.CHECK_TRUE) && (messageReaction.message.member.roles.find(r => r.name === "En attente..."))) {
 
             // Le membre est un apprenti/en attente : on lui ajoute le rôle membre
             messageReaction.message.member.addRole(membre);
