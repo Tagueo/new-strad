@@ -27,6 +27,7 @@ exports.run = async (client, member) => {
         ctx.quadraticCurveTo(x, y, x + radius.tl, y);
         ctx.closePath();
         if (fill) {
+            ctx.fillStyle = "#36393f";
             ctx.fill();
         }
         if (stroke) {
