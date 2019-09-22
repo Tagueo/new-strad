@@ -1,6 +1,6 @@
 // TODO À continuer plus tard
 
-const db = require("../scripts/db");
+const db = require("./db");
 
 /**
  * @type {Inventory}

@@ -1,4 +1,4 @@
-const sendMP = require("../scripts/sendMP");
+const sendMP = require("./sendMP");
 const Canvas = require("canvas");
 const Discord = require("discord.js");
 

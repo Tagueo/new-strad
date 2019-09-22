@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
-const db = require("../scripts/db");
-const mLog = require("../scripts/mLog");
+const db = require("../classes/db");
+const mLog = require("../functions/mLog");
 
 exports.run = async (client, message) => {
 
