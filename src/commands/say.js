@@ -1,45 +1,56 @@
-const Discord = require("discord.js");
-const db = require("../scripts/db");
-const mLog = require("../scripts/mLog");
+import Discord from 'discord.js';
+import { colors } from '../colors';
+import { connectDatabase } from '../functions/connectDatabase';
+import { sendLog } from '../functions/sendMessage/sendLog';
+import { client, commandChannelID } from '../globals';
 
-exports.run = async (client, message, args) => {
+const say = async (message, args) => {
+  const commandChannel = client.channels.get(commandChannelID);
 
-    let commandChannel = client.channels.get('415633143861739541');
-
-    if (!args[0]) {
-        let errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Aide")
-            .setDescription("Faire parler Strad : ``Strad say <message>``.")
-            .setColor(mLog.colors.NEUTRAL_BLUE);
-        message.delete();
-        commandChannel.send(errorEmbed);
-        return;
-    }
-
-    let msg = args.join(" "),
-        itemId = 2,
-        con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
-
-    let sayItem = (await con.query(`SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`))[0];
-
-    if (!sayItem || sayItem.amount < 1) {
-        let errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Boutique")
-            .setDescription("Pour avoir accès à ça, fais ``Strad shop`` !")
-            .setColor(mLog.colors.SHOP);
-        message.delete();
-        commandChannel.send(errorEmbed);
-        con.end();
-        return;
-    }
-
+  if (!args[0]) {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Aide')
+      .setDescription('Faire parler Strad : `Strad say <message>`.')
+      .setColor(colors.NEUTRAL_BLUE);
+    commandChannel.send(errorEmbed);
     message.delete();
-    message.channel.send(msg); // Envoi du message personnalisé
+return;
+  }
 
-    mLog.run(client, "Strad say", `${message.author} a envoyé un message via Strad : "${msg}"`, mLog.colors.NEUTRAL_BLUE);
+  const msg = args.join(' ');
+  const itemId = 2;
+  const connection = connectDatabase();
 
-    await con.query(`UPDATE has_items SET amount = amount - 1 WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`);
+  const sayItem = (await connection.query(
+    `SELECT * FROM has_items WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`
+  ))[0];
 
-    con.end();
+  if (!sayItem || sayItem.amount < 1) {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Boutique')
+      .setDescription('Pour avoir accès à ça, fais `Strad shop` !')
+      .setColor(colors.SHOP);
+    commandChannel.send(errorEmbed);
+    connection.end();
+    message.delete();
+return;
+  }
 
+  message.delete();
+  message.channel.send(msg); // Envoi du message personnalisé
+
+  sendLog(
+    'Strad say',
+    `${message.author} a envoyé un message via Strad : "${msg}"`,
+    colors.NEUTRAL_BLUE
+  );
+
+  await connection.query(
+    `UPDATE has_items SET amount = amount - 1 WHERE user_id = "${message.member.id}" AND item_id = ${itemId}`
+  );
+
+  connection.end();
 };
+
+export { say };
+

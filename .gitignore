@@ -2,6 +2,6 @@ node_modules/
 package-lock.json
 config.json
 .ftpconfig
-logs/
+/logs/
 *.xml
 *.iml

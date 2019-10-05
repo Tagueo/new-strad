@@ -1,69 +1,72 @@
-const Discord = require("discord.js");
-const mLog = require("../scripts/mLog");
+import Discord from 'discord.js';
+import { colors } from '../colors';
+import { sendEmdedThenDelete } from '../functions/sendMessage/sendEmdedThenDelete';
+import { sendLog } from '../functions/sendMessage/sendLog';
 
-exports.run = async (client, message, args) => {
-    let bannedMember,
-        reason;
+const ban = async (message, args) => {
+  if (!message.member.roles.find(role => role.name === 'Modérateur')) {
+    message.delete();
+    return;
+  }
 
-    if (!message.member.roles.find(r => r.name === "Modérateur")) {
-        message.delete();
-        return;
-    }
-    if (args.length < 1) {
-        let errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Commande erronée")
-            .setDescription("Le nombre d'arguments est insuffisant. Utilisation : ``Strad ban <@membre> <raison>``.")
-            .setColor(mLog.colors.ALERT);
-        message.delete();
-        message.channel.send(errorEmbed)
-            .then(m => {
-                m.delete(5000);
-            });
-        return;
-    }
-    bannedMember = message.mentions.members.first();
-    args = args.slice(1);
+  if (args.length < 1) {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Commande erronée')
+      .setDescription(
+        "Le nombre d'arguments est insuffisant. Utilisation : `Strad ban <@membre> <raison>`."
+      )
+      .setColor(colors.ALERT);
+    sendEmdedThenDelete(message, errorEmbed);
+    return;
+  }
 
-    if (!bannedMember) {
-        let errorEmbed = new Discord.RichEmbed()
-        .setAuthor("Échec de la commande")
-        .setDescription("Le membre concerné est introuvable. Utilisation : ``Strad ban <@membre> <raison>``.")
-        .setColor(mLog.colors.ALERT);
-        message.delete();
-        message.channel.send(errorEmbed)
-            .then(m => {
-                m.delete(5000);
-            });
-        return;
-    }
-    reason = args.join(" ");
-    if (reason.length < 10) {
-        let errorEmbed = new Discord.RichEmbed()
-        .setAuthor("Raison insuffisante")
-        .setDescription("La raison doit contenir au moins 5 caractères. Utilisation : ``Strad ban <@membre> <raison>``.")
-        .setColor(mLog.colors.ALERT);
-        message.delete();
-        message.channel.send(errorEmbed)
-            .then(m => {
-                m.delete(5000);
-            });
-        return;
-    }
-    try {
-        await bannedMember.ban(reason);
-        mLog.run(client, "Bannissement", bannedMember + " a été banni de Stradivarius.\n Raison : \"" + reason + "\"", mLog.colors.ALERT);
+  const bannedMember = message.mentions.members.first();
+  if (!bannedMember) {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Échec de la commande')
+      .setDescription(
+        'Le membre concerné est introuvable. Utilisation : `Strad ban <@membre> <raison>`.'
+      )
+      .setColor(colors.ALERT);
+    sendEmdedThenDelete(message, errorEmbed);
+    return;
+  }
 
-        let successEmbed = new Discord.RichEmbed()
-            .setAuthor("Bannissement")
-            .setDescription(bannedMember + " a été banni de Stradivarius.\n Raison : \"" + reason + "\"")
-            .setColor(mLog.colors.ALERT);
-        message.channel.send(successEmbed)
-            .then(m => {
-                m.delete(5000);
-            });
-        message.delete();
-    } catch (e) {
-        message.delete();
-        console.log(e);
-    }
+  const reason = args.splice(1).join(' ');
+  if (reason.length < 10) {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Raison insuffisante')
+      .setDescription(
+        'La raison doit contenir au moins 10 caractères. Utilisation : `Strad ban <@membre> <raison>`.'
+      )
+      .setColor(colors.ALERT);
+    sendEmdedThenDelete(message, errorEmbed);
+    return;
+  }
+
+  try {
+    await bannedMember.ban(reason);
+    sendLog(
+      'Bannissement',
+      `${bannedMember} a été banni de Stradivarius.
+      Raison : "${reason}"`,
+      colors.ALERT
+    );
+
+    const succesEmbed = new Discord.RichEmbed()
+      .setTitle('Bannissement')
+      .setDescription(
+        `${bannedMember} a été banni de Stradivarius.
+      Raison : "${reason}"`
+      )
+      .setColor(colors.ALERT);
+
+    sendEmdedThenDelete(message, succesEmbed);
+  } catch (error) {
+    message.delete();
+    console.log(error);
+  }
 };
+
+export { ban };
+

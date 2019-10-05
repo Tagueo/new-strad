@@ -1,24 +1,19 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+import Discord from 'discord.js';
+import { logger } from '../functions/logs/logger';
+import { client, stradivariusID } from '../globals';
 
-const chalk = require('chalk');
-const moment = require('moment');
+const guildBanRemove = (guild, user) => {
+  const logChannel = client.channels.get(client.config.logsChannel);
 
-var appRoot = process.cwd();
+  if (guild.id !== stradivariusID) return;
+  // TODO Nettoyer le code
+  const embed = new Discord.RichEmbed()
+    .setTitle('Membre Débanni')
+    .setDescription(`**${user.tag}** vient de se faire débannir.`)
+    .setColor('#21b1ff');
+  logger.run(`${user.tag} a été débanni du serveur ${guild.name}.`);
+  logChannel.send(embed);
+};
 
-const logger = require(appRoot + '/scripts/logger.js');
+export { guildBanRemove };
 
-module.exports = async (client, guild, user) => {
-  const logs = client.channels.get(client.config.logsChannel)
-
-  if (guild.id === '412369732679893004') { // TODO Nettoyer le code
-
-    var embed = new Discord.RichEmbed()
-      .setColor("#21b1ff")
-      .setTitle("Membre Débanni")
-      .setDescription(`**${user.tag}** vient de se faire débannir.`)
-
-    logger.run(`${user.tag} a été débanni du serveur ${guild.name}.`)
-    logs.send(embed)
-  }
-}

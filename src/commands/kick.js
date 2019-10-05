@@ -1,69 +1,71 @@
-const Discord = require("discord.js");
-const mLog = require("../scripts/mLog");
+import Discord from 'discord.js';
+import { colors } from '../colors';
+import { sendEmdedThenDelete } from '../functions/sendMessage/sendEmdedThenDelete';
+import { sendLog } from '../functions/sendMessage/sendLog';
 
-exports.run = async (client, message, args) => {
-    let kickedMember,
-        reason;
+const kick = async (message, args) => {
+  if (!message.member.roles.find(role => role.name === 'Modérateur')) {
+    message.delete();
+    return;
+  }
+  if (args.length < 1) {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Commande erronée')
+      .setDescription(
+        "Le nombre d'arguments est insuffisant. Utilisation : `Strad kick <@membre> <raison>`."
+      )
+      .setColor(colors.ALERT);
+    sendEmdedThenDelete(message, errorEmbed);
+    return;
+  }
+  const kickedMember = message.mentions.members.first();
 
-    if (!message.member.roles.find(r => r.name === "Modérateur")) {
-        message.delete();
-        return;
-    }
-    if (args.length < 1) {
-        let errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Commande erronée")
-            .setDescription("Le nombre d'arguments est insuffisant. Utilisation : ``Strad kick <@membre> <raison>``.")
-            .setColor(mLog.colors.ALERT);
-        message.delete();
-        message.channel.send(errorEmbed)
-            .then(m => {
-                m.delete(5000);
-            });
-        return;
-    }
-    kickedMember = message.mentions.members.first();
-    args = args.slice(1);
+  if (!kickedMember) {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Échec de la commande')
+      .setDescription(
+        'Le membre concerné est introuvable. Utilisation : `Strad kick <@membre> <raison>`.'
+      )
+      .setColor(colors.ALERT);
+    sendEmdedThenDelete(message, errorEmbed);
+    return;
+  }
+  const reason = args.slice(1).join(' ');
+  if (reason.length < 10) {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Raison insuffisante')
+      .setDescription(
+        'La raison doit contenir au moins 10 caractères. Utilisation : `Strad kick <@membre> <raison>`.'
+      )
+      .setColor(colors.ALERT);
+    sendEmdedThenDelete(message, errorEmbed);
+    return;
+  }
+  try {
+    await kickedMember.kick(reason);
 
-    if (!kickedMember) {
-        let errorEmbed = new Discord.RichEmbed()
-        .setAuthor("Échec de la commande")
-        .setDescription("Le membre concerné est introuvable. Utilisation : ``Strad kick <@membre> <raison>``.")
-        .setColor(mLog.colors.ALERT);
-        message.delete();
-        message.channel.send(errorEmbed)
-            .then(m => {
-                m.delete(5000);
-            });
-        return;
-    }
-    reason = args.join(" ");
-    if (reason.length < 10) {
-        let errorEmbed = new Discord.RichEmbed()
-        .setAuthor("Raison insuffisante")
-        .setDescription("La raison doit contenir au moins 5 caractères. Utilisation : ``Strad kick <@membre> <raison>``.")
-        .setColor(mLog.colors.ALERT);
-        message.delete();
-        message.channel.send(errorEmbed)
-            .then(m => {
-                m.delete(5000);
-            });
-        return;
-    }
-    try {
-        await kickedMember.kick(reason);
-        mLog.run(client, "Expulsion", kickedMember + " a été expulsé de Stradivarius.\n Raison : \"" + reason + "\"", mLog.colors.ALERT);
+    const logEmbed = new Discord.RichEmbed()
+      .setTitle('Expulsion')
+      .setDescription(
+        `${kickedMember} a été expulsé de Stradivarius.
+        Raison : "${reason}"`
+      )
+      .setColor(colors.ALERT);
+    sendLog(logEmbed);
 
-        let successEmbed = new Discord.RichEmbed()
-            .setAuthor("Expulsion")
-            .setDescription(kickedMember + " a été expulsé de Stradivarius.\n Raison : \"" + reason + "\"")
-            .setColor(mLog.colors.ALERT);
-        message.channel.send(successEmbed)
-            .then(m => {
-                m.delete(5000);
-            });
-        message.delete();
-    } catch (e) {
-        message.delete();
-        console.log(e);
-    }
+    const succesEmbed = new Discord.RichEmbed()
+      .setTitle('Expulsion')
+      .setDescription(
+        `${kickedMember} a été expulsé de Stradivarius.
+        Raison : "${reason}"`
+      )
+      .setColor(colors.ALERT);
+    sendEmdedThenDelete(message, succesEmbed);
+  } catch (error) {
+    message.delete();
+    console.log(error);
+  }
 };
+
+export { kick };
+

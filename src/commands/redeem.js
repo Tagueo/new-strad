@@ -1,85 +1,99 @@
-const Discord = require("discord.js");
-const db = require("../scripts/db");
-const mLog = require("../scripts/mLog");
-let moment = require("moment");
+import Discord from 'discord.js';
+import moment from 'moment';
+import { colors } from '../colors';
+import { connectDatabase } from '../functions/connectDatabase';
+import { findKey } from '../functions/key/findKey';
+import { sendLog } from '../functions/sendMessage/sendLog';
+import { client, commandChannelID } from '../globals';
 
-exports.run = async (client, message, args) => {
+const redeem = async (message, args) => {
+  const blockEmoji = client.assets.emojis.BLOCK;
 
-    const blockEmoji = client.assets.emojis.BLOCK;
+  const commandChannel = client.channels.get(commandChannelID);
 
-    function findKey(rows, keyFace) {
-        let key = null;
-        for (let i=0;i<rows.length;i++) {
-            if (rows[i]["key_face"] === keyFace) key = rows[i];
-        }
-        return key;
+  if (!args[0]) {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Commande erronée')
+      .setDescription(
+        'Merci de saisir la clé à utiliser. Utilisation : `Strad redeem <clé>`.'
+      )
+      .setColor(colors.ALERT);
+    commandChannel.send(errorEmbed);
+    message.delete();
+return;
+  }
+
+  const connection = connectDatabase();
+  const keyFace = args[0];
+  const todayDate = moment().format('DD/MM/YY');
+
+  const keys = await connection.query(`SELECT * FROM blocks_keys`);
+
+  if (keys[0]) {
+    const key = findKey(keys, keyFace);
+
+    if (!key) {
+      const errorEmbed = new Discord.RichEmbed()
+        .setTitle('Récupération impossible')
+        .setDescription(
+          `La clé \`${keyFace}\` n'est pas valide.
+        Format : \`XXXX-XXXX-XXXX-XXXX\`.`
+        )
+        .setColor(colors.ALERT);
+      commandChannel.send(errorEmbed);
+      connection.end();
+      message.delete();
+return;
     }
 
-    let commandChannel = client.channels.get('415633143861739541');
+    if (!key.recipient_id) {
+      await connection.query(
+        `UPDATE blocks_keys SET recipient_id = "${message.author.id}", redeem_date = "${todayDate}" WHERE key_id = ${key.key_id}`
+      );
+      await connection.query(
+        `UPDATE users SET money = money + ${
+          key['key_value']
+        } WHERE user_id = "${message.author.id}"`
+      );
 
-    if (!args[0]) {
-        let errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Commande erronée")
-            .setDescription("Merci de saisir la clé à utiliser. Utilisation : ``Strad redeem <clé>``.")
-            .setColor(mLog.colors.ALERT);
-        message.delete();
-        commandChannel.send(errorEmbed);
-        return;
-    }
+      const successEmbed = new Discord.RichEmbed()
+        .setTitle('Récupération réussie')
+        .setDescription(
+          `Youpi ! Tu viens de recevoir **${key.key_value}** ${blockEmoji} !`
+        )
+        .setColor(colors.VALID)
+        .setFooter('Strad redeem <clé>');
+      message.delete();
+      commandChannel.send(successEmbed);
 
-    let con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad"),
-        keyFace = args[0],
-        todayDate = moment().format('DD/MM/YY');
-
-    let keys = await con.query(`SELECT * FROM blocks_keys`);
-
-    if (keys[0]) {
-        let key = findKey(keys, keyFace);
-
-        if (!key) {
-            let errorEmbed = new Discord.RichEmbed()
-                .setAuthor("Récupération impossible")
-                .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
-                .setColor(mLog.colors.ALERT);
-            message.delete();
-            commandChannel.send(errorEmbed);
-            con.end();
-            return;
-        }
-
-        if (!key.recipient_id) {
-            await con.query(`UPDATE blocks_keys SET recipient_id = "${message.author.id}", redeem_date = "${todayDate}" WHERE key_id = ${key.key_id}`);
-            await con.query(`UPDATE users SET money = money + ${key["key_value"]} WHERE user_id = "${message.author.id}"`);
-
-            let successEmbed = new Discord.RichEmbed()
-                .setAuthor("Récupération réussie")
-                .setDescription("Youpi ! Tu viens de recevoir **" + key["key_value"] + "** " + blockEmoji + " !")
-                .setFooter("Strad redeem <clé>")
-                .setColor(mLog.colors.VALID);
-            message.delete();
-            commandChannel.send(successEmbed);
-
-            mLog.run(client, "Récupération de clé", message.author + " a utilisé la clé ``" + keyFace + "`` d'une valeur de **" + key["key_value"] + "** " + blockEmoji + ".",
-                mLog.colors.NEUTRAL_BLUE);
-
-            con.end();
-        } else {
-            let errorEmbed = new Discord.RichEmbed()
-                .setAuthor("Récupération impossible")
-                .setDescription("La clé ``" + keyFace + "`` a déjà été utilisée. En cas de litige, contacte un Mentor en message privé.")
-                .setColor(mLog.colors.ALERT);
-            message.delete();
-            commandChannel.send(errorEmbed);
-            con.end();
-        }
+      sendLog(
+        'Récupération de clé',
+        `${message.author} a utilisé la clé \`${keyFace}\` d'une valeur de **${key.key_value}** ${blockEmoji}.`,
+        colors.NEUTRAL_BLUE
+      );
     } else {
-        let errorEmbed = new Discord.RichEmbed()
-            .setAuthor("Récupération impossible")
-            .setDescription("La clé ``" + keyFace + "`` n'est pas valide. Format : ``XXXX-XXXX-XXXX-XXXX``.")
-            .setColor(mLog.colors.ALERT);
-        message.delete();
-        commandChannel.send(errorEmbed);
-        con.end();
+      const errorEmbed = new Discord.RichEmbed()
+        .setTitle('Récupération impossible')
+        .setDescription(
+          `La clé \`${keyFace}\` a déjà été utilisée. En cas de litige, contacte un Mentor en message privé.`
+        )
+        .setColor(colors.ALERT);
+      message.delete();
+      commandChannel.send(errorEmbed);
     }
-
+  } else {
+    const errorEmbed = new Discord.RichEmbed()
+      .setTitle('Récupération impossible')
+      .setDescription(
+        `La clé \`${keyFace}\` n'est pas valide.
+      Format : \`XXXX-XXXX-XXXX-XXXX\`.`
+      )
+      .setColor(colors.ALERT);
+    message.delete();
+    commandChannel.send(errorEmbed);
+  }
+  connection.end();
 };
+
+export { redeem };
+

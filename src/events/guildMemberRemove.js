@@ -1,10 +1,18 @@
-const mLog = require("../scripts/mLog");
+import { colors } from '../colors';
+import { sendLog } from '../functions/sendMessage/sendLog';
+import { stradivariusID, welcomeCategoryId } from '../globals';
 
-module.exports = async (client, member) => {
-    const welcomeCategId = "443782424653070346";
-
-    if (member.guild.id = '412369732679893004') {
-        member.guild.channels.find(c => c.id === welcomeCategId).setName("STRADIVARIUS | " + member.guild.memberCount + " MEMBRES");
-        mLog.run(client, "Ancien membre", `**${member.user.tag}** vient de quitter le serveur.`, mLog.colors.ALERT);
-    }
+const guildMemberRemove = async member => {
+  if (member.guild.id !== stradivariusID) return;
+  member.guild.channels
+    .find(channel => channel.id === welcomeCategoryId)
+    .setName(`STRADIVARIUS | ${member.guild.memberCount} MEMBRES`);
+  sendLog(
+    'Ancien membre',
+    `**${member.user.tag}** vient de quitter le serveur.`,
+    colors.ALERT
+  );
 };
+
+export { guildMemberRemove };
+

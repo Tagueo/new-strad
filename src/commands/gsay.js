@@ -1,32 +1,30 @@
-const sendMP = require("../scripts/sendMP");
+import { sendMP } from '../functions/sendMessage/sendMP';
+import { client } from '../globals';
 
-exports.run = async (client, message, args) => {
+const gsay = (message, args) => {
+  const trueEmoji = client.assets.emojis.CHECK_TRUE;
 
-    const trueEmoji = client.assets.emojis.CHECK_TRUE;
-
-  if (message.member.roles.find(x => x.name === "Mentor")) {
-
-    if (!args[0]) {
-        const channel = message.guild.channels.get(message.channel.id);
-    } else {
-        const channel = message.guild.channels.get(args[0]) || message.guild.channels.find("name", args[0]);
-        if (!channel) {
-            let tempChannel = args[0];
-            tempChannel = tempChannel.slice(2, -1);
-            const channel = message.guild.channels.get(tempChannel);
-        }
-        if (!channel) {
-            message.channel.send('Channel invalide\nUsage : gsay <channel> <message>');
-        }
+  if (message.member.roles.find(role => role.name === 'Mentor')) {
+    const channel = !args[0]
+      ? message.guild.channels.get(message.channel.id)
+      : message.guild.channels.get(args[0]) ||
+        message.guild.channels.find(channel => channel.name === args[0]) ||
+        message.guild.channels.get(args[0].slice(2, -1));
+    if (!channel)
+      return message.channel.send(
+        `Channel invalide
+        Usage : \`gsay <channel> <message>\``
+      );
+    if (args[1]) {
+      channel.send(args.splice(0, 1).join(' '));
+      sendMP(`${trueEmoji} Envoyé !`, message.member);
     }
-
-    if (channel && args[1]) {
-        args.splice(0, 1);
-        channel.send(args.join(" "));
-        sendMP.run(client, `${trueEmoji} Envoyé !`, message.member);
-    }
-
   } else {
-      message.channel.send('Tu n\'as pas le droit de faire cette commande <:facepalm:428261651947716609>');
+    message.channel.send(
+      "Tu n'as pas le droit de faire cette commande <:facepalm:428261651947716609>"
+    );
   }
 };
+
+export { gsay };
+

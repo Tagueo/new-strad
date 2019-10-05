@@ -1,23 +1,19 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+import Discord from 'discord.js';
+import { logger } from '../functions/logs/logger';
+import { client, stradivariusID } from '../globals';
 
-const chalk = require('chalk');
-const moment = require('moment');
+const guildBanAdd = (guild, user) => {
+  const logChannel = client.channels.get(client.config.logsChannel);
 
-var appRoot = process.cwd();
+  if (guild.id !== stradivariusID) return;
+  // TODO Nettoyer le code
+  const embed = new Discord.RichEmbed()
+    .setTitle('Membre Banni')
+    .setDescription(`**${user.tag}** vient de se faire bannir.`)
+    .setColor('#f44242');
+  logger.run(`${user.tag} a été banni du serveur ${guild.name}.`);
+  logChannel.send(embed);
+};
 
-const logger = require(appRoot + '/scripts/logger.js');
+export { guildBanAdd };
 
-module.exports = async (client, guild, user) => {
-  const logs = client.channels.get(client.config.logsChannel);
-
-  if (guild.id === '412369732679893004') { // TODO Nettoyer le code
-    let embed = new Discord.RichEmbed()
-      .setColor("#f44242")
-      .setTitle("Membre Banni")
-      .setDescription(`**${user.tag}** vient de se faire bannir.`)
-
-    logger.run(`${user.tag} a été banni du serveur ${guild.name}.`)
-    logs.send(embed);
-  }
-}

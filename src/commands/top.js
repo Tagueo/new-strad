@@ -1,32 +1,42 @@
-const Discord = require("discord.js");
-const db = require("../classes/db");
-const mLog = require("../functions/mLog");
+import Discord from 'discord.js';
+import { colors } from '../colors';
+import { connectDatabase } from '../functions/connectDatabase';
+import { client, commandChannelID } from '../globals';
 
-exports.run = async (client, message) => {
+const top = async message => {
+  const quantity = 10; // Quantité de membres affichés dans le top 10
+  const connection = connectDatabase;
 
-    let quantity = 10, // Quantité de membres affichés dans le top 10
-        con = new db.Connection("localhost", client.config.mysqlUser, client.config.mysqlPass, "strad");
-
-    let users = await con.query(`SELECT * FROM users ORDER BY creas_amount DESC LIMIT ${quantity}`),
-        otherLeaders = "";
-    const creaEmoji = client.assets.emojis.CREA,
-        topEmbed = new Discord.RichEmbed()
-            .setAuthor(`Stradivarius - Classement (Créas)`);
-
-    for (i = 0; i < 2; i++) { // Podium
-        topEmbed.addField(`${i + 1}. ${users[i].usertag}`, `**${users[i].creas_amount}** ${creaEmoji}`, true);
-    }
-    for (i = 2; i < quantity; i++) { // Reste du classement
-        otherLeaders += `\`\`${i + 1}. ${users[i].creas_amount}\`\` - ${users[i].usertag}\n`;
-    }
-
-    topEmbed.addField(`Top ${quantity}`, otherLeaders, false);
-    topEmbed.setFooter("Strad top");
-    topEmbed.setColor(mLog.colors.SDVR);
-
-    client.channels.get('415633143861739541').send(topEmbed);
-    message.delete();
-
-    con.end();
-
+  const usersRanking = await connection.query(
+    `SELECT * FROM users ORDER BY creas_amount DESC LIMIT ${quantity}`
+  );
+  const creaEmoji = client.assets.emojis.CREA;
+  const topEmbed = new Discord.RichEmbed()
+    .setTitle('Stradivarius - Classement (Créas)')
+    .setFooter('Strad top')
+    .setColor(colors.SDVR);
+  usersRanking
+    .slice(0, 2)
+    .forEach((user, index) =>
+      topEmbed.addField(
+        `${index + 1}. ${user.usertag}`,
+        `**${user.creas_amount}** ${creaEmoji}`,
+        true
+      )
+    );
+  // Reste du classement
+  const otherLeaders = usersRanking
+    .slice(2, quantity)
+    .map(
+      (user, index) =>
+        `\`${index + 1}. ${user.creas_amount}\` - ${user.usertag}`
+    )
+    .join('\n');
+  topEmbed.addField(`Top ${quantity}`, otherLeaders, false);
+  client.channels.get(commandChannelID).send(topEmbed);
+  message.delete();
+  connection.end();
 };
+
+export { top };
+
