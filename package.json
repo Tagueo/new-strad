@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "launch": "node --experimental-modules --es-module-specifier-resolution=node src/main.js"
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/main.js"
   },
   "repository": {
     "type": "git",
