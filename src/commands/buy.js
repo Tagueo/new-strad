@@ -4,7 +4,10 @@ import { connectDatabase } from '../functions/connectDatabase';
 import { sendLog } from '../functions/sendMessage/sendLog';
 import { client, commandChannelID } from '../globals';
 
-
+/**
+ * @param  {Message} message
+ * @param  {String[]} args
+ */
 const buy = async (message, args) => {
   const commandChannel = client.channels.get(commandChannelID);
   const blockEmoji = client.assets.emojis.BLOCK;
@@ -161,4 +164,3 @@ const buy = async (message, args) => {
 };
 
 export { buy };
-

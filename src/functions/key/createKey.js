@@ -9,4 +9,3 @@ const createKey = async () => {
 };
 
 export { createKey };
-

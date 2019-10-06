@@ -2,6 +2,9 @@ import { colors } from '../colors';
 import { sendLog } from '../functions/sendMessage/sendLog';
 import { stradivariusID, welcomeCategoryId } from '../globals';
 
+/**
+ * @param  {GuildMember} member
+ */
 const guildMemberRemove = async member => {
   if (member.guild.id !== stradivariusID) return;
   member.guild.channels
@@ -15,4 +18,3 @@ const guildMemberRemove = async member => {
 };
 
 export { guildMemberRemove };
-

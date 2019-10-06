@@ -1,3 +1,13 @@
+/**
+ * @param  {CanvasRenderingContext2D} context
+ * @param  {Number} x
+ * @param  {Number} y
+ * @param  {Number} width
+ * @param  {Number} height
+ * @param  {(Number|Object)} radius
+ * @param  {String} fill
+ * @param  {Boolean} stroke
+ */
 const roundRect = (context, x, y, width, height, radius, fill, stroke) => {
   if (typeof radius === 'number') {
     radius = {
@@ -45,4 +55,3 @@ const roundRect = (context, x, y, width, height, radius, fill, stroke) => {
 };
 
 export { roundRect };
-

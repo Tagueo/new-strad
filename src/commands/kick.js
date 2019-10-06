@@ -3,6 +3,10 @@ import { colors } from '../colors';
 import { sendEmdedThenDelete } from '../functions/sendMessage/sendEmdedThenDelete';
 import { sendLog } from '../functions/sendMessage/sendLog';
 
+/**
+ * @param  {Message} message
+ * @param  {String[]} args
+ */
 const kick = async (message, args) => {
   if (!message.member.roles.find(role => role.name === 'Modérateur')) {
     message.delete();
@@ -68,4 +72,3 @@ const kick = async (message, args) => {
 };
 
 export { kick };
-

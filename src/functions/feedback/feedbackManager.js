@@ -8,6 +8,10 @@ import { connectDatabase } from '../connectDatabase';
 import { checkFeedbackable } from './checkFeedbackable';
 import { checkFeedbackActivation } from './checkFeedbackActivation';
 
+/**
+ * @param  {MessageReaction} reaction
+ * @param  {User} user
+ */
 const feedbackManager = async (reaction, user) => {
   const upVoteEmoji = assets.emojiIds.UPVOTE;
   const blockEmoji = assets.emojis.BLOCK;
@@ -115,4 +119,3 @@ const feedbackManager = async (reaction, user) => {
 };
 
 export { feedbackManager };
-

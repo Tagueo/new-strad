@@ -5,4 +5,3 @@ const randomChar = () => {
 };
 
 export { randomChar };
-

@@ -8,6 +8,10 @@ import { sendLog } from '../functions/sendMessage/sendLog';
 import { sendMP } from '../functions/sendMessage/sendMP';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ * @param  {String[]} args
+ */
 const key = async (message, args) => {
   const blockEmoji = client.assets.emojis.BLOCK;
   const commandChannel = client.channels.get(commandChannelID);
@@ -23,7 +27,7 @@ const key = async (message, args) => {
       .setColor(colors.ALERT);
     message.delete();
     commandChannel.send(errorEmbed);
-return;
+    return;
   }
   const chosenValue = parseInt(args[0], 10);
 
@@ -36,7 +40,7 @@ return;
       .setColor(colors.ALERT);
     message.delete();
     commandChannel.send(errorEmbed);
-return;
+    return;
   }
 
   const keyFace = createKey();
@@ -59,7 +63,7 @@ return;
     message.delete();
     commandChannel.send(errorEmbed);
     connection.end();
-return;
+    return;
   }
 
   await connection.query(
@@ -106,4 +110,3 @@ return;
 };
 
 export { key };
-

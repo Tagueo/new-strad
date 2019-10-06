@@ -29,4 +29,3 @@ const assets = {
 };
 
 export { assets };
-

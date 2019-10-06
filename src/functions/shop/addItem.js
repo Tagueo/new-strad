@@ -1,5 +1,9 @@
 import { client } from '../../globals';
 
+/**
+ * @param  {MessageEmbed} embed
+ * @param  {Object} item
+ */
 const addItem = (embed, item) => {
   const blockEmoji = client.assets.emojis.BLOCK;
   const discountEmoji = client.assets.emojis.DISCOUNT;
@@ -30,4 +34,3 @@ const addItem = (embed, item) => {
 };
 
 export { addItem };
-

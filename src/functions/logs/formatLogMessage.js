@@ -1,6 +1,9 @@
 import chalk from 'chalk';
 import moment from 'moment';
 
+/**
+ * @param  {Message} message
+ */
 const formatLogMessage = message => {
   const isObject = typeof message === 'object' ? true : false; // Détecte un message (objet) ou une string en argument.
   const logMoment = moment(Date.now()).format('MM-DD-YY_h-mm-ss');
@@ -29,4 +32,3 @@ const formatLogMessage = message => {
 };
 
 export { formatLogMessage };
-

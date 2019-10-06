@@ -2,6 +2,9 @@ import Canvas from 'canvas';
 import Discord from 'discord.js';
 import { roundRect } from './canvas/roundRect';
 
+/**
+ * @param  {GuildMember} member
+ */
 const welcome = async member => {
   const globalChannel = member.guild.channels.find(
     channel => channel.id === '412369732679893008'
@@ -38,4 +41,3 @@ const welcome = async member => {
 };
 
 export { welcome };
-

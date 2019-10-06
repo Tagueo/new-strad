@@ -39,4 +39,3 @@ const commands = {
 };
 
 export { commands };
-

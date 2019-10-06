@@ -4,6 +4,10 @@ import { connectDatabase } from '../functions/connectDatabase';
 import { sendLog } from '../functions/sendMessage/sendLog';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ * @param  {String[]} args
+ */
 const say = async (message, args) => {
   const commandChannel = client.channels.get(commandChannelID);
 
@@ -14,7 +18,7 @@ const say = async (message, args) => {
       .setColor(colors.NEUTRAL_BLUE);
     commandChannel.send(errorEmbed);
     message.delete();
-return;
+    return;
   }
 
   const msg = args.join(' ');
@@ -33,7 +37,7 @@ return;
     commandChannel.send(errorEmbed);
     connection.end();
     message.delete();
-return;
+    return;
   }
 
   message.delete();
@@ -53,4 +57,3 @@ return;
 };
 
 export { say };
-

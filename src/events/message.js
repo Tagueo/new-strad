@@ -8,6 +8,9 @@ import { sendLog } from '../functions/sendMessage/sendLog';
 import { sendMP } from '../functions/sendMessage/sendMP';
 import { client, creationChannels, prefix } from '../globals';
 
+/**
+ * @param  {Message} message
+ */
 const message = async message => {
   if (message.channel.type !== 'text') return;
 
@@ -111,4 +114,3 @@ const message = async message => {
 };
 
 export { message };
-

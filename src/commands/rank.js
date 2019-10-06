@@ -2,6 +2,9 @@ import Discord from 'discord.js';
 import { connectDatabase } from '../functions/connectDatabase';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ */
 const rank = async message => {
   const blockEmoji = client.assets.emojis.BLOCK;
   const creaEmoji = client.assets.emojis.CREA;
@@ -49,4 +52,3 @@ const rank = async message => {
 };
 
 export { rank };
-

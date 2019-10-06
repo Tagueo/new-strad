@@ -4,6 +4,9 @@ import { connectDatabase } from '../functions/connectDatabase';
 import { sendMP } from '../functions/sendMessage/sendMP';
 import { client, stradivariusID } from '../globals';
 
+/**
+ * @param  {GuildMember} member
+ */
 const guildMemberAdd = async member => {
   // Récupération du salon de modération
   const logsChannel = client.channels.get(client.config.logsChannel);
@@ -50,4 +53,3 @@ const guildMemberAdd = async member => {
 };
 
 export { guildMemberAdd };
-

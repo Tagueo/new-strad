@@ -3,6 +3,10 @@ import { colors } from '../colors';
 import { sendEmdedThenDelete } from '../functions/sendMessage/sendEmdedThenDelete';
 import { sendLog } from '../functions/sendMessage/sendLog';
 
+/**
+ * @param  {Message} message
+ * @param  {String[]} args
+ */
 const ban = async (message, args) => {
   if (!message.member.roles.find(role => role.name === 'Modérateur')) {
     message.delete();
@@ -69,4 +73,3 @@ const ban = async (message, args) => {
 };
 
 export { ban };
-

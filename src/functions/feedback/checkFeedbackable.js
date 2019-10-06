@@ -1,4 +1,7 @@
-// Vérifie si le message est éligible aux feedbacks
+/**
+ * Vérifie si le message est éligible aux feedbacks
+ * @param  {Message} message
+ */
 const checkFeedbackable = message => {
   const mContent = message.content.toUpperCase();
   const isFeedbackable =
@@ -11,4 +14,3 @@ const checkFeedbackable = message => {
 };
 
 export { checkFeedbackable };
-

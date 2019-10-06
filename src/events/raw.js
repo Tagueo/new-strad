@@ -1,5 +1,8 @@
 import { client } from '../globals';
 
+/**
+ * @param  {Object} packet
+ */
 const raw = async packet => {
   const { d: data, t: type } = packet;
   if (!['MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE'].includes(type))
@@ -22,4 +25,3 @@ const raw = async packet => {
 };
 
 export { raw };
-

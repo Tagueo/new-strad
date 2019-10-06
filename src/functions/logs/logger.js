@@ -3,6 +3,9 @@ import moment from 'moment';
 import { formatLogMessage } from './formatLogMessage';
 
 // Permet d'écrire dans les logs.
+/**
+ * @param  {Message} message
+ */
 const logger = message => {
   const appRoot = process.cwd();
   const logName = moment(Date.now()).format('MM-DD-YY');
@@ -17,4 +20,3 @@ const logger = message => {
 };
 
 export { logger };
-

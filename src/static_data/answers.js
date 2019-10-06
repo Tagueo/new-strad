@@ -9,4 +9,3 @@ const answers = {
 };
 
 export { answers };
-

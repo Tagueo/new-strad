@@ -1,3 +1,7 @@
+/**
+ * @param  {Message} message
+ * @param  {MessageEmbed} embed
+ */
 const sendEmdedThenDelete = async (message, embed) => {
   const messageBot = await message.channel.send(embed);
   message.delete();
@@ -5,4 +9,3 @@ const sendEmdedThenDelete = async (message, embed) => {
 };
 
 export { sendEmdedThenDelete };
-

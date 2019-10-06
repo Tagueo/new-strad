@@ -2,6 +2,10 @@ import Discord from 'discord.js';
 import { logger } from '../functions/logs/logger';
 import { client, stradivariusID } from '../globals';
 
+/**
+ * @param  {Guild} guild
+ * @param  {User} user
+ */
 const guildBanAdd = (guild, user) => {
   const logChannel = client.channels.get(client.config.logsChannel);
 
@@ -16,4 +20,3 @@ const guildBanAdd = (guild, user) => {
 };
 
 export { guildBanAdd };
-

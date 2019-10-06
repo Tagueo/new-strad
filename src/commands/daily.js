@@ -4,6 +4,9 @@ import { colors } from '../colors';
 import { connectDatabase } from '../functions/connectDatabase';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ */
 const daily = async message => {
   moment.locale('fr');
 
@@ -87,4 +90,3 @@ const daily = async message => {
 };
 
 export { daily };
-

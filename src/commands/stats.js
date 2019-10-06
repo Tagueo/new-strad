@@ -5,6 +5,9 @@ import os from 'os';
 import { colors } from '../colors';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ */
 const stats = message => {
   cpuStat.usagePercent((error, percent) => {
     if (error) {
@@ -38,4 +41,3 @@ const stats = message => {
 };
 
 export { stats };
-

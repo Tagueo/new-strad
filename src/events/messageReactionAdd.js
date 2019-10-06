@@ -5,6 +5,10 @@ import { toggleCreatorRoles } from '../functions/roles/toggleCreatorRoles';
 import { toggleNotificationRoles } from '../functions/roles/toggleNotificationRoles';
 import { client, creationChannels, stradivariusID } from '../globals';
 
+/**
+ * @param  {MessageReaction} reaction
+ * @param  {User} user
+ */
 const messageReactionAdd = (reaction, user) => {
   const stradivarius = client.guilds.find(guild => guild.id === stradivariusID);
 
@@ -37,4 +41,3 @@ const messageReactionAdd = (reaction, user) => {
 };
 
 export { messageReactionAdd };
-

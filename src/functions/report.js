@@ -4,6 +4,10 @@ import { client } from '../globals';
 import { logger } from './logs/logger';
 import { sendMP } from './sendMessage/sendMP';
 
+/**
+ * @param  {MessageReaction} reaction
+ * @param  {User} user
+ */
 const report = (reaction, user) => {
   const reactedRecently = [];
   if (reaction.message.member.user.bot) {
@@ -76,4 +80,3 @@ const report = (reaction, user) => {
 };
 
 export { report };
-

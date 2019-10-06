@@ -1,6 +1,10 @@
 import { sendMP } from '../functions/sendMessage/sendMP';
 import { client } from '../globals';
 
+/**
+ * @param  {Message} message
+ * @param  {String[]} args
+ */
 const gsay = (message, args) => {
   const trueEmoji = client.assets.emojis.CHECK_TRUE;
 
@@ -27,4 +31,3 @@ const gsay = (message, args) => {
 };
 
 export { gsay };
-

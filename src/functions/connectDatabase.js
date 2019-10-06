@@ -11,4 +11,3 @@ const connectDatabase = () => {
 };
 
 export { connectDatabase };
-

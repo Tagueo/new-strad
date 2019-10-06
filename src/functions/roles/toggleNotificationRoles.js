@@ -1,5 +1,10 @@
 import { toggleNotificationsSeparator } from './toggleNotificationsSeparator';
 
+/**
+ * @param  {Guild} guild
+ * @param  {MessageReaction} reaction
+ * @param  {User} user
+ */
 const toggleNotificationRoles = (guild, reaction, user) => {
   const emojiName = reaction.emoji.name;
   const member = guild.members.find(member => member.id === user.id);
@@ -24,4 +29,3 @@ const toggleNotificationRoles = (guild, reaction, user) => {
 };
 
 export { toggleNotificationRoles };
-

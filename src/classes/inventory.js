@@ -14,4 +14,3 @@ class Inventory {
 }
 
 export { Inventory };
-

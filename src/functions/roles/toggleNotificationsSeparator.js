@@ -1,3 +1,7 @@
+/**
+ * @param  {Guild} guild
+ * @param  {GuildMember} member
+ */
 const toggleNotificationsSeparator = (guild, member) => {
   const rolePrefix = "Notif's - ";
   const SeparatorRole = guild.roles.find(
@@ -15,4 +19,3 @@ const toggleNotificationsSeparator = (guild, member) => {
 };
 
 export { toggleNotificationsSeparator };
-

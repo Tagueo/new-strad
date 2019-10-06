@@ -3,6 +3,9 @@ import { colors } from '../colors';
 import { connectDatabase } from '../functions/connectDatabase';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ */
 const top = async message => {
   const quantity = 10; // Quantité de membres affichés dans le top 10
   const connection = connectDatabase;
@@ -39,4 +42,3 @@ const top = async message => {
 };
 
 export { top };
-

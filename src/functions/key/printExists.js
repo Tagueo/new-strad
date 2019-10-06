@@ -1,5 +1,8 @@
 import { connectDatabase } from '../connectDatabase';
 
+/**
+ * @param  {String} keyPrint
+ */
 const printExists = async keyPrint => {
   const connection = connectDatabase();
   const keys = await connection.query(`SELECT * FROM blocks_keys`);
@@ -7,4 +10,3 @@ const printExists = async keyPrint => {
 };
 
 export { printExists };
-

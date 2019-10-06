@@ -9,4 +9,3 @@ const createFingerPrint = () => {
 };
 
 export { createFingerPrint };
-

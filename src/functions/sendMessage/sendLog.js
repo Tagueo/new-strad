@@ -1,5 +1,9 @@
 import { client, stradivariusID } from '../../globals';
 
+/**
+ * @param  {MessageEmbed} logEmbed
+ * @param  {Function} callback
+ */
 const sendLog = async (logEmbed, callback = null) => {
   const logChannel = client.guilds
     .find(guild => guild.id === stradivariusID)
@@ -9,4 +13,3 @@ const sendLog = async (logEmbed, callback = null) => {
 };
 
 export { sendLog };
-

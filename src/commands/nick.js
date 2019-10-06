@@ -4,6 +4,10 @@ import { connectDatabase } from '../functions/connectDatabase';
 import { sendLog } from '../functions/sendMessage/sendLog';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ * @param  {String[]} args
+ */
 const nick = async (message, args) => {
   const commandChannel = client.channels.get(commandChannelID);
 
@@ -16,7 +20,7 @@ const nick = async (message, args) => {
       .setColor(colors.ALERT);
     commandChannel.send(errorEmbed);
     message.delete();
-return;
+    return;
   }
 
   if (!args[0]) {
@@ -29,7 +33,7 @@ return;
       .setColor(colors.NEUTRAL_BLUE);
     commandChannel.send(errorEmbed);
     message.delete();
-return;
+    return;
   } else if (args[0].toLowerCase() === 'default') {
     message.member.setNickname(message.author.username);
     const successEmbed = new Discord.RichEmbed()
@@ -38,7 +42,7 @@ return;
       .setColor(colors.NEUTRAL_BLUE);
     commandChannel.send(successEmbed);
     message.delete();
-return;
+    return;
   }
 
   const newNickname = args.join(' ');
@@ -58,7 +62,7 @@ return;
     commandChannel.send(errorEmbed);
     connection.end();
     message.delete();
-return;
+    return;
   }
 
   message.member.setNickname(newNickname).catch(() => {
@@ -69,7 +73,7 @@ return;
     commandChannel.send(errorEmbed);
     connection.end();
     message.delete();
-return;
+    return;
   });
 
   await connection.query(
@@ -92,4 +96,3 @@ return;
 };
 
 export { nick };
-

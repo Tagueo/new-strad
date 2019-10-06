@@ -10,4 +10,3 @@ class Item {
 }
 
 export { Item };
-

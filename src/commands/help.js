@@ -2,6 +2,9 @@ import Discord from 'discord.js';
 import { colors } from '../colors';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ */
 const help = message => {
   const embed = new Discord.RichEmbed()
     .setTitle('Help')
@@ -58,4 +61,3 @@ const help = message => {
 };
 
 export { help };
-

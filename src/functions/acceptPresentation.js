@@ -1,6 +1,9 @@
 import { client } from '../globals';
 import { welcome } from './welcome';
 
+/**
+ * @param  {MessageReaction} reaction
+ */
 const acceptPresentation = reaction => {
   // Rôles
   const roleMembre = reaction.message.guild.roles.find(
@@ -30,4 +33,3 @@ const acceptPresentation = reaction => {
 };
 
 export { acceptPresentation };
-

@@ -1,7 +1,10 @@
 import { client } from '../../globals';
 import { assets } from '../../static_data/assets';
 
-// Vérifie si l'éligibilité aux feedbacks a été activée
+/**
+ * Vérifie si l'éligibilité aux feedbacks a été activée
+ * @param  {Message} message
+ */
 const checkFeedbackActivation = message => {
   const messageReactions = message.reactions;
   const feedbackActivation =
@@ -16,4 +19,3 @@ const checkFeedbackActivation = message => {
 };
 
 export { checkFeedbackActivation };
-

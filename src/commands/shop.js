@@ -4,6 +4,9 @@ import { connectDatabase } from '../functions/connectDatabase';
 import { addItem } from '../functions/shop/addItem';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ */
 const shop = async message => {
   const connection = connectDatabase();
   const commandChannel = client.channels.get(commandChannelID);
@@ -33,4 +36,3 @@ const shop = async message => {
 };
 
 export { shop };
-

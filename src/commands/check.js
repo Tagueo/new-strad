@@ -4,6 +4,10 @@ import { connectDatabase } from '../functions/connectDatabase';
 import { findKey } from '../functions/key/findKey';
 import { client, commandChannelID, stradivariusID } from '../globals';
 
+/**
+ * @param  {Message} message
+ * @param  {String[]} args
+ */
 const check = async (message, args) => {
   const blockEmoji = client.assets.emojis.BLOCK;
   const validEmoji = client.assets.emojis.KEY_VALID;
@@ -77,4 +81,3 @@ const check = async (message, args) => {
 };
 
 export { check };
-

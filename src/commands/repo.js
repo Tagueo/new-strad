@@ -1,6 +1,9 @@
 import Discord from 'discord.js';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ */
 const repo = message => {
   const repoLink = 'https://github.com/Tagueo/new-strad';
   const embed = new Discord.RichEmbed()
@@ -18,4 +21,3 @@ const repo = message => {
 };
 
 export { repo };
-

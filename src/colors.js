@@ -13,4 +13,3 @@ const colors = {
 };
 
 export { colors };
-

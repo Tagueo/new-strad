@@ -6,6 +6,10 @@ import { findKey } from '../functions/key/findKey';
 import { sendLog } from '../functions/sendMessage/sendLog';
 import { client, commandChannelID } from '../globals';
 
+/**
+ * @param  {Message} message
+ * @param  {String[]} args
+ */
 const redeem = async (message, args) => {
   const blockEmoji = client.assets.emojis.BLOCK;
 
@@ -20,7 +24,7 @@ const redeem = async (message, args) => {
       .setColor(colors.ALERT);
     commandChannel.send(errorEmbed);
     message.delete();
-return;
+    return;
   }
 
   const connection = connectDatabase();
@@ -43,7 +47,7 @@ return;
       commandChannel.send(errorEmbed);
       connection.end();
       message.delete();
-return;
+      return;
     }
 
     if (!key.recipient_id) {
@@ -96,4 +100,3 @@ return;
 };
 
 export { redeem };
-

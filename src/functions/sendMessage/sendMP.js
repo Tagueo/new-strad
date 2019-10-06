@@ -2,6 +2,10 @@ import Discord from 'discord.js';
 import { colors } from '../../colors';
 import { client, commandChannelID } from '../../globals';
 
+/**
+ * @param  {String} messageContent
+ * @param  {User} user
+ */
 const sendMP = (messageContent, user) => {
   user.send(messageContent).catch(() => {
     const errorEmbed = new Discord.RichEmbed()
@@ -15,4 +19,3 @@ const sendMP = (messageContent, user) => {
 };
 
 export { sendMP };
-
