@@ -1,6 +1,7 @@
-## Fonctionnalitées à faire / Bugs à résoudre de Strad
+## Fonctionnalités à faire / Bugs à résoudre de Strad
 
-### Liste des fonctionnalitées à faire :
+### Liste des fonctionnalités à faire :
+
 - Logs admin **En cours : Tagueo**
 - Economie
   - daily
@@ -26,4 +27,5 @@
 (modifiable par des membres agréés)
 
 ### Liste des bugs à résoudre :
-Aucun bugs ! 🎉!
+
+Aucun bug 🎉!
