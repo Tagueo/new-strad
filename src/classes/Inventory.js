@@ -6,11 +6,11 @@ import { connectDatabase } from '../functions/connectDatabase';
  * @param {GuildMember} ownerMember The owner of the inventory.
  */
 class Inventory {
-  constructor(/* ownerMember */) {
-    const connection = connectDatabase();
-    connection.query();
-    this.content = [];
-  }
+    constructor(/* ownerMember */) {
+        const connection = connectDatabase();
+        connection.query();
+        this.content = [];
+    }
 }
 
 export { Inventory };

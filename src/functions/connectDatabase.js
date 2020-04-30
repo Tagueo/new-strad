@@ -1,13 +1,7 @@
-import { Connection } from '../classes/connection';
-import { client } from '../globals';
+import { Connection } from '../classes/Connection';
 
 const connectDatabase = () => {
-  return new Connection(
-    'localhost',
-    client.config.mysqlUser,
-    client.config.mysqlPass,
-    'strad'
-  );
+    return Connection.getInstance();
 };
 
 export { connectDatabase };

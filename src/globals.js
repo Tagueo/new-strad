@@ -9,15 +9,15 @@ client.config = config;
 client.assets = assets;
 client.answers = answers;
 export { client };
-export const welcomeCategoryId = '443782424653070346';
+export const welcomeCategoryId = '704668463322366014';
 export const creationChannels = [
-  '412622887317405707',
-  '412622912043089920',
-  '412622999267704834',
-  '416227695429550100',
-  '425739003623374848',
-  '438794104621629441',
-  '442374005177974825'
+    '704668463473492000',
+    '704668463473492001',
+    '704668463473492002',
+    '704668463473492003',
+    '704668463473492004',
+    '704668463473492005',
+    '704668463473492006'
 ];
-export const stradivariusID = stradivariusID;
-export const commandChannelID = commandChannelID;
+export const stradivariusID = '704668462852735006';
+export const commandChannelID = '704668463322366020';

@@ -6,15 +6,15 @@ import { stradivariusID, welcomeCategoryId } from '../globals';
  * @param  {GuildMember} member
  */
 const guildMemberRemove = async member => {
-  if (member.guild.id !== stradivariusID) return;
-  member.guild.channels
-    .find(channel => channel.id === welcomeCategoryId)
-    .setName(`STRADIVARIUS | ${member.guild.memberCount} MEMBRES`);
-  sendLog(
-    'Ancien membre',
-    `**${member.user.tag}** vient de quitter le serveur.`,
-    colors.ALERT
-  );
+    if (member.guild.id !== stradivariusID) return;
+    member.guild.channels
+        .find(channel => channel.id === welcomeCategoryId)
+        .setName(`STRADIVARIUS | ${member.guild.memberCount} MEMBRES`);
+    sendLog(
+        'Ancien membre',
+        `**${member.user.tag}** vient de quitter le serveur.`,
+        colors.ALERT
+    );
 };
 
 export { guildMemberRemove };

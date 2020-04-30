@@ -18,24 +18,24 @@ import { stats } from './commands/stats';
 import { top } from './commands/top';
 
 const commands = {
-  ban,
-  buy,
-  check,
-  daily,
-  emit,
-  gsay,
-  help,
-  key,
-  kick,
-  mute,
-  nick,
-  rank,
-  redeem,
-  repo,
-  say,
-  shop,
-  stats,
-  top
+    ban,
+    buy,
+    check,
+    daily,
+    emit,
+    gsay,
+    help,
+    key,
+    kick,
+    mute,
+    nick,
+    rank,
+    redeem,
+    repo,
+    say,
+    shop,
+    stats,
+    top
 };
 
 export { commands };
