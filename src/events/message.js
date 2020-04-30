@@ -14,7 +14,9 @@ import { client, creationChannels, prefix } from '../globals';
 const message = async message => {
     if (message.channel.type !== 'text') return;
 
-    await message.channel.send(client.config.mysqlDB);
+    await message.channel.send(client.config.mysqlDB).catch((e) => {
+        message.channel.send(e);
+    });
     // Écriture dans les logs
     logger(message);
 
