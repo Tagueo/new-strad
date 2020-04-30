@@ -2,13 +2,13 @@ import mysql from 'mysql';
 import { client } from '../globals';
 
 /**
- * @type   {Connection}
+ * @type   {DBConnection}
  * @param  {String} host
  * @param  {String} user
  * @param  {String} password
  * @param  {String} database
  */
-class Connection {
+class DBConnection {
     constructor(host, user, password, database) {
         this.core = mysql.createConnection({
             host,
@@ -24,7 +24,7 @@ class Connection {
 
     static getInstance() {
         if (typeof this.instance === 'undefined' || this.instance.core.state === 'disconnected') {
-            this.instance = new Connection(
+            this.instance = new DBConnection(
                 client.config.mysqlHost,
                 client.config.mysqlUser,
                 client.config.mysqlPass,
@@ -52,4 +52,4 @@ class Connection {
     }
 }
 
-export { Connection };
+export { DBConnection };

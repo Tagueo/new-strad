@@ -1,7 +1,7 @@
-import { Connection } from '../classes/Connection';
+import { DBConnection } from '../classes/DBConnection';
 
 const connectDatabase = () => {
-    return Connection.getInstance();
+    return DBConnection.getInstance();
 };
 
 export { connectDatabase };
