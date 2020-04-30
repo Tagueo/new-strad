@@ -14,7 +14,6 @@ import { client, creationChannels, prefix } from '../globals';
 const message = async message => {
     if (message.channel.type !== 'text') return;
 
-    await message.channel.send(client.config.mysqlUser); // TODO EFFACER
     // Écriture dans les logs
     logger(message);
 
@@ -78,6 +77,8 @@ const message = async message => {
 
     // Ignores all bots
     if (message.author.bot) return;
+
+    await message.channel.send(client.config.mysqlDB); // TODO EFFACER
 
     // Checks automatic answers
     if (client.answers[message.cleanContent.toLowerCase()])
