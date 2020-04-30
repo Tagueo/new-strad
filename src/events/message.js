@@ -77,7 +77,7 @@ const message = async message => {
 
     // Ignores all bots
     if (message.author.bot) return;
-    
+
     // Checks automatic answers
     if (client.answers[message.cleanContent.toLowerCase()])
         message.channel.send(client.answers[message.cleanContent.toLowerCase()]);
