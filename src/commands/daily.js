@@ -22,6 +22,8 @@ const daily = async message => {
         `SELECT * FROM users WHERE user_id = "${message.author.id}"`
     )[0];
 
+    console.log(user);
+
     if (user.lastdaily !== todayDate) {
         // Si l'utilisateur n'a pas encore demandé son daily aujourd'hui, alors...
         const upvotesList = await connection.query(
