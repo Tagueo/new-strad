@@ -3,7 +3,7 @@
 
 ## Informations
 
-Le bot est développé par Tagueo et les contributeurs (voir ci-dessous pour la liste). Il est développé en JavaScript grâce au runtime [NodeJS](https://nodejs.org/en/) et utilise la librairie [discord.js](https://discord.js.org/#/). Le logo du bot a été fait par [SuperDelphi](https://github.com/SuperDelphi).
+Le bot est développé par Tagueo et les contributeurs (voir ci-dessous pour la liste). Il est développé en JavaScript grâce au runtime [NodeJS](https://nodejs.org/en/) et utilise la bibliothèque [discord.js](https://discord.js.org/#/). Le logo du bot a été fait par [SuperDelphi](https://github.com/SuperDelphi).
 
 Pour en savoir plus sur la contribution au développement du bot, rendez-vous [ici](https://github.com/Tagueo/new-strad/blob/master/CONTRIBUTING.md) !
 
