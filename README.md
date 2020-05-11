@@ -19,3 +19,16 @@ Pour faire fonctionner ce bot en local, c'est très simple :
   - Mac : (en utilisant [Homebrew](https://brew.sh/)) `brew install pkg-config cairo pango libpng jpeg giflib librsvg`
 - Remplissez le fichier de configuration avec le token et les ids des channels
 - Exécutez `npm run start` dans l'invite de commande/terminal
+
+### Exemple de fichier de configuration
+```js
+{
+  "token": "", // Votre token Discord
+  "prefix": "Strad ", // Le préfix de votre bot
+  "logsChannel": "id", // Salon de logs
+  "modRole": "roleName", // rôle modérateur
+  "mysqlUser": "user", // utilisateur mysql (db sur 127.0.0.1)
+  "mysqlPass": "pass", // mot-de-passe mysql
+  "mtnMode": false // Mode maintenance on/off
+}
+```
