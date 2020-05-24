@@ -17,7 +17,7 @@ const daily = async message => {
     const downloadEmoji = client.assets.emojis.DOWNLOAD;
 
     const todayDate = moment().format('DD/MM/YY');
-    const connection = connectDatabase();
+    const connection = await connectDatabase();
     const user = await connection.query(
         `SELECT * FROM users WHERE user_id = "${message.author.id}"`
     )[0];

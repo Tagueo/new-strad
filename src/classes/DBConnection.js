@@ -22,7 +22,7 @@ class DBConnection {
         });
     }
 
-    static getInstance() {
+    static async getInstance() {
         if (typeof this.instance === 'undefined' || this.instance.core.state === 'disconnected') {
             this.instance = new DBConnection(
                 client.config.mysqlHost,

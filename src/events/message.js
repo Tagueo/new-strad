@@ -38,15 +38,17 @@ const message = async message => {
             colors.WARNING
         );
     }
+
     if (creationChannels.includes(message.channel.id)) {
-        if (message.includes('[RES]')) message.pin();
+        if (message.content.includes('[RES]')) message.pin();
         if (message.type === 'PINS_ADD') message.delete();
 
         // Conditions d'éligibilité au feedback : fichier joint (sans "[POST]" nécessaire) ou URL (mention "[POST]")
         if (checkFeedbackable(message)) {
-            message.react('✨');
+            let sparkles = client.emojis.get(client.assets.emojiIds.ENABLE_VOTES)
+            message.react(sparkles);
             const messageBot = await message.channel.send(
-                `(Clique sur ✨ si tu souhaites recevoir un feedback)`
+                `(Clique sur ${sparkles} si tu souhaites recevoir un feedback)`
             );
             messageBot.delete(3500);
         }

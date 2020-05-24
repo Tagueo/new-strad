@@ -53,7 +53,7 @@ const ban = async (message, args) => {
         sendLog(
             'Bannissement',
             `${bannedMember} a été banni de Stradivarius.
-      Raison : "${reason}"`,
+            Raison : "${reason}"`,
             colors.ALERT
         );
 
@@ -61,7 +61,7 @@ const ban = async (message, args) => {
             .setTitle('Bannissement')
             .setDescription(
                 `${bannedMember} a été banni de Stradivarius.
-      Raison : "${reason}"`
+            Raison : "${reason}"`
             )
             .setColor(colors.ALERT);
 

@@ -17,7 +17,17 @@ const say = async (message, args) => {
             .setDescription('Faire parler Strad : `Strad say <message>`.')
             .setColor(colors.NEUTRAL_BLUE);
         commandChannel.send(errorEmbed);
-        message.delete();
+        await message.delete();
+        return;
+    }
+
+    if (message.content.includes("@") || message.mentions.everyone || message.mentions.users.array().length || message.mentions.roles.array().length) {
+        const errorEmbed = new Discord.RichEmbed()
+            .setTitle('Erreur')
+            .setDescription('Tu ne peux pas inclure de mentions ni d\'arobases ("@") dans cette commande.')
+            .setColor(colors.ALERT);
+        commandChannel.send(errorEmbed);
+        await message.delete();
         return;
     }
 

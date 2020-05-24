@@ -27,7 +27,7 @@ const feedbackManager = async (reaction, user) => {
             reaction.message.author.id === user.id ||
             !reaction.message.attachments
         ) {
-            reaction.remove(user);
+            await reaction.remove(user);
             return;
         }
 
@@ -55,7 +55,7 @@ const feedbackManager = async (reaction, user) => {
         }
 
         const downloadEmbed = new Discord.RichEmbed()
-            .setTitle(`Téléchargement de ${attachment.filename}`)
+            .setTitle(`Téléchargement de ${typeof attachment.filename !== "undefined" ? attachment.filename : "[Sans titre]"}`)
             .setDescription(
                 `${description}
       Dimensions : ${dimensions} / Type : ${fileExtension}`

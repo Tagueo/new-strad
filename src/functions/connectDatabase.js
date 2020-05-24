@@ -1,7 +1,7 @@
 import { DBConnection } from '../classes/DBConnection';
 
-const connectDatabase = () => {
-    return DBConnection.getInstance();
+const connectDatabase = async () => {
+    return await DBConnection.getInstance();
 };
 
 export { connectDatabase };

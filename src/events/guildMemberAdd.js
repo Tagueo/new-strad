@@ -12,7 +12,7 @@ const guildMemberAdd = async member => {
     const logsChannel = client.channels.get(client.config.logsChannel);
 
     // Récupération de la catégorie de bienvenue
-    const welcomeCategoryId = '443782424653070346';
+    const welcomeCategoryId = client.config.welcomeCategoryId;
 
     // On vérifie si l'évènement a lieu sur Stradivarius
     if (member.guild.id === stradivariusID) {
